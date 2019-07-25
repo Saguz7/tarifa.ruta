@@ -1,0 +1,653 @@
+.sinsalirse{
+  word-break: break-all;
+word-wrap: break-word;
+}
+
+#btnrealizarotrabusqueda{
+  width: 40%;
+
+}
+
+#btncambiarestado{
+  width: 40%;
+
+}
+#inputsearchuser{
+  margin-left: 25px;
+}
+.tituloadvertenciadescripcionverde{
+  font-size: 22px;
+  color: green;
+  font-family: fuenteparacuerpo;
+
+}
+
+.tituloadvertenciadescripcionmorebig{
+  font-size: 34px;
+  color: red;
+
+  font-family: fuenteparacuerpo;
+}
+
+.tituloadvertenciadescripcionverdemorebig{
+  font-size: 34px;
+  color: green;
+  font-family: fuenteparacuerpo;
+}
+
+
+
+#parsingalingleft{
+  margin-left: -2.4%;
+
+}
+
+hr {
+  background-color: #f5f5f5;
+  border: 1px dotted #efe4e4;
+}
+
+.tituloregistro{
+    font-size: 25px;
+    color: #000000;
+    font-family: fuenteparatitulos;
+}
+
+/* label color */
+ .input-field label {
+   color: #000;
+ }
+ /* label focus color */
+ .input-field input[type=text]:focus + label {
+   color: #000;
+ }
+ /* label underline focus color */
+ .input-field input[type=text]:focus {
+   border-bottom: 1px solid #000;
+   box-shadow: 0 1px 0 0 #000;
+ }
+ /* valid color */
+ .input-field input[type=text].valid {
+   border-bottom: 1px solid #000;
+   box-shadow: 0 1px 0 0 #000;
+ }
+ /* invalid color */
+ .input-field input[type=text].invalid {
+   border-bottom: 1px solid #000;
+   box-shadow: 0 1px 0 0 #000;
+ }
+ /* icon prefix focus color */
+ .input-field .prefix.active {
+   color: #000;
+ }
+
+ .divesconder{
+  display:none;
+
+}
+
+.punteado{
+  border-style: dotted;
+   border-width: 1px;
+   border-color: 660033;
+   background-color: cc3366;
+   font-family: verdana, arial;
+   font-size: 10pt;
+}
+
+
+th {
+     width: 25%;
+  font-size: 13px;
+  font-weight: normal;
+  padding: 8px;
+     border-top: 4px solid #aabcfe;
+    border-bottom: 1px solid #fff;
+    color: #039;
+    border: 1px solid #000;
+   border-spacing: 0;
+  }
+
+td {
+     width: 25%;
+  padding: 8px;
+   border-bottom: 1px solid #fff;
+    color: #669;
+    border-top: 1px solid transparent;
+    border: 1px solid #000;
+   border-spacing: 0;
+  }
+
+tr:hover td {
+
+  }
+
+#container {
+  background-color: #f1f1f1;
+}
+
+nav {
+    color: #000;
+    background-color: #fff;
+    width: 100%;
+    height: 56px;
+    line-height: 56px;
+}
+
+nav .input-field label i {
+    color: rgba(0, 0, 0, 0.7);
+    transition: color .3s;
+}
+
+.centrar{
+  text-align: center;
+}
+
+.opcionesdeexamenes{
+  font-size: 24px;
+  color: #000000;
+
+}
+
+.conseciontitulo{
+  font-size: 22px;
+  color: #000000;
+}
+
+.conseciontitulored{
+  font-size: 24px;
+  color: #e91e63;
+  font-family: fuenteparatitulos;
+
+ }
+
+.conseciontitulopequeño{
+  font-size: 23px;
+  color: #000000;
+  font-family: fuenteparacuerpo;
+
+}
+
+#btnrealizarotrabusqueda{
+  font-size: 14px;
+   font-family: fuenteparatitulos;
+}
+
+#btncambiarestado{
+  font-size: 14px;
+   font-family: fuenteparatitulos;
+}
+
+.conseciontitulopequeñored{
+  font-size: 20px;
+  color: #e91e63;
+  font-family: fuenteparatitulos;
+
+}
+
+.atributoscuestionario{
+  font-size: 22px;
+  color: #000000;
+}
+
+.cardtitulosred{
+  font-size: 24px;
+  color: #000000;
+  font-weight: bold;
+  margin-left: 8%;
+
+}
+
+
+.cardtitulos{
+  font-size: 21px;
+  color: #000000;
+  margin-left: 15%;
+
+}
+
+.adventencia{
+  font-size: 28px;
+  font-weight: bold;
+
+  color: red;
+}
+
+
+
+  .cuerpolabelcategorias{
+    font-size: 23px;
+    color: #000;
+    font-weight: bold;
+
+  }
+
+  .cuerpolabel {
+    font-size: 23px;
+    color: #000;
+
+   }
+
+   #titulocentrado {
+       font-size: 25px;
+       color: #000;
+   }
+
+   #bajardiv{
+     margin-top: 200px;
+   }
+
+   .k-pdf-export .bajardiv {
+     margin-top: 200px;
+}
+
+.buscadores{
+  font-size: 20px;
+  color: #000;
+  font-family: fuenteparatitulos;
+}
+
+.encabezadosprocesos{
+  font-size: 24px;
+  color: #43a047 ;
+}
+
+.collapsible-header{
+  background-color: #F1F1F1;
+}
+
+.tamanioadvertencia{
+  font-size: 18px;
+   color: #000;
+  font-weight: bold;
+}
+
+.buscadorcss{
+  font-size: 18px;
+   color: #FFFFFF;
+}
+
+.atributoscuestionariotitulos{
+  font-size: 19px;
+  color: #000000;
+}
+
+.titulomodal{
+  font-size: 26px;
+  font-weight: bold;
+
+  color: #e91e63;
+}
+
+.botonesmodalcss{
+  font-size: 19px;
+  font-weight: bold;
+
+  color: #FFFFFF;
+}
+
+
+* { box-sizing: border-box; }
+body {
+  font: 16px Arial;
+}
+.autocomplete {
+  /*the container must be positioned relative:*/
+  position: relative;
+  display: inline-block;
+}
+input {
+  border: 1px solid transparent;
+  background-color: #f1f1f1;
+  padding: 10px;
+  font-size: 16px;
+}
+input[type=text] {
+  background-color: #ffffff;
+  width: 100%;
+}
+input[type=submit] {
+  background-color: DodgerBlue;
+  color: #fff;
+}
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4;
+}
+.autocomplete-items div:hover {
+  /*when hovering an item:*/
+  background-color: #e9e9e9;
+}
+.autocomplete-active {
+  /*when navigating through the items using the arrow keys:*/
+  background-color: DodgerBlue !important;
+  color: #ffffff;
+}
+
+#nombre{
+      background-color: #FFFFFF;
+}
+
+#serie{
+  background-color: #FFFFFF;
+}
+
+.toast {
+  border-radius: 10px;
+
+top: 80px;
+padding: 10px 90px;
+
+}
+
+
+#divbusquedadearriba{
+   margin-left: 15%;
+}
+
+#serie{
+  margin-right: 19%;
+}
+
+
+#modal1{
+    max-height: 100%;
+}
+
+
+.btn1 {
+      background-color: white;
+      color: black;
+      border: 2px solid #008CBA;
+}
+.btn1:hover {
+      background-color: #008CBA;
+      color: white;
+ }
+
+ #botonEditar{
+   background-color: #008CBA;
+ }
+
+ #botonClose{
+   background-color: red;
+
+ }
+
+ .classtitulosceldas{
+width: 30%; /*Aquí va el ancho de la Celda*/
+}
+
+.classinfoceldas{
+width: 70%; /*Aquí va el ancho de la Celda*/
+}
+
+.classtitulosceldas{
+  margin-left: 13%;
+
+}
+
+.cardtitulosred2{
+  font-size: 24px;
+  color: #000000;
+  font-weight: bold;
+
+}
+
+
+.cardtitulos2{
+  font-size: 21px;
+  color: #000000;
+
+}
+
+#toast-container {
+    min-width: 10%;
+    top: 50%;
+    right: 50%;
+    transform: translateX(50%) translateY(50%);
+}
+
+#toast-container {
+    position: fixed !important;
+    bottom: 0px !important;
+    left: 0px !important;
+}
+
+.advertenciacontador{
+      color: red;
+}
+
+
+#labeltitulo{
+  font-size: 24px;
+  color: #e91e63;
+
+}
+
+#cardinformacionconsecionarios{
+ }
+
+.tituloadvertenciacard{
+  font-size: 25px;
+  color: #000000;
+   font-family: fuenteparacuerpo;
+}
+
+.tituloadvertenciadescripcion{
+  font-size: 22px;
+  color: #e91e63;
+  font-family: fuenteparacuerpo;
+
+}
+
+.tituloadvertenciaexpirado{
+  font-size: 24px;
+  color: red;
+  font-weight: bold;
+}
+
+#tituloadvertencia1{
+  font-size: 30px;
+  font-weight: bold;
+  color: #4caf50;
+}
+
+#tituloadvertencia2{
+  font-size: 30px;
+  font-weight: bold;
+  color: #cddc39;
+}
+
+#tituloadvertencia3{
+  font-size: 30px;
+  font-weight: bold;
+  color: #f44336;
+
+}
+
+#div4responsivo{
+  font-size: 20px;
+   font-family: fuenteparatitulos;
+}
+
+
+@media screen and (max-width: 600px) {
+  #cambiodetamanio {
+    width: 100%;
+  }
+  #cambiodetamanio2 {
+    width: 100%;
+  }
+
+  #div1responsivo{
+    width: 100%;
+    margin-left: -10%;
+  }
+
+  #nombre{
+    margin-left: 5%;
+  }
+
+  #div6responsivo{
+    width: 100%;
+    margin-left: -10%;
+  }
+
+  #div2responsivo{
+    width: 100%;
+  }
+
+  #div3responsivo{
+    width: 100%;
+  }
+
+  #divbusquedadearriba{
+    width: 100%;
+    margin-left: 4%;
+
+  }
+
+  #divbusquedadearriba[_ngcontent-aql-c1] {
+   width: 100%;
+}
+#divbusquedadearriba[_ngcontent-aql-c1] {
+   margin-left: 1%;
+}
+
+#div4responsivo{
+  margin-left: 19%;
+  width: 60%;
+  font-size: 16px;
+   font-family: fuenteparatitulos;
+}
+
+#div5responsivo{
+  width: 100%;
+}
+
+#divbusquedadearriba{
+  width: 90%;
+}
+
+#div7responsivo{
+  width: 90%;
+}
+
+#btnrealizarotrabusqueda{
+  width: 90%;
+  font-size: 10px;
+
+}
+
+#btncambiarestado{
+  width: 90%;
+  font-size: 10px;
+
+}
+
+.tituloadvertenciacard{
+  font-size: 18px;
+}
+
+.tituloadvertenciadescripcion{
+  font-size: 18px;
+}
+
+#lupadiv{
+  width: 5%;
+
+}
+
+.buscadores{
+  font-size: 18px;
+}
+
+.conseciontitulored{
+  font-size: 18px;
+}
+
+.conseciontitulo{
+  font-size: 18px;
+}
+
+.conseciontitulopequeñored{
+  font-size: 18px;
+}
+
+.conseciontitulopequeño{
+  font-size: 18px;
+}
+
+.tituloregistro{
+    font-size: 17px;
+    color: #000000;
+    font-family: fuenteparatitulos;
+    margin-left: 10%;
+
+}
+
+#cambiodetamanio{
+  margin-left: 1%;
+
+}
+
+#img1{
+  width: 100%;
+  margin-left: 1%;
+}
+
+#img2{
+  width: 100%;
+  margin-left: 1%;
+}
+
+#img3{
+  width: 100%;
+  margin-left: 1%;
+}
+
+#btn1nuevo{
+  width: 90.3333333333%;
+}
+
+#btn2estado{
+  width: 90.3333333333%;
+}
+
+
+.tituloadvertenciadescripcionmorebig{
+  font-size: 19px;
+
+}
+
+.tituloadvertenciadescripcionverdemorebig{
+  font-size: 19px;
+
+}
+
+#divsearchmob{
+  width: 110%;
+  margin-left: -15%;
+}
+
+#cambiodetamanio9{
+  margin-left: 5%;
+}
+
+
+
+}
