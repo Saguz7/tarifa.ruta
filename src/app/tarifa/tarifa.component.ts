@@ -13,6 +13,33 @@
   selector: 'app-tarifa', templateUrl: './tarifa.component.html', styleUrls: ['./tarifa.component.css']
 })
 export class TarifaComponent implements OnInit {
+    date1: Date;
+    datepay: Date;
+    datenow: Date;
+    minDate: Date;
+
+        es: any;
+        registroamostrar: any;
+        pago1: any;
+        pago2: any;
+        pago3: any;
+        pago2a: any;
+        fechapagoString : string = "";
+
+        pago1aux:string = "A";
+        pago2aux:string = "B ";
+        pago3aux:string = "C";
+        btnhojavalorada: boolean = false;
+        btnverficarfecha: boolean = false;
+        fechaverificada: boolean = false;
+        formlineadecaptura: boolean = false;
+        formhojavalorada: boolean = false;
+
+
+        div1validacionpago: boolean = true;
+        div2busquedadeconcesionario: boolean = true;
+        div3solicitud: boolean = true;
+        div4descarga: boolean = true;
 
   constructor(
       private router?: Router,
@@ -20,6 +47,27 @@ export class TarifaComponent implements OnInit {
     ){}
 
   ngOnInit() {
+    this.datenow = new Date();
+    this.minDate = new Date(2010);
+
+    this.es = {
+            firstDayOfWeek: 1,
+            dayNames: [ "domingo","lunes","martes","miércoles","jueves","viernes","sábado" ],
+            dayNamesShort: [ "dom","lun","mar","mié","jue","vie","sáb" ],
+            dayNamesMin: [ "D","L","M","X","J","V","S" ],
+            monthNames: [ "enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre" ],
+            monthNamesShort: [ "ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic" ],
+            today: 'Hoy',
+            clear: 'Borrar'
+        }
+        $(document).ready(function(){
+          $('.modal').modal({dismissible: false});
+        });
+
+  $(document).ready(function() {
+    $('input#input_text, textarea#textarea2').characterCounter();
+  });
+
       }
 
       generate(){
@@ -115,6 +163,73 @@ export class TarifaComponent implements OnInit {
 
 
               pdf.save("ejemplo.pdf");
+      }
+
+      vistaprevia(){
+
+      }
+
+      validarfoliopago(){
+        var n = this.pago1.toString();
+        if(n.length>0){
+          this.pago1aux = n + "1";
+        }
+        if(n.length == 11){
+          M.toast({html: 'Formato del folio de pago correcto.'})
+          this.formlineadecaptura = true;
+          document.getElementById("pago1advertencia").style.color = "#000000";
+        }else{
+          this.formlineadecaptura = false;
+          document.getElementById("pago1advertencia").style.color = "red";
+        }
+      }
+
+
+      validarnumerodecaptura(){
+        var n = this.pago2.toString();
+        if(n.length>0){
+          this.pago2aux = n + "1";
+        }
+        if(n.length == 19){
+          M.toast({html: 'Formato de la linea de captura correcto.'})
+          this.formhojavalorada = true;
+          document.getElementById("pago2advertencia").style.color = "#000000";
+        }else{
+          this.formhojavalorada = false;
+          document.getElementById("pago2advertencia").style.color = "red";
+        }
+      }
+
+      validarhojavalorada(){
+        var n = this.pago3.toString();
+        if(n.length>0){
+          this.pago3aux = n + "1";
+        }
+        if(n.length == 9){
+          M.toast({html: 'Formato de la hoja valorada correcto.'})
+          document.getElementById("pago3advertencia").style.color = "#000000";
+          this.btnhojavalorada = true;
+        }else{
+          this.btnhojavalorada = false;
+          document.getElementById("pago3advertencia").style.color = "red";
+        }
+      }
+
+      habilitarpasotres(){
+        this.pago2a = this.pago2;
+        this.btnverficarfecha = true;
+        this.formlineadecaptura = false;
+        this.formhojavalorada = false;
+        (<HTMLInputElement>document.getElementById("pago1")).disabled = true;
+        this.btnhojavalorada= false;
+
+      }
+
+      verificarfecha(){
+
+
+          this.fechaverificada = true;
+
       }
 
 

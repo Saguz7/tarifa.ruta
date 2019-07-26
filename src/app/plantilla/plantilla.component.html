@@ -1,0 +1,75 @@
+<div class="container"><br>
+  <div class="card">
+    <div class="row"><br><br><br>
+      <div class="col s10  offset-s1"><br><br><br>
+        <div class="col s6">
+          <input  autocomplete="off" type="text"  class="form-control" >
+        </div>
+        <div class="col s3"><br>
+          <a id="btnverificarpago" class="waves-effect waves-light btn-small"  ><i class="material-icons left">arrow_downward</i>Buscar Localidad</a>
+        </div>
+        <div class="col s3">
+        </div>
+      </div>
+      <div class="col s10  offset-s1"><br><br>
+        <div class="col s6">
+          <input  autocomplete="off" type="text"  class="form-control" >
+        </div>
+        <div class="col s3"><br>
+        </div>
+        <div class="col s3">
+        </div>
+      </div><br><br>
+      <div class="col s12"><br><br>
+        <div class="col s4">
+          <div>
+            <label  class="atributoscuestionariotitulos">Fecha.</label>
+          </div>
+          <div>
+            <p-calendar [(ngModel)]="date1" [locale]="es" dateFormat="dd/mm/yy"></p-calendar>
+          </div>
+        </div>
+        <div class="col s4">
+          <div>
+            <label  class="atributoscuestionariotitulos">Tomo.</label>
+          </div>
+          <div>
+            <input  autocomplete="off" type="text"  class="form-control" >
+          </div>
+        </div>
+        <div class="col s4">
+          <div>
+            <label  class="atributoscuestionariotitulos">Numero.</label>
+          </div>
+          <div>
+            <input  autocomplete="off" type="text"  class="form-control" >
+          </div>
+        </div>
+      </div>
+      <div class="col s12"><br><br>
+        <div class="col s1 offset-s9"><br>
+          <a class="btn-floating " (click)="addruta()"><i class="material-icons">add</i></a>
+        </div>
+      </div><br><br>
+      <div  class="col s12" *ngFor="let archiex  of arrayarchivosadjuntos; let i = index" >
+        <div class="col s12">
+          <label  class="atributoscuestionariotitulos">Ruta {{i+1}}</label>
+        </div>
+        <div class="col s12">
+          <div class="col s4 input-field inline">
+            <input type="text"  class="form-control"><br>
+          </div>
+          <div class="col s4 input-field inline">
+            <input type="text" class="form-control"><br>
+          </div>
+          <div class="col s4 input-field inline">
+            <a class="btn-floating " (click)="deleteruta(i)"><i class="material-icons">clear</i></a>
+          </div>
+        </div>
+      </div>
+      <div class="col s3"><br>
+        <a id="btnverificarpago" class="waves-effect waves-light btn-small"  ><i class="material-icons left">arrow_downward</i>Crear ruta</a>
+      </div>
+    </div>
+  </div>
+</div>

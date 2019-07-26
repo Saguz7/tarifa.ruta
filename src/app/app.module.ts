@@ -9,14 +9,17 @@ import { LoginComponent } from './login/login/login.component';
 import {CoreModule} from "./core/core.module";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TarifaComponent } from './tarifa/tarifa.component';
-
+import {CalendarModule} from 'primeng/calendar';
 import * as $ from 'jquery';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PlantillaComponent } from './plantilla/plantilla.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    TarifaComponent
+    TarifaComponent,
+    PlantillaComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,9 @@ import * as $ from 'jquery';
     GraphQLModule,
     HttpClientModule,
     CoreModule,
-    FormsModule
+    FormsModule,
+    CalendarModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

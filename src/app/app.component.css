@@ -43,6 +43,14 @@ nav ul a {
 
 }
 
+@media screen and (max-width: 750px) {
+  #logosemovi {
+    width: 500px;
+margin-top: 10px;
+padding-left: 10px;
+  }
+
+}
 
 
 @media screen and (max-width: 750px) {
