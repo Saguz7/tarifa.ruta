@@ -33,6 +33,16 @@ export class PlantillaComponent implements OnInit {
             today: 'Hoy',
             clear: 'Borrar'
         }
+
+        $(document).ready(function(){
+    $('input.autocomplete').autocomplete({
+      data: {
+        "Ocotlan de Morelos": null,
+        "Huatulco": null 
+      },
+    });
+  });
+
       }
 
       addruta(){

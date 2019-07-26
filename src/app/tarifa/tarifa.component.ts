@@ -8,6 +8,7 @@
     import { saveAs } from 'file-saver';
     import * as jsPDF from 'jspdf';
     import 'jspdf-autotable';
+    import kjua from "kjua";
 
  @Component({
   selector: 'app-tarifa', templateUrl: './tarifa.component.html', styleUrls: ['./tarifa.component.css']
@@ -17,6 +18,7 @@ export class TarifaComponent implements OnInit {
     datepay: Date;
     datenow: Date;
     minDate: Date;
+    qrmensagge: any;
 
         es: any;
         registroamostrar: any;
@@ -40,7 +42,12 @@ export class TarifaComponent implements OnInit {
         div2busquedadeconcesionario: boolean = true;
         div3solicitud: boolean = true;
         div4descarga: boolean = true;
-
+        static getBarcodeData(text: string, size = 900) {
+           return kjua({
+             render: "canvas", crisp: true, minVersion: 1, ecLevel: "Q", size: size, ratio: undefined, fill: "#333", back: "#fff",
+             text, rounded: 10, quiet: 2, mode: "label",  mSize: 5, mPosX: 50, mPosY: 100, label: "", fontname: "sans-serif", fontcolor: "#3F51B5", image: undefined
+           });
+         }
   constructor(
       private router?: Router,
       private apollo?: Apollo
@@ -81,11 +88,17 @@ export class TarifaComponent implements OnInit {
              pdf.text(55, 28, 'DIRECCIÓN DE OPERACIÓN DEL TRANSPORTE PUBLICO');
              var img = new Image();
              img.src = './assets/SEMOVI2.png'
+
+             this.qrmensagge =
+                          " Hola mundo" ;
+              const barcodeData = TarifaComponent.getBarcodeData(this.qrmensagge);
+              pdf.addImage(barcodeData, "JPG", 10, 34,34, 34);
+
              pdf.setDrawColor(0);
              pdf.setFillColor(255,0,0);
              pdf.rect(6, 34, 198, 256 ); // empty square
 
-             pdf.addImage(img, 'png', 84, 46, 100, 19);
+             pdf.addImage(img, 'png', 94, 38, 104, 24);
              pdf.setFontSize(37);
              pdf.setDrawColor(0);
              pdf.setFillColor(255,0,0);

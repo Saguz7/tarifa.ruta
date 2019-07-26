@@ -13,7 +13,7 @@ import {CalendarModule} from 'primeng/calendar';
 import * as $ from 'jquery';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PlantillaComponent } from './plantilla/plantilla.component';
-
+import {ButtonModule} from 'primeng/button';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +29,8 @@ import { PlantillaComponent } from './plantilla/plantilla.component';
     CoreModule,
     FormsModule,
     CalendarModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

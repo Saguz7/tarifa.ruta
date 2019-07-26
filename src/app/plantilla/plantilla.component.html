@@ -1,32 +1,39 @@
 <div class="container"><br>
   <div class="card">
     <div class="row"><br><br><br>
-      <div class="col s10  offset-s1"><br><br><br>
+      <div class="col s10  offset-s1">
         <div class="col s6">
-          <input  autocomplete="off" type="text"  class="form-control" >
-        </div>
-        <div class="col s3"><br>
-          <a id="btnverificarpago" class="waves-effect waves-light btn-small"  ><i class="material-icons left">arrow_downward</i>Buscar Localidad</a>
+          <div class="input-field col s12">
+            <input id="municipio" type="text" class="validate">
+            <label class="atributoscuestionariotitulos" for="municipio">Municipio</label>
+          </div>
+         </div>
+        <div class="col s3">
+          <a id="div4responsivo" class="waves-effect waves-light btn-large"  > Buscar</a>
+
         </div>
         <div class="col s3">
         </div>
       </div>
       <div class="col s10  offset-s1"><br><br>
         <div class="col s6">
-          <input  autocomplete="off" type="text"  class="form-control" >
+          <div class="input-field col s12">
+           <input id="localidad" type="text" id="autocomplete-input" class="autocomplete">
+           <label class="atributoscuestionariotitulos" for="localidad">Localidad</label>
+          </div>
         </div>
         <div class="col s3"><br>
         </div>
         <div class="col s3">
         </div>
       </div><br><br>
-      <div class="col s12"><br><br>
-        <div class="col s4">
+      <div class="col s10  offset-s1"><br><br>
+        <div class=" col s4">
           <div>
             <label  class="atributoscuestionariotitulos">Fecha.</label>
           </div>
           <div>
-            <p-calendar [(ngModel)]="date1" [locale]="es" dateFormat="dd/mm/yy"></p-calendar>
+            <p-calendar  [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"  [(ngModel)]="date1" [locale]="es" dateFormat="dd/mm/yy"></p-calendar>
           </div>
         </div>
         <div class="col s4">
@@ -46,12 +53,12 @@
           </div>
         </div>
       </div>
-      <div class="col s12"><br><br>
+      <div class="col s10  offset-s1"><br><br>
         <div class="col s1 offset-s9"><br>
           <a class="btn-floating " (click)="addruta()"><i class="material-icons">add</i></a>
         </div>
       </div><br><br>
-      <div  class="col s12" *ngFor="let archiex  of arrayarchivosadjuntos; let i = index" >
+      <div  class="col s10  offset-s1" *ngFor="let archiex  of arrayarchivosadjuntos; let i = index" >
         <div class="col s12">
           <label  class="atributoscuestionariotitulos">Ruta {{i+1}}</label>
         </div>
@@ -67,8 +74,8 @@
           </div>
         </div>
       </div>
-      <div class="col s3"><br>
-        <a id="btnverificarpago" class="waves-effect waves-light btn-small"  ><i class="material-icons left">arrow_downward</i>Crear ruta</a>
+      <div class="col s10  offset-s1"><br>
+        <a id="btnverificarpago" class="waves-effect waves-light btn-small"  ><i class="material-icons left">arrow_downward</i>Crear ruta</a><br><br><br>
       </div>
     </div>
   </div>
