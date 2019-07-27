@@ -1,0 +1,50 @@
+<div class="payment">
+  <form [formGroup]="paymentForm" (ngSubmit)="sendStatus(paymentForm.valid)">
+    <div class="row">
+      <!-- Payment folio -->
+      <div class="col s12 m4">
+        <div class="input-field">
+          <input type="text" id="folio" name="folio"
+            autofocus
+            autocomplete="off"
+            formControlName="folio">
+          <label for="first_name">Folio de pago</label>
+        </div>
+      </div>
+
+      <!-- Capture line -->
+      <div class="col s12 m4">
+        <div class="input-field">
+          <input type="text" id="capture_line" name="capture_line"
+            autocomplete="off"
+            formControlName="capture_line">
+          <label for="capture_line">Linea de captura</label>
+        </div>
+      </div>
+
+      <!-- Concept key -->
+      <div class="col s12 m4">
+        <div class="input-field">
+          <input type="text" id="key_concept" name="key_concept"
+            autocomplete="off"
+            formControlName="key_concept">
+          <label for="key_concept">Concepto de pago en clave</label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12 right-align">
+        <button type="submit" class="waves-effect waves-light btn-small"
+          [disabled]="!paymentForm.valid"> Verificar pago
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="">
+        {{paymentForm.controls['folio'].valid}}
+        {{paymentForm.controls['capture_line'].valid}}
+        {{paymentForm.controls['key_concept'].valid}}
+      </div>
+    </div>
+  </form>
+</div>

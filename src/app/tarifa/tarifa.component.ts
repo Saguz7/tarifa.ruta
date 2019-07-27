@@ -1,81 +1,90 @@
-  import {Component, OnInit} from '@angular/core';
-  import {Router} from '@angular/router';
-   import {Apollo} from 'apollo-angular';
-  import gql from 'graphql-tag';
-  import { Observable,Observer } from 'rxjs';
-   import {User} from "../core/models/user.model";
-    declare var M: any;
-    import { saveAs } from 'file-saver';
-    import * as jsPDF from 'jspdf';
-    import 'jspdf-autotable';
-    import kjua from "kjua";
+import {Component, OnInit} from '@angular/core';
+import {FormGroup, FormControl} from '@angular/forms';
+import {Router} from '@angular/router';
+import {Apollo} from 'apollo-angular';
+import gql from 'graphql-tag';
+import { Observable,Observer } from 'rxjs';
+import {User} from "../core/models/user.model";
+declare var M: any;
+import { saveAs } from 'file-saver';
+import * as jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import kjua from "kjua";
 
- @Component({
-  selector: 'app-tarifa', templateUrl: './tarifa.component.html', styleUrls: ['./tarifa.component.css']
+@Component({
+  selector: 'app-tarifa',
+  templateUrl: './tarifa.component.html',
+  styleUrls: ['./tarifa.component.css']
 })
+
 export class TarifaComponent implements OnInit {
-    date1: Date;
-    datepay: Date;
-    datenow: Date;
-    minDate: Date;
-    qrmensagge: any;
+  statusComponentPayment: boolean = false;
 
-        es: any;
-        registroamostrar: any;
-        pago1: any;
-        pago2: any;
-        pago3: any;
-        pago2a: any;
-        fechapagoString : string = "";
+  date1: Date;
+  datepay: Date;
+  datenow: Date;
+  minDate: Date;
+  qrmensagge: any;
 
-        pago1aux:string = "A";
-        pago2aux:string = "B ";
-        pago3aux:string = "C";
-        btnhojavalorada: boolean = false;
-        btnverficarfecha: boolean = false;
-        fechaverificada: boolean = false;
-        formlineadecaptura: boolean = false;
-        formhojavalorada: boolean = false;
+  es: any;
+  registroamostrar: any;
+  pago1: any;
+  pago2: any;
+  pago3: any;
+  pago2a: any;
+  fechapagoString : string = "";
 
+  pago1aux:string = "A";
+  pago2aux:string = "B ";
+  pago3aux:string = "C";
+  btnhojavalorada: boolean = false;
+  btnverficarfecha: boolean = false;
+  fechaverificada: boolean = false;
+  formlineadecaptura: boolean = false;
+  formhojavalorada: boolean = false;
 
-        div1validacionpago: boolean = true;
-        div2busquedadeconcesionario: boolean = true;
-        div3solicitud: boolean = true;
-        div4descarga: boolean = true;
-        static getBarcodeData(text: string, size = 900) {
-           return kjua({
-             render: "canvas", crisp: true, minVersion: 1, ecLevel: "Q", size: size, ratio: undefined, fill: "#333", back: "#fff",
-             text, rounded: 10, quiet: 2, mode: "label",  mSize: 5, mPosX: 50, mPosY: 100, label: "", fontname: "sans-serif", fontcolor: "#3F51B5", image: undefined
-           });
-         }
-  constructor(
-      private router?: Router,
-      private apollo?: Apollo
-    ){}
+  div1validacionpago: boolean = true;
+  div2busquedadeconcesionario: boolean = true;
+  div3solicitud: boolean = true;
+  div4descarga: boolean = true;
+
+  static getBarcodeData(text: string, size = 900) {
+    return kjua({
+      render: "canvas", crisp: true, minVersion: 1, ecLevel: "Q", size: size, ratio: undefined, fill: "#333", back: "#fff",
+      text, rounded: 10, quiet: 2, mode: "label",  mSize: 5, mPosX: 50, mPosY: 100, label: "", fontname: "sans-serif", fontcolor: "#3F51B5", image: undefined
+    });
+  }
+
+  constructor(private router?: Router, private apollo?: Apollo){}
 
   ngOnInit() {
     this.datenow = new Date();
     this.minDate = new Date(2010);
 
     this.es = {
-            firstDayOfWeek: 1,
-            dayNames: [ "domingo","lunes","martes","miércoles","jueves","viernes","sábado" ],
-            dayNamesShort: [ "dom","lun","mar","mié","jue","vie","sáb" ],
-            dayNamesMin: [ "D","L","M","X","J","V","S" ],
-            monthNames: [ "enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre" ],
-            monthNamesShort: [ "ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic" ],
-            today: 'Hoy',
-            clear: 'Borrar'
-        }
-        $(document).ready(function(){
-          $('.modal').modal({dismissible: false});
-        });
+      firstDayOfWeek: 1,
+      dayNames: [ "domingo","lunes","martes","miércoles","jueves","viernes","sábado" ],
+      dayNamesShort: [ "dom","lun","mar","mié","jue","vie","sáb" ],
+      dayNamesMin: [ "D","L","M","X","J","V","S" ],
+      monthNames: [ "enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre" ],
+      monthNamesShort: [ "ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic" ],
+      today: 'Hoy',
+      clear: 'Borrar'
+    }
 
-  $(document).ready(function() {
-    $('input#input_text, textarea#textarea2').characterCounter();
-  });
+    $(document).ready(function(){
+      $('.modal').modal({dismissible: false});
+    });
 
-      }
+    $(document).ready(function() {
+      $('input#input_text, textarea#textarea2').characterCounter();
+    });
+  }
+
+  getStatusComponentPayment($event){
+    this.statusComponentPayment = $event;
+  }
+
 
       generate(){
         var pdf = new jsPDF();
@@ -244,8 +253,5 @@ export class TarifaComponent implements OnInit {
           this.fechaverificada = true;
 
       }
-
-
-
 
 }
