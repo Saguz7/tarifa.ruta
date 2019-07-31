@@ -1,82 +1,169 @@
 <div class="container"><br>
   <div class="card">
-    <div class="row"><br><br><br>
-      <div class="col s10  offset-s1">
-        <div class="col s6">
-          <div class="input-field col s12">
-            <input id="municipio" type="text" class="validate">
-            <label class="atributoscuestionariotitulos" for="municipio">Municipio</label>
-          </div>
-         </div>
-        <div class="col s3">
-          <a id="div4responsivo" class="waves-effect waves-light btn-large"  > Buscar</a>
-
-        </div>
-        <div class="col s3">
-        </div>
-      </div>
-      <div class="col s10  offset-s1"><br><br>
-        <div class="col s6">
-          <div class="input-field col s12">
-           <input id="localidad" type="text" id="autocomplete-input" class="autocomplete">
-           <label class="atributoscuestionariotitulos" for="localidad">Localidad</label>
-          </div>
-        </div>
-        <div class="col s3"><br>
-        </div>
-        <div class="col s3">
-        </div>
-      </div><br><br>
-      <div class="col s10  offset-s1"><br><br>
-        <div class=" col s4">
-          <div>
-            <label  class="atributoscuestionariotitulos">Fecha.</label>
-          </div>
-          <div>
-            <p-calendar  [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"  [(ngModel)]="date1" [locale]="es" dateFormat="dd/mm/yy"></p-calendar>
-          </div>
-        </div>
-        <div class="col s4">
-          <div>
-            <label  class="atributoscuestionariotitulos">Tomo.</label>
-          </div>
-          <div>
-            <input  autocomplete="off" type="text"  class="form-control" >
-          </div>
-        </div>
-        <div class="col s4">
-          <div>
-            <label  class="atributoscuestionariotitulos">Numero.</label>
-          </div>
-          <div>
-            <input  autocomplete="off" type="text"  class="form-control" >
-          </div>
-        </div>
-      </div>
-      <div class="col s10  offset-s1"><br><br>
-        <div class="col s1 offset-s9"><br>
-          <a class="btn-floating " (click)="addruta()"><i class="material-icons">add</i></a>
-        </div>
-      </div><br><br>
-      <div  class="col s10  offset-s1" *ngFor="let archiex  of arrayarchivosadjuntos; let i = index" >
+    <div class="row"><br>
+      <div class="row">
         <div class="col s12">
-          <label  class="atributoscuestionariotitulos">Ruta {{i+1}}</label>
+          <ul class="tabs">
+            <li class="tab col s6"><a href="#plantilla">Plantilla</a></li>
+            <li class="tab col s6"><a href="#diarioficial">Periodico Oficial</a></li>
+          </ul>
         </div>
-        <div class="col s12">
-          <div class="col s4 input-field inline">
-            <input type="text"  class="form-control"><br>
-          </div>
-          <div class="col s4 input-field inline">
-            <input type="text" class="form-control"><br>
-          </div>
-          <div class="col s4 input-field inline">
-            <a class="btn-floating " (click)="deleteruta(i)"><i class="material-icons">clear</i></a>
+        <div id="plantilla" class="col s12">
+          <div class="col s10 offset-s1" id="responsible1">
+            <div class="col s12 m12"><br><br>
+              <p-table  #dt  [value]="plantillas" [paginator]="true" [rows]="10" [responsive]="true">
+                <ng-template pTemplate="caption">
+                  <div class="col s8" id="div12responsive">
+                    <div class="valign-wrapper">
+                      <div class="col s1 offset-s1" id="cambioenmob1" >
+                        <div class="tooltip">
+                          <a class="btn-floating modal-trigger"   data-position="bottom" data-target="modalcreateplantilla" ><i class="material-icons">add</i></a>
+                          <span class="tooltiptext">Crear tramite</span>
+                        </div>
+                      </div><br><br>
+                    </div><br>
+                  </div>
+                  <div class="col s4" id="divsearchmob">
+                    <div class="input-field">
+                      <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                      <input id="inputsearchuser" type="text" pInputText size="50"  (input)="dt.filterGlobal($event.target.value, 'contains')" ><br>
+                    </div><br>
+                  </div>
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                  <tr>
+                    <th style="width:45%">
+                      <label class="conseciontitulo">
+                        Nombre
+                      </label>
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                  <tr (click)=habilitarbotones(rowData,$event);  class="sinfondo">
+                    <td>
+                      <div>
+                        <label  class="conseciontitulo">
+                          {{rowData.nombre}}
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+              <div class="col-md-12 center text-center">
+                <span class="left" id="total_reg"></span>
+                <ul class="pagination pager" id="myPager"></ul>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col s10  offset-s1"><br>
-        <a id="btnverificarpago" class="waves-effect waves-light btn-small"  ><i class="material-icons left">arrow_downward</i>Crear ruta</a><br><br><br>
+        <div id="diarioficial" class="col s12">
+          <div class="row">
+            <div class="col s12">
+              <div class="col s10 offset-s1" id="responsible1">
+                <div class="col s12 m12"><br><br>
+                  <p-table  #dt  [value]="newspapers" [paginator]="true" [rows]="10" [responsive]="true" [globalFilterFields]="['descripcion','fecha_publicacion','tomo','numero']">
+                    <ng-template pTemplate="caption">
+                      <div class="col s8" id="div12responsive">
+                        <div class="valign-wrapper">
+                          <div class="col s1 offset-s1" id="cambioenmob1" >
+                            <div class="tooltip">
+                              <a class="btn-floating modal-trigger"   data-position="bottom" data-target="modalcreatediario" ><i class="material-icons">add</i></a>
+                              <span class="tooltiptext">Crear Diario Oficial</span>
+                            </div>
+                          </div><br><br>
+                        </div><br>
+                      </div>
+                      <div class="col s4" id="divsearchmob">
+                        <div class="input-field">
+                          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                          <input id="inputsearchuser" type="text" pInputText size="50"  (input)="dt.filterGlobal($event.target.value, 'contains')" ><br>
+                         </div>
+                         <br>
+                      </div>
+                    </ng-template>
+                    <ng-template pTemplate="header" let-columns>
+                      <tr>
+                        <th style="width:40%">
+                          <label  class="tabladiariooficial">
+                            Descripcion
+                          </label>
+                        </th>
+                        <th style="width:20%">
+                          <label  class="tabladiariooficial">
+                            Fecha Publicación
+                          </label>
+                        </th>
+                        <th style="width:10%">
+                          <label  class="tabladiariooficial">
+                            Tomo
+                          </label>
+                        </th>
+                        <th style="width:10%">
+                          <label  class="tabladiariooficial">
+                            Numero
+                          </label>
+                        </th>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                      <tr (click)=habilitarbotones(rowData,$event);  class="sinfondo">
+                        <td>
+                          <div>
+                            <label  class="tabladiariooficial">
+                              {{rowData.descripcion}}
+                            </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div>
+                            <label  class="tabladiariooficial">
+                              {{rowData.fecha_publicacion}}
+                            </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div>
+                            <label  class="tabladiariooficial">
+                              {{rowData.tomo}}
+                            </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div>
+                            <label  class="tabladiariooficial">
+                              {{rowData.numero}}
+                            </label>
+                          </div>
+                        </td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                  <div class="col-md-12 center text-center">
+                    <span class="left" id="total_reg"></span>
+                    <ul class="pagination pager" id="myPager"></ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+</div>
+
+
+<div id="modalcreateplantilla" class="modal">
+<div class="modal-content">
+  <app-createplantilla></app-createplantilla>
+</div>
+</div>
+
+
+<div id="modalcreatediario" class="modal">
+<div class="modal-content">
+  <app-creatediariooficial></app-creatediariooficial>
+</div>
 </div>
