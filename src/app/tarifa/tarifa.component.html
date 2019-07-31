@@ -1,4 +1,10 @@
 <div class="container"><br>
+  <app-payment (componentStatus)="getStatusComponentPayment($event)"></app-payment>
+  <div class="row">
+    <div class="col s12">
+      <p>Estado del componente payment:: {{statusComponentPayment}}</p>
+    </div>
+  </div>
   <div class="card">
     <div class="row">
       <ul class="collapsible">
@@ -196,7 +202,7 @@
             </div>
          </li>
         <li>
-          <div class="collapsible-header" id="divheader3"><i class="material-icons">assignment</i>Solicitud</div>
+          <div class="collapsible-header" id="divheader3"><i class="material-icons">assignment</i>Solicitudes</div>
           <div class="row" *ngIf="div3solicitud"><br>
             <div class="row">
               <div class="col s10 offset-s1"> <br> <br>

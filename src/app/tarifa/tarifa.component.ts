@@ -152,35 +152,35 @@ export class TarifaComponent implements OnInit {
       }
 
 
-     multiple(valor, multiple){
-       var resto = valor % multiple;
-       if(resto==0)
-       {return true;}
-       else
-       {return false;}
-     }
+   multiple(valor, multiple){
+     var resto = valor % multiple;
+     if(resto==0)
+     {return true;}
+     else
+     {return false;}
+   }
 
-     getStatusComponentPayment($event){
-       this.statusComponentPayment = $event;
-     }
-      generate(){
+   getStatusComponentPayment($event){
+     this.statusComponentPayment = $event;
+   }
+    generate(){
 
-        let calibri_url = CALIBRI.CALIBRI;
-        let calibrib_url = CALIBRIB.CALIBRIB;
+      let calibri_url = CALIBRI.CALIBRI;
+      let calibrib_url = CALIBRIB.CALIBRIB;
 
-        var pdf = new jsPDF('p', 'mm', [612,   792]);
-            var multiplesde40 = [];
-            var a_permisoxf = [];
-            var a_permisoxf2 = [];
+      var pdf = new jsPDF('p', 'mm', [612,   792]);
+          var multiplesde40 = [];
+          var a_permisoxf = [];
+          var a_permisoxf2 = [];
 
-             pdf.setFont('Calibri');
+           pdf.setFont('Calibri');
 
-            var totalderutas = this.arrayrutasdepruebas.length;
-            for( var z = 1; z < totalderutas; z++){
-              if(this.multiple(z,50)){
-                    multiplesde40.push(z);
-              }
+          var totalderutas = this.arrayrutasdepruebas.length;
+          for( var z = 1; z < totalderutas; z++){
+            if(this.multiple(z,50)){
+                  multiplesde40.push(z);
             }
+          }
 
             for(var x = 0; x < multiplesde40.length; x++){
               console.log("hacer los 40"+x);
@@ -250,48 +250,46 @@ export class TarifaComponent implements OnInit {
             }
 
 
-              let pageNumber = pdf.internal.getNumberOfPages();
+            let pageNumber = pdf.internal.getNumberOfPages();
 
-              pdf.autoTable({
-                  head: [['NU','ORIGEN-DESTINO', 'TARIFA', ' ' ]],
-                  body: a_permisoxf,
-                  startY: 100,
-                  showHead: 'firstPage',
-                  styles: {overflow: 'linebreak', fontSize: 5  ,overflowColumns: 'linebreak' , cellPadding: 1},
-                  columnStyles: {
-                    0: {cellWidth: 6},
-                    1: {cellWidth: 40},
-                    2: {cellWidth: 35},
-                    3: {cellWidth: 10}
-                  },
-                  margin: { right: 140}
-              });
+            pdf.autoTable({
+                head: [['NU','ORIGEN-DESTINO', 'TARIFA', ' ' ]],
+                body: a_permisoxf,
+                startY: 100,
+                showHead: 'firstPage',
+                styles: {overflow: 'linebreak', fontSize: 5  ,overflowColumns: 'linebreak' , cellPadding: 1},
+                columnStyles: {
+                  0: {cellWidth: 6},
+                  1: {cellWidth: 40},
+                  2: {cellWidth: 35},
+                  3: {cellWidth: 10}
+                },
+                margin: { right: 140}
+            });
 
-              pdf.setPage(pageNumber);
+            pdf.setPage(pageNumber);
 
-              pdf.autoTable({
-                  head: [['NU',' ORIGEN-DESTINO', 'TARIFA', ' ' ]],
-                  body: a_permisoxf2,
-                  startY: 100,
-                  showHead: 'firstPage',
-                  styles: { overflow: 'linebreak', fontSize: 5, cellPadding: 1  },
+            pdf.autoTable({
+                head: [['NU',' ORIGEN-DESTINO', 'TARIFA', ' ' ]],
+                body: a_permisoxf2,
+                startY: 100,
+                showHead: 'firstPage',
+                styles: { overflow: 'linebreak', fontSize: 5, cellPadding: 1  },
 
-                  columnStyles: {
-                    0: {cellWidth: 6},
-                    1: {cellWidth: 40},
-                    2: {cellWidth: 35},
-                    3: {cellWidth: 10}
-                  },
-                  margin: { left: 108}
-              });
+                columnStyles: {
+                  0: {cellWidth: 6},
+                  1: {cellWidth: 40},
+                  2: {cellWidth: 35},
+                  3: {cellWidth: 10}
+                },
+                margin: { left: 108}
+            });
 
-              pdf.setFontSize(9);
-              pdf.text(25, 264, 'del Servicio Público de Transporte de pasajeros en la modalidad de TAXI; para el Municipio de SANTA MARÍA HUATULCO.');
-              pdf.addPage();
+            pdf.setFontSize(9);
+            pdf.text(25, 264, 'del Servicio Público de Transporte de pasajeros en la modalidad de TAXI; para el Municipio de SANTA MARÍA HUATULCO.');
+            pdf.addPage();
 
-            }
-
-            console.log(totalderutas - multiplesde40[multiplesde40.length-1]);
+          }
 
             a_permisoxf = [];
             var restorutas = 0;
@@ -414,65 +412,75 @@ export class TarifaComponent implements OnInit {
       vistaprevia(){
       }
 
-      validarfoliopago(){
-        var n = this.pago1.toString();
-        if(n.length>0){
-          this.pago1aux = n + "1";
-        }
-        if(n.length == 11){
-          M.toast({html: 'Formato del folio de pago correcto.'})
-          this.formlineadecaptura = true;
-          document.getElementById("pago1advertencia").style.color = "#000000";
-        }else{
-          this.formlineadecaptura = false;
-          document.getElementById("pago1advertencia").style.color = "red";
-        }
+
+
+
+    vistaprevia(){
+
+    }
+
+    validarfoliopago(){
+      var n = this.pago1.toString();
+      if(n.length>0){
+        this.pago1aux = n + "1";
       }
-
-
-      validarnumerodecaptura(){
-        var n = this.pago2.toString();
-        if(n.length>0){
-          this.pago2aux = n + "1";
-        }
-        if(n.length == 19){
-          M.toast({html: 'Formato de la linea de captura correcto.'})
-          this.formhojavalorada = true;
-          document.getElementById("pago2advertencia").style.color = "#000000";
-        }else{
-          this.formhojavalorada = false;
-          document.getElementById("pago2advertencia").style.color = "red";
-        }
-      }
-
-      validarhojavalorada(){
-        var n = this.pago3.toString();
-        if(n.length>0){
-          this.pago3aux = n + "1";
-        }
-        if(n.length == 9){
-          M.toast({html: 'Formato de la hoja valorada correcto.'})
-          document.getElementById("pago3advertencia").style.color = "#000000";
-          this.btnhojavalorada = true;
-        }else{
-          this.btnhojavalorada = false;
-          document.getElementById("pago3advertencia").style.color = "red";
-        }
-      }
-
-      habilitarpasotres(){
-        this.pago2a = this.pago2;
-        this.btnverficarfecha = true;
+      if(n.length == 11){
+        M.toast({html: 'Formato del folio de pago correcto.'})
+        this.formlineadecaptura = true;
+        document.getElementById("pago1advertencia").style.color = "#000000";
+      }else{
         this.formlineadecaptura = false;
+        document.getElementById("pago1advertencia").style.color = "red";
+      }
+    }
+
+
+    validarnumerodecaptura(){
+      var n = this.pago2.toString();
+      if(n.length>0){
+        this.pago2aux = n + "1";
+      }
+      if(n.length == 19){
+        M.toast({html: 'Formato de la linea de captura correcto.'})
+        this.formhojavalorada = true;
+        document.getElementById("pago2advertencia").style.color = "#000000";
+      }else{
         this.formhojavalorada = false;
-        (<HTMLInputElement>document.getElementById("pago1")).disabled = true;
-        this.btnhojavalorada= false;
-
+        document.getElementById("pago2advertencia").style.color = "red";
       }
+    }
 
-      verificarfecha(){
+    validarhojavalorada(){
+      var n = this.pago3.toString();
+      if(n.length>0){
+        this.pago3aux = n + "1";
+      }
+      if(n.length == 9){
+        M.toast({html: 'Formato de la hoja valorada correcto.'})
+        document.getElementById("pago3advertencia").style.color = "#000000";
+        this.btnhojavalorada = true;
+      }else{
+        this.btnhojavalorada = false;
+        document.getElementById("pago3advertencia").style.color = "red";
+      }
+    }
+
+    habilitarpasotres(){
+      this.pago2a = this.pago2;
+      this.btnverficarfecha = true;
+      this.formlineadecaptura = false;
+      this.formhojavalorada = false;
+      (<HTMLInputElement>document.getElementById("pago1")).disabled = true;
+      this.btnhojavalorada= false;
+
+    }
+
+    verificarfecha(){
+
+
         this.fechaverificada = true;
-      }
+
+    }
 
       mychange(event)
        {
