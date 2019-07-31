@@ -10,12 +10,13 @@ import {AuthorizatedGuard} from "./core/guards/authorizated.guard";
 import {AuthorizatedAdminGuard} from "./core/guards/authorizatedAdmin.guard";
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent, canActivate: [ AuthorizatedAfterLoginGuard ]},
-  { path: 'tarifa', component: TarifaComponent, canActivate: [ AuthorizatedGuard ]},
-  { path: 'crearplantilla', component: PlantillaComponent, canActivate: [ AuthorizatedGuard ] },
+  { path: 'login', component: LoginComponent, canActivate: [ AuthorizatedAfterLoginGuard ] },
+  { path: 'tarifa', component: TarifaComponent, pathMatch: 'full' },
+  // { path: 'tarifa', component: TarifaComponent, canActivate: [ AuthorizatedAdminGuard ] },
+  { path: 'crearplantilla', component: PlantillaComponent, canActivate: [ AuthorizatedAdminGuard ] },
 
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: '**', redirectTo: '/login'}
+  // { path: '', redirectTo: '/login', pathMatch: 'full' },
+  // { path: '**', redirectTo: '/login'}
 
 ];
 

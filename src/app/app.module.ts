@@ -1,12 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login/login.component';
-import {CoreModule} from "./core/core.module";
+import { PaymentComponent } from './payment/payment.component';
+import { CoreModule } from "./core/core.module";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TarifaComponent } from './tarifa/tarifa.component';
 import { PlantillaComponent } from './plantilla/plantilla.component';
@@ -27,6 +27,7 @@ import {DropdownModule} from 'primeng/dropdown';
   declarations: [
     AppComponent,
     LoginComponent,
+    PaymentComponent,
     TarifaComponent,
     PaymentComponent,
     PlantillaComponent,
@@ -41,6 +42,7 @@ import {DropdownModule} from 'primeng/dropdown';
     HttpClientModule,
     CoreModule,
     FormsModule,
+    ReactiveFormsModule,
     CalendarModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
