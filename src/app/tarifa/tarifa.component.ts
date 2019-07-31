@@ -410,15 +410,7 @@ export class TarifaComponent implements OnInit {
            }
 
       vistaprevia(){
-      }
-
-
-
-
-    vistaprevia(){
-
-    }
-
+      } 
     validarfoliopago(){
       var n = this.pago1.toString();
       if(n.length>0){
