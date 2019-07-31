@@ -4,7 +4,7 @@
       <div class="col s10  offset-s1">
         <div class="input-field col s12">
           <i class="material-icons prefix">apps</i> <br>
-          <label class="tituloregistromodal"> Crear nueva plantilla </label>
+          <label class="tituloregistromodal" id="titulocrearperiodico"> Crear nueva plantilla </label>
         </div>
       </div>
     </div>
@@ -24,24 +24,23 @@
       <div class="col s12">
         <div class="input-field col s12">
 
-          <input  type="text" id="autocomplete" name="autocomplete"  [(ngModel)]="localidad" >
+          <input  type="text" id="autocomplete" name="autocomplete"  [(ngModel)]="localidad" (change)="validarlocalidad()" (ngModelChange)="validarlocalidad()">
           <label class="atributoscuestionariotitulos" for="localidad">Localidad</label>
         </div>
       </div>
     </div>
 
-    <div class="col s10  offset-s1" *ngIf="mostardespuesmunicipio">
+    <div class="col s10  offset-s1" *ngIf="mostardespueslocalidad">
       <div class="col s12">
         <div class="input-field col s12">
-
-          <input  type="text" id="autocomplete3" name="autocomplete3"  [(ngModel)]="modalidad" >
+          <input  type="text" id="autocomplete3" name="autocomplete3"  [(ngModel)]="modalidad" (change)="validarmodalidad()">
           <label class="atributoscuestionariotitulos" for="modalidad">Modalidad</label>
         </div>
       </div>
     </div>
 
 
-    <div class="col s10  offset-s1" *ngIf="mostardespuesmunicipio">
+    <div class="col s10  offset-s1" *ngIf="mostardespuesmodalidad">
       <div class="col s12">
         <div class="input-field col s12">
           <input  type="text" id="descripcion" [(ngModel)]="descripcion" name="descripcion"  >
@@ -50,11 +49,11 @@
       </div>
     </div>
 
-    <div class="col s10  offset-s1" *ngIf="mostardespuesmunicipio">
+    <div class="col s10  offset-s1" *ngIf="mostardespuesmodalidad">
       <div class="col s12">
 
         <div class="col s12 m12">
-          <label class="atributoscuestionariotitulos" for="localidad">Selecciona el diario oficial de la plantilla</label>
+          <label class="atributoscuestionariotitulos" for="localidad">Selecciona el periódico oficial de la plantilla</label>
 
           <p-table  #dt  [value]="newspapers" [paginator]="true" [rows]="10" [responsive]="true" [globalFilterFields]="['descripcion','fecha_publicacion','tomo','numero']">
             <ng-template pTemplate="caption">
@@ -69,7 +68,7 @@
               <tr>
                 <th style="width:40%">
                   <label class="tabladiariooficial">
-                    Descripcion
+                    Descripción
                   </label>
                 </th>
                 <th style="width:20%">
@@ -130,43 +129,48 @@
       </div>
     </div>
 
-    <div class="col s10  offset-s1" *ngIf="mostardespuesmunicipio">
-      <div class="col s11 offset-s1">
+    <div class="col s10  offset-s1" *ngIf="mostardespuesmodalidad">
+      <div class="col s10 offset-s2">
         {{mensaje}}
 
         </div>
       </div>
 <br><br>
 
-    <div class="col s11  offset-s1" *ngIf="mostardespuesmunicipio">
+    <div class="col s11  offset-s1" *ngIf="mostardespuesperiodicooficial">
       <div class="col s12">
         <a class="btn-floating " (click)="addruta()"><i class="material-icons">add</i></a><br>
       </div>
     </div><br><br>
     <div  class="col s11  offset-s1" *ngFor="let ruta  of arrayrutas; let i = index"  >
-       <div class="col s12" >
+       <div class="col s12" *ngIf="mostardespuesperiodicooficial">
         <label  class="atributoscuestionariotitulos">Ruta {{i+1}}</label>
       </div>
-      <div class="col s12">
-        <div class="col s6 input-field inline">
-          <input id="destino{{i+1}}" [(ngModel)]="ruta.destino" type="text" class="form-control">
-          <label for="destino{{i+1}}">Destino ruta {{i+1}}</label><br>
+      <div class="col s12" *ngIf="mostardespuesperiodicooficial">
+        <div class="col s4 input-field inline">
+          <input id="origen{{i+1}}" [(ngModel)]="ruta.origen" type="text" class="form-control" (ngModelChange)="validarrutas()">
+          <label class="atributoscuestionariotitulos" for="origen{{i+1}}">Origen ruta {{i+1}}</label><br>
         </div>
-        <div class="col s3 input-field inline">
-          <input id="tarifa{{i+1}}" [(ngModel)]="ruta.tarifa" type="text" class="form-control">
-          <label for="tarifa{{i+1}}">Tarifa ruta {{i+1}}</label><br>
+        <div class="col s4 input-field inline" *ngIf="mostardespuesperiodicooficial">
+          <input id="destino{{i+1}}" [(ngModel)]="ruta.destino" type="text" class="form-control" (ngModelChange)="validarrutas()">
+          <label class="atributoscuestionariotitulos" for="destino{{i+1}}">Destino ruta {{i+1}}</label><br>
         </div>
-        <div class="col s2 input-field inline">
+        <div class="col s2 input-field inline" *ngIf="mostardespuesperiodicooficial">
+          <input id="tarifa{{i+1}}" [(ngModel)]="ruta.tarifa" type="number" class="form-control" specialNumberAndDecimalOnly step=".5" (ngModelChange)="convertirALetras(ruta)">
+          <label class="atributoscuestionariotitulos" for="tarifa{{i+1}}">Tarifa ruta {{i+1}}</label><br>
+        </div>
+        <div class="col s2 input-field inline" *ngIf="mostardespuesperiodicooficial">
           <a class="btn-floating " (click)="deleteruta(i)"><i class="material-icons">clear</i></a>
         </div>
       </div>
     </div>
     <div class="col s10  offset-s2"><br>
-      <div class="col s4  offset-s1">
-        <a id="btnverificarpago" *ngIf="mostardespuesmunicipio" class="waves-effect waves-light btn-small"   (click)="crearruta()"><i class="material-icons left" >arrow_downward</i>Crear ruta</a>
+      <div class="col s4  offset-s1" id="divbtncrearperiodico">
+        <a *ngIf="municipio == undefined || localidad == undefined || modalidad == undefined || descripcion == undefined || arrayrutas.length == 0 || newspaperselect == undefined || !verificarrutas" id="btncrearplantilla" class="waves-effect waves-light btn-small disabled" ><i class="material-icons left" >arrow_downward</i>Crear plantilla</a>
+        <a *ngIf="municipio != undefined && localidad != undefined && modalidad != undefined && descripcion != undefined && arrayrutas.length > 0  && newspaperselect != undefined && verificarrutas" id="btncrearplantilla" class="waves-effect waves-light btn-small"   (click)="crearruta()"><i class="material-icons left" >arrow_downward</i>Crear plantilla</a>
       </div>
-      <div class="col s4  offset-s1">
-        <a  id="btncerrar" class="btn modal-close waves-effect waves-light btn-small">Cancelar</a>
+      <div class="col s4  offset-s1" id="divbtncerrar">
+        <a  id="btncerrar" class="btn modal-close waves-effect waves-light btn-small"  (click)="limpiar()">Cancelar</a>
       </div>
     </div>
   </div>

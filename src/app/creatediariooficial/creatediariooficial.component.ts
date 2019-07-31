@@ -25,6 +25,7 @@ export class CreateDiarioOficialComponent implements OnInit {
               {}
 
   ngOnInit() {
+    console.log(this.numero);
     this.es = {
             firstDayOfWeek: 1,
             dayNames: [ "domingo","lunes","martes","miércoles","jueves","viernes","sábado" ],
@@ -50,10 +51,23 @@ export class CreateDiarioOficialComponent implements OnInit {
       .subscribe(({ data }) => {
         this.plantillaComponent.listDiarios();
         $('.modal.open').modal('close')
+        M.toast({html: "Se ha agregado un nuevo periodico."})
+
                  }, (error) => {
+                   var divisiones = error.message.split(":", 2);
+                   M.toast({html: divisiones[1]})
        });
 
   }
+
+   limpiar(){
+     this.numero = null;
+     this.tomo = null;
+     this.date1 = null;
+     this.descripcion = null;
+   }
+
+    
 
 
 

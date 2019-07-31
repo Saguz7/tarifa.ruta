@@ -18,6 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CreatePlantillaComponent } from './createplantilla/createplantilla.component';
 import { CreateDiarioOficialComponent } from './creatediariooficial/creatediariooficial.component';
 import { OnlynumberDirective  } from './only-numeric.directive';
+import { SpecialNumberAndDecimalDirective  } from './specialnumericdecimal.directive';
 
 import {ButtonModule} from 'primeng/button';
 import {TableModule} from 'primeng/table';
@@ -31,6 +32,7 @@ import {DropdownModule} from 'primeng/dropdown';
     PaymentComponent,
     PlantillaComponent,
     OnlynumberDirective,
+    SpecialNumberAndDecimalDirective,
     CreatePlantillaComponent,
     CreateDiarioOficialComponent
   ],

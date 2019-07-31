@@ -5,6 +5,10 @@
 }
 
 
+#nav1cambiotamanio{
+  font-size: 22px;
+  color: #000000;
+}
 .tabladiariooficial{
   font-size: 14px;
   color: #000000;
@@ -499,6 +503,13 @@ width: 70%; /*Aquí va el ancho de la Celda*/
 
 
 @media screen and (max-width: 600px) {
+
+  #nav1cambiotamanio{
+    font-size: 14px;
+    color: #000000;
+
+  }
+  
   #cambiodetamanio {
     width: 100%;
   }

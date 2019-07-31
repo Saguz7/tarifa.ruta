@@ -133,6 +133,34 @@
   margin-left: 0%;
     }
 
+    #titulocrearperiodico{
+      font-size: 14px;
+      color: #ff1744;
+      font-family: fuenteparatitulos;
+    }
+
+
+    #btncerrar{
+      width: 100%;
+
+    }
+
+    #btncrearplantilla{
+      width: 100%; 
+    }
+
+    #divbtncrearperiodico{
+      width: 100%;
+      margin-left: -12%;
+
+    }
+
+    #divbtncerrar{
+      width: 100%;
+      margin-left: -12%;
+
+    }
+
 
 
 }

@@ -5,7 +5,7 @@
         <div class="col s10  offset-s1">
           <div class="input-field col s12">
             <i class="material-icons prefix">apps</i> <br>
-            <label class="tituloregistromodal"> Crear periodico oficial </label>
+            <label class="tituloregistromodal" id="titulocrearperiodico"> Crear periódico oficial </label>
           </div>
         </div>
       </div>
@@ -21,7 +21,7 @@
           </div>
           </div>
         <div class="col s10  offset-s1"><br><br>
-          <div class=" col s4">
+          <div class=" col s4" id="fechadiv">
             <div>
               <label  class="atributoscuestionariotitulos">Fecha.</label>
             </div>
@@ -29,7 +29,7 @@
               <p-calendar  [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"  [(ngModel)]="date1" [locale]="es" dateFormat="dd/mm/yy"></p-calendar>
             </div>
           </div>
-          <div class="col s4">
+          <div class="col s4" id="tomodiv">
             <div>
               <label  class="atributoscuestionariotitulos">Tomo.</label>
             </div>
@@ -37,25 +37,25 @@
               <input [(ngModel)]="tomo"  autocomplete="off" type="text"  class="form-control" >
             </div>
           </div>
-          <div class="col s4">
+          <div class="col s4" id="numerodiv">
             <div>
               <label  class="atributoscuestionariotitulos">Numero.</label>
             </div>
             <div>
-              <input [(ngModel)]="numero"  autocomplete="off" type="number"  class="form-control" >
+              <input [(ngModel)]="numero" numbersOnly autocomplete="off" type="number"  class="form-control" >
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="col s10  offset-s2"><br>
-      <div class="col s4  offset-s1">
-        <a *ngIf="descripcion == '' || date1 == '' || tomo == '' || numero == ''" id="btnverificarpago" class="waves-effect waves-light btn-small disabled" ><i class="material-icons left" >arrow_downward</i>Crear periodico oficial</a>
+      <div class="col s4  offset-s1" id="divbtncrearperiodico">
+        <a *ngIf="descripcion == undefined || date1 == undefined || tomo == undefined || numero == undefined" id="btncrearperiodico" class="waves-effect waves-light btn-small disabled" ><i class="material-icons left" >arrow_downward</i>Crear periódico oficial</a>
 
-        <a *ngIf="descripcion != '' || date1 != '' || tomo != '' || numero != ''"  id="btnverificarpago" class="waves-effect waves-light btn-small"   (click)="creardiarioficial()"><i class="material-icons left" >arrow_downward</i>Crear periodico oficial</a>
+        <a *ngIf="descripcion != undefined && date1 != undefined && tomo != undefined && numero != undefined"  id="btncrearperiodico" class="waves-effect waves-light btn-small"   (click)="creardiarioficial()"><i class="material-icons left" >arrow_downward</i>Crear periodico oficial</a>
       </div>
-      <div class="col s4  offset-s1">
-        <a  id="btncerrar" class="btn modal-close waves-effect waves-light btn-small">Cancelar</a>
+      <div class="col s4  offset-s1" id="divbtncerrar">
+        <a  id="btncerrar" class="btn modal-close waves-effect waves-light btn-small" (click)="limpiar()">Cancelar</a>
       </div>
     </div>
   </div>

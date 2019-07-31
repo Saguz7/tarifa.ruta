@@ -4,6 +4,7 @@ import {AuthorizatedGuard} from "./guards/authorizated.guard";
 import {AuthorizatedAdminGuard} from "./guards/authorizatedAdmin.guard";
 import {AuthorizatedAfterLoginGuard} from "./guards/authorizatedafterlogin.guard";
 import {AuthorizatedResportesGuard} from "./guards/authorizedreportes.guard";
+import {ConvertNSService} from "./services/convertns.service";
 
 @NgModule({
   declarations: [  ],
@@ -13,7 +14,8 @@ import {AuthorizatedResportesGuard} from "./guards/authorizedreportes.guard";
     AuthorizatedGuard,
     AuthorizatedAdminGuard,
     AuthorizatedAfterLoginGuard,
-    AuthorizatedResportesGuard
+    AuthorizatedResportesGuard,
+    ConvertNSService
   ],
   bootstrap: []
 })
