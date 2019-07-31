@@ -10,7 +10,6 @@ import { CoreModule } from "./core/core.module";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TarifaComponent } from './tarifa/tarifa.component';
 import { PlantillaComponent } from './plantilla/plantilla.component';
-import { PaymentComponent } from './payment/payment.component';
 
 import {CalendarModule} from 'primeng/calendar';
 import * as $ from 'jquery';
