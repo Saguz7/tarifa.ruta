@@ -1,0 +1,127 @@
+.btn, .btn-large, .btn-small , .btn-floating {
+    background-color: #747be6;
+}
+.atributoslogin{
+  font-size: 22px;
+  color: #000000;
+
+
+}
+
+.atributoscuestionariotitulos{
+  font-size: 16px;
+  color: #000000;
+
+}
+
+
+.tituloregistromodal{
+  font-size: 20px;
+  color: #ff1744;
+  font-family: fuenteparatitulos;
+}
+#btncerrar{
+  background-color: #e57373 ;
+  color: #000000;
+  font-family: fuenteparatitulos;
+
+}
+
+#btnaceptar{
+  background-color: #00695c;
+  color: #FFFFFF;
+  font-family: fuenteparatitulos;
+
+}
+
+.tituloregistro{
+    font-size: 20px;
+    color: #000000;
+    font-family: fuenteparatitulos;
+}
+
+.tituloparaformulario{
+  font-size: 22px;
+  color: #000000;
+
+  font-family: fuenteparacuerpo;
+}
+
+
+@media screen and (max-width: 780px) {
+  #cambiodetamanio {
+    width: 100%;
+  }
+  #cambiodetamanio2 {
+    width: 100%;
+  }
+  #cambiodetamanio3 {
+    width: 100%;
+  }
+  #cambiodetamanio4 {
+    width: 100%;
+  }
+  #cambiodetamanio5 {
+    width: 100%;
+  }
+  #cambiodetamanio6 {
+    width: 100%;
+  }
+  #cambiodetamanio7 {
+    width: 100%;
+  }
+  #cambiodetamanio8 {
+    width: 40%;
+    margin-left: 30%;
+
+  }
+  #cambiodetamanio9 {
+    width: 10%;
+  }
+
+  .atributoscuestionario{
+ font-weight: bold;
+ font-size: 18px;
+  }
+
+  .tituloregistro{
+      font-size: 16px;
+      color: #000000;
+      font-family: fuenteparatitulos;
+  }
+
+  .tituloparaformulario{
+    font-size: 18px;
+    color: #000000;
+    font-family: fuenteparacuerpo;
+  }
+
+
+    #btncerrar{
+      width: 100%;
+
+    }
+
+    #btnaceptar{
+      width: 100%;
+
+    }
+
+    #cambiodetamanio9{
+      width: 100%;
+  margin-left: 0%;
+    }
+
+    #cambiodetamanio10{
+      width: 100%;
+  margin-left: 0%;
+    }
+
+    #cambiodetamanio11{
+      width: 100%;
+  margin-left: 0%;
+    }
+
+
+
+}

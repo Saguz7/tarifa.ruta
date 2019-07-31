@@ -1,3 +1,16 @@
+.atributoscuestionariotitulos{
+  font-size: 16px;
+  color: #000000;
+
+}
+
+
+.tabladiariooficial{
+  font-size: 14px;
+  color: #000000;
+
+}
+
 .sinsalirse{
   word-break: break-all;
 word-wrap: break-word;
