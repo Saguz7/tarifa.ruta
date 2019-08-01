@@ -13,6 +13,7 @@
   import {CALIBRI} from "../core/key/calibri";
   import {CALIBRIB} from "../core/key/calibrib";
   import { ConvertNSService } from '../core/services/convertns.service';
+  import { PagosService } from '../core/services/pagos.service';
 
  @Component({
   selector: 'app-tarifa', templateUrl: './tarifa.component.html', styleUrls: ['./tarifa.component.css']
@@ -58,11 +59,14 @@ export class TarifaComponent implements OnInit {
     constructor(
       private router?: Router,
       private apollo?: Apollo,
-      private convertNSService?: ConvertNSService
+      private convertNSService?: ConvertNSService,
+      private pagosService?: PagosService
     ){}
 
 
     ngOnInit() {
+
+      //this.pagosService.getConsulta().subscribe(response => console.log(response.body));
       this.datenow = new Date();
       this.minDate = new Date(2010);
       this.arrayrutasdepruebas = [];
@@ -183,8 +187,7 @@ export class TarifaComponent implements OnInit {
           }
 
             for(var x = 0; x < multiplesde40.length; x++){
-              console.log("hacer los 40"+x);
-              a_permisoxf = [];
+               a_permisoxf = [];
               pdf.addFileToVFS("Calibri.ttf",calibri_url);
               pdf.addFileToVFS("Calibrib.ttf",calibrib_url);
               pdf.addFont("Calibrib.ttf", "Calibrib", "normal");
@@ -207,13 +210,13 @@ export class TarifaComponent implements OnInit {
 
               pdf.setDrawColor(0);
               pdf.setFillColor(255,0,0);
-              pdf.rect(6, 44, 198, 222 ); // empty square
+              pdf.rect(6, 44, 198, 222 );
 
               pdf.addImage(img, 'png', 110, 46, 74, 16);
               pdf.setFontSize(27);
               pdf.setDrawColor(0);
               pdf.setFillColor(214,214,214);
-              pdf.rect(11, 62, 186, 12,'F'); // empty square
+              pdf.rect(11, 62, 186, 12,'F');
               pdf.setDrawColor(0,0,0);
               pdf.addFont("Calibrib.ttf", "Calibrib", "normal");
               pdf.setFont("Calibrib");
@@ -302,11 +305,11 @@ export class TarifaComponent implements OnInit {
               pdf.addFileToVFS("Calibrib.ttf",calibrib_url);
               pdf.addFont("Calibrib.ttf", "Calibrib", "normal");
               pdf.setFont("Calibrib");
-              pdf.setFontSize(11);
-              pdf.text(88, 18, 'SECRETARÍA DE MOVILIDAD');
+              pdf.setFontSize(13);
+              pdf.text(89, 18, 'SECRETARÍA DE MOVILIDAD');
               pdf.setFontSize(9);
-              pdf.text(69, 21, 'SUBSECRETARÍA DE REGULACIÓN Y CONTROL DE TRANSPORTE');
-              pdf.text(75, 24, 'DIRECCIÓN DE OPERACIÓN DEL TRANSPORTE PUBLICO');
+              pdf.text(77, 21, 'SUBSECRETARÍA DE REGULACIÓN Y CONTROL DE TRANSPORTE');
+              pdf.text(82, 24, 'DIRECCIÓN DE OPERACIÓN DEL TRANSPORTE PUBLICO');
               var img = new Image();
               img.src = './assets/SEMOVI2.png'
               pdf.addFont("Calibri.ttf", "Calibri", "normal");
@@ -410,7 +413,7 @@ export class TarifaComponent implements OnInit {
            }
 
       vistaprevia(){
-      } 
+      }
     validarfoliopago(){
       var n = this.pago1.toString();
       if(n.length>0){

@@ -61,6 +61,12 @@ input{
     height: 350px;
  }
 
+  @media screen and (max-width: 1450px) {
+    #imagenlogo{
+      width: 250px;
+       padding: 0 .0rem;
+    }
+  }
 
 @media screen and (max-width: 780px) {
   #cambiodetamanio {

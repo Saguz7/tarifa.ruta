@@ -4,12 +4,12 @@
  import {Session} from "../core/models/session.model";
  import {Apollo} from 'apollo-angular';
  import gql from 'graphql-tag';
-  declare var M: any;
-  import {Ruta} from "../models/vo/ruta";
-  import { Periodico, AllPeriodicosGQL } from '../graphql/newspapers';
-  import { Municipio, AllMunicipiosGQL } from '../graphql/listmunicipios';
-  import { Modalidad, AllModalidadesGQL } from '../graphql/listmodalidades';
-  import { ConvertNSService } from '../core/services/convertns.service';
+ declare var M: any;
+ import {Ruta} from "../models/vo/ruta";
+ import { Periodico, AllPeriodicosGQL } from '../graphql/newspapers';
+ import { Municipio, AllMunicipiosGQL } from '../graphql/listmunicipios';
+ import { Modalidad, AllModalidadesGQL } from '../graphql/listmodalidades';
+ import { ConvertNSService } from '../core/services/convertns.service';
 
 @Component({
   selector: 'app-createplantilla',
@@ -30,8 +30,8 @@ export class CreatePlantillaComponent implements OnInit {
   municipios: any;
   municipioobj: any;
   localidadobj: any;
-modalidadobj: any;
-modalidad:any;
+  modalidadobj: any;
+  modalidad:any;
   mostardespuesmunicipio: boolean = false;
   mostardespueslocalidad: boolean = false;
   mostardespuesmodalidad: boolean = false;
@@ -134,21 +134,17 @@ modalidad:any;
      .valueChanges.subscribe(result => {
         this.asignarlocalidades(result.data)
       });
-
-
   }
 
 
   asignarlocalidades(localidades: any){
     this.localidades = localidades.localidades;
     this.mostardespuesmunicipio = true;
-
     var datos = new Object();
     datos = {};
     for(var i = 0; i <localidades.localidades.length;i++){
        datos[localidades.localidades[i].nombre] = null;
      }
-
     $(document).ready(function(){
       $('#autocomplete').autocomplete(
         {
@@ -157,8 +153,6 @@ modalidad:any;
           }
         });
       });
-
-
   }
 
   esconderdespuesdebuscar(){
@@ -294,8 +288,7 @@ modalidad:any;
        var decision = false;
        this.mostardespueslocalidad = false;
 
-       console.log(inputlocalidad);
-       for(var i = 0; i <this.localidades.length;i++){
+        for(var i = 0; i <this.localidades.length;i++){
            if(this.localidades[i].nombre == inputlocalidad){
                this.mostardespueslocalidad = true;
                this.allModalidadesGQL.watch()
@@ -303,7 +296,7 @@ modalidad:any;
                   this.asignarmodalidades(result.data);
                });
               }
-        }
+          }
       }
 
      validarmodalidad(){
@@ -316,5 +309,4 @@ modalidad:any;
               }
         }
      }
-
 }

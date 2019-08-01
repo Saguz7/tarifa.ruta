@@ -4,9 +4,9 @@
  import {Session} from "../core/models/session.model";
  import {Apollo} from 'apollo-angular';
  import gql from 'graphql-tag';
-  declare var M: any;
-  import { InsertPeriodicoGQL } from '../graphql/createnewspape';
-  import {PlantillaComponent} from '../plantilla/plantilla.component';
+ declare var M: any;
+ import { InsertPeriodicoGQL } from '../graphql/createnewspape';
+ import {PlantillaComponent} from '../plantilla/plantilla.component';
 
 
 @Component({
@@ -25,8 +25,7 @@ export class CreateDiarioOficialComponent implements OnInit {
               {}
 
   ngOnInit() {
-    console.log(this.numero);
-    this.es = {
+     this.es = {
             firstDayOfWeek: 1,
             dayNames: [ "domingo","lunes","martes","miércoles","jueves","viernes","sábado" ],
             dayNamesShort: [ "dom","lun","mar","mié","jue","vie","sáb" ],
@@ -66,11 +65,4 @@ export class CreateDiarioOficialComponent implements OnInit {
      this.date1 = null;
      this.descripcion = null;
    }
-
-    
-
-
-
-
-
 }

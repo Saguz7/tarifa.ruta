@@ -26,17 +26,11 @@ export class AppComponent implements OnInit  {
      }else{
        this.loged = true;
      }
-
-
-    $(".dropdown-trigger").dropdown();
-
-      $(document).ready(function(){
-        $('.sidenav').sidenav();
+     $(".dropdown-trigger").dropdown();
+       $(document).ready(function(){
+         $('.sidenav').sidenav();
       });
-
   }
-
-
   mandarmenu(){
     var elem= document.querySelector('.modal');
   var instance = M.Sidenav.getInstance(elem);
@@ -44,9 +38,7 @@ export class AppComponent implements OnInit  {
   }
 
   public logout(): void{
-
     this.storageService.logout();
     window.location.href = "/";
-
   }
 }

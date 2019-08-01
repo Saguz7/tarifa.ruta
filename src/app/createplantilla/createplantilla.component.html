@@ -11,7 +11,7 @@
     <div class="col s10  offset-s1">
       <div class="col s12">
         <div class="input-field col s12">
-           <input  [(ngModel)]="municipio"  id="autocomplete2" name="autocomplete2"  autocomplete="off" type="text" (ngModelChange)="esconderdespuesdebuscar()" >
+          <input  [(ngModel)]="municipio"  id="autocomplete2" name="autocomplete2"  autocomplete="off" type="text" (ngModelChange)="esconderdespuesdebuscar()" >
           <label class="atributoscuestionariotitulos" for="municipio">Municipio</label>
         </div>
         <div  class="col s6">
@@ -19,17 +19,14 @@
         </div>
       </div>
     </div>
-    <div class="col s10  offset-s1" *ngIf="mostardespuesmunicipio">
-      <br>
+    <div class="col s10  offset-s1" *ngIf="mostardespuesmunicipio"><br>
       <div class="col s12">
         <div class="input-field col s12">
-
           <input  type="text" id="autocomplete" name="autocomplete"  [(ngModel)]="localidad" (change)="validarlocalidad()" (ngModelChange)="validarlocalidad()">
           <label class="atributoscuestionariotitulos" for="localidad">Localidad</label>
         </div>
       </div>
     </div>
-
     <div class="col s10  offset-s1" *ngIf="mostardespueslocalidad">
       <div class="col s12">
         <div class="input-field col s12">
@@ -38,8 +35,6 @@
         </div>
       </div>
     </div>
-
-
     <div class="col s10  offset-s1" *ngIf="mostardespuesmodalidad">
       <div class="col s12">
         <div class="input-field col s12">
@@ -48,13 +43,10 @@
         </div>
       </div>
     </div>
-
     <div class="col s10  offset-s1" *ngIf="mostardespuesmodalidad">
       <div class="col s12">
-
         <div class="col s12 m12">
           <label class="atributoscuestionariotitulos" for="localidad">Selecciona el periódico oficial de la plantilla</label>
-
           <p-table  #dt  [value]="newspapers" [paginator]="true" [rows]="10" [responsive]="true" [globalFilterFields]="['descripcion','fecha_publicacion','tomo','numero']">
             <ng-template pTemplate="caption">
               <div class="col s8 offset-s4" id="divsearchmob">
@@ -132,18 +124,15 @@
     <div class="col s10  offset-s1" *ngIf="mostardespuesmodalidad">
       <div class="col s10 offset-s2">
         {{mensaje}}
-
-        </div>
       </div>
-<br><br>
-
+    </div><br><br>
     <div class="col s11  offset-s1" *ngIf="mostardespuesperiodicooficial">
       <div class="col s12">
         <a class="btn-floating " (click)="addruta()"><i class="material-icons">add</i></a><br>
       </div>
     </div><br><br>
     <div  class="col s11  offset-s1" *ngFor="let ruta  of arrayrutas; let i = index"  >
-       <div class="col s12" *ngIf="mostardespuesperiodicooficial">
+      <div class="col s12" *ngIf="mostardespuesperiodicooficial">
         <label  class="atributoscuestionariotitulos">Ruta {{i+1}}</label>
       </div>
       <div class="col s12" *ngIf="mostardespuesperiodicooficial">

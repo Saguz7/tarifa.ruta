@@ -10,157 +10,146 @@
       <ul class="collapsible">
         <li>
           <div class="collapsible-header" id="divheader1"><i class="material-icons">attach_money</i> Validación de pago</div>
-             <div class="row" *ngIf="div1validacionpago"><br>
-              <div class="row">
-                <!--
-                <app-payment (componentStatus)="getStatusComponentPayment($event)"></app-payment>
-
-                <div class="row">
-                  <div class="col s12">
-                    <p>Estado del componente payment:: {{statusComponentPayment}}</p>
+          <div class="row" *ngIf="div1validacionpago"><br>
+            <div class="row">
+              <div class="col s10 offset-s1"> <br> <br>
+                <div class="col s6" id="cambiodetamanio3">
+                  <div>
+                    <label  class="atributoscuestionariotitulos">Folio de pago.</label>
+                  </div>
+                  <div>
+                    <input  autocomplete="off" type="text" numbersOnly required onKeyPress="if(this.value.length==11) return false;" [(ngModel)]="pago1" id="pago1" name="pago1" class="form-control"  (ngModelChange)="validarfoliopago()">
+                    <label for="input_text" id="pago1advertencia"  class="advertenciacontador">{{pago1aux.length - 1}} /11</label>
                   </div>
                 </div>
-                -->
-                <div class="col s10 offset-s1"> <br> <br>
-                  <div class="col s6" id="cambiodetamanio3">
-                    <div>
-                      <label  class="atributoscuestionariotitulos">Folio de pago.</label>
-                    </div>
-                    <div>
-                      <input  autocomplete="off" type="text" numbersOnly required onKeyPress="if(this.value.length==11) return false;" [(ngModel)]="pago1" id="pago1" name="pago1" class="form-control"  (ngModelChange)="validarfoliopago()">
-                      <label for="input_text" id="pago1advertencia"  class="advertenciacontador">{{pago1aux.length - 1}} /11</label>
-                    </div>
+                <div class="col s6" id="cambiodetamanio4">
+                  <div>
+                    <label  class="atributoscuestionariotitulos">Linea de Captura.</label>
                   </div>
-                  <div class="col s6" id="cambiodetamanio4">
-                    <div>
-                      <label  class="atributoscuestionariotitulos">Linea de Captura.</label>
-                    </div>
-                    <div *ngIf="formlineadecaptura">
-                      <input  autocomplete="off" type="text" numbersOnly required onKeyPress="if(this.value.length==19) return false;" [(ngModel)]="pago2" id="pago2" name="pago2" class="form-control"  (ngModelChange)="validarnumerodecaptura()">
-                      <label for="input_text"  id="pago2advertencia"  class="advertenciacontador">{{pago2aux.length - 1}} /19</label>
-                    </div>
-                    <div *ngIf="!formlineadecaptura">
-                      <input type="text" id="auxiliardepago" name="auxiliardepago" min="0" length="11" class="form-control" [(ngModel)]="pago2" disabled>
-                      <label id="pago3advertencia"  class="advertenciacontador">{{pago2aux.length - 1}} /19</label>
-                    </div>
+                  <div *ngIf="formlineadecaptura">
+                    <input  autocomplete="off" type="text" numbersOnly required onKeyPress="if(this.value.length==19) return false;" [(ngModel)]="pago2" id="pago2" name="pago2" class="form-control"  (ngModelChange)="validarnumerodecaptura()">
+                    <label for="input_text"  id="pago2advertencia"  class="advertenciacontador">{{pago2aux.length - 1}} /19</label>
                   </div>
-                  <div class="col s6" id="cambiodetamanio5">
-                    <div>
-                      <label  class="atributoscuestionariotitulos">Folio de hoja valorada.</label>
-                    </div>
-                    <div *ngIf="!formhojavalorada">
-                      <input type="number" name="test_name" min="0" length="11" class="form-control" oninput="validity.valid||(value='');"   [(ngModel)]="pago3" disabled>
-                      <label for="input_text" id="pago3advertencia" class="advertenciacontador">{{pago3aux.length - 1}} /9</label>
-                    </div>
-                    <div *ngIf="formhojavalorada">
-                      <input type="text" numbersOnly required onKeyPress="if(this.value.length==9) return false;" [(ngModel)]="pago3" id="pago3" name="pago3" class="form-control" (ngModelChange)="validarhojavalorada()">
-                      <label for="input_text" id="pago3advertencia" class="advertenciacontador">{{pago3aux.length - 1}} /9</label>
-                    </div>
+                  <div *ngIf="!formlineadecaptura">
+                    <input type="text" id="auxiliardepago" name="auxiliardepago" min="0" length="11" class="form-control" [(ngModel)]="pago2" disabled>
+                    <label id="pago3advertencia"  class="advertenciacontador">{{pago2aux.length - 1}} /19</label>
                   </div>
-                  <div class="col s6" id="cambiodetamanio5">
-                    <div>
-                      <label  class="atributoscuestionariotitulos">Fecha de pago.</label>
-                    </div>
-                    <div>
-                      <div class="col s12">
-                            <div class="ui-g-12">
-                              <p-calendar *ngIf="!btnverficarfecha"  [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" [(ngModel)]="datepay"  [locale]="es" dateFormat="dd/mm/yy" disabled ></p-calendar>
-                              <p-calendar *ngIf="btnverficarfecha" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" [(ngModel)]="datepay"  [minDate]="minDate" [maxDate]="datenow" [locale]="es" dateFormat="dd/mm/yy" (ngModelChange)="verificarfecha()"></p-calendar>
-                            </div>
-
-                      </div>
-                    </div>
-                  </div> <br> <br>
                 </div>
-              </div>
-              <div class="col s11 offset-s1" id="cambiodetamanio6">
-                <a id="btnverificarpago" *ngIf="!btnhojavalorada"  class="waves-effect waves-light btn-small" disabled><i class="material-icons left">arrow_downward</i>Verificar Pago</a>
-                <a id="btnverificarpago" *ngIf="btnhojavalorada" (click)="habilitarpasotres()"  class="waves-effect waves-light btn-small"><i class="material-icons left">arrow_downward</i>Verificar Pago</a>
-              </div> <br> <br>
-              <div class="col s11 offset-s1" id="cambiodetamanio7">
-                <a id="btnverificarpago2" *ngIf="!fechaverificada" class="waves-effect waves-light btn-small" disabled><i class="material-icons left">arrow_downward</i>Confirmar pago</a>
-                <a id="btnverificarpago2" *ngIf="fechaverificada" class="waves-effect waves-light btn-small" (click)="tercerproceso()"><i class="material-icons left">arrow_downward</i>Confirmar pago</a> <br> <br>
+                <div class="col s6" id="cambiodetamanio5">
+                  <div>
+                    <label  class="atributoscuestionariotitulos">Folio de hoja valorada.</label>
+                  </div>
+                  <div *ngIf="!formhojavalorada">
+                    <input type="number" name="test_name" min="0" length="11" class="form-control" oninput="validity.valid||(value='');"   [(ngModel)]="pago3" disabled>
+                    <label for="input_text" id="pago3advertencia" class="advertenciacontador">{{pago3aux.length - 1}} /9</label>
+                  </div>
+                  <div *ngIf="formhojavalorada">
+                    <input type="text" numbersOnly required onKeyPress="if(this.value.length==9) return false;" [(ngModel)]="pago3" id="pago3" name="pago3" class="form-control" (ngModelChange)="validarhojavalorada()">
+                    <label for="input_text" id="pago3advertencia" class="advertenciacontador">{{pago3aux.length - 1}} /9</label>
+                  </div>
+                </div>
+                <div class="col s6" id="cambiodetamanio5">
+                  <div>
+                    <label  class="atributoscuestionariotitulos">Fecha de pago.</label>
+                  </div>
+                  <div>
+                    <div class="col s12">
+
+                         <p-calendar *ngIf="btnverficarfecha" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" [(ngModel)]="datepay"  [minDate]="minDate" [maxDate]="datenow" [locale]="es" dateFormat="dd/mm/yy" (ngModelChange)="verificarfecha()"></p-calendar>
+             
+                    </div>
+                  </div>
+                </div> <br> <br>
               </div>
             </div>
-         </li>
+            <div class="col s11 offset-s1" id="cambiodetamanio6">
+              <a id="btnverificarpago" *ngIf="!btnhojavalorada"  class="waves-effect waves-light btn-small" disabled><i class="material-icons left">arrow_downward</i>Verificar Pago</a>
+              <a id="btnverificarpago" *ngIf="btnhojavalorada" (click)="habilitarpasotres()"  class="waves-effect waves-light btn-small"><i class="material-icons left">arrow_downward</i>Verificar Pago</a>
+            </div> <br> <br>
+            <div class="col s11 offset-s1" id="cambiodetamanio7">
+              <a id="btnverificarpago2" *ngIf="!fechaverificada" class="waves-effect waves-light btn-small" disabled><i class="material-icons left">arrow_downward</i>Confirmar pago</a>
+              <a id="btnverificarpago2" *ngIf="fechaverificada" class="waves-effect waves-light btn-small" (click)="tercerproceso()"><i class="material-icons left">arrow_downward</i>Confirmar pago</a> <br> <br>
+            </div>
+          </div>
+        </li>
         <li>
           <div class="collapsible-header" id="divheader2"><i class="material-icons">search</i>Busqueda de concesionario</div>
-             <div class="row" *ngIf="div2busquedadeconcesionario"><br><br>
-              <div class="row" >
-                <div class="col s11 offset-s1">
-                  <div class="col s4" id="cambiodetamanio1">
-                    <p>
-                      <label>
-                        <input id="inputdefault" class="with-gap" name="group1" type="radio" (click) = "buscarpornombre()" checked />
-                        <span class="buscadores"><label class="buscadores">Nombre/Razón social</label></span>
-                      </label>
-                    </p>
-                  </div>
-                  <div class="col s3" id="cambiodetamanio2">
-                    <p>
-                      <label>
-                        <input class="with-gap" name="group1" type="radio" (click) = "buscarpornuc()" />
-                        <span class="buscadores"><label class="buscadores">NUC</label></span>
-                      </label>
-                    </p>
-                  </div>
+          <div class="row" *ngIf="div2busquedadeconcesionario"><br><br>
+            <div class="row" >
+              <div class="col s11 offset-s1">
+                <div class="col s4" id="cambiodetamanio1">
+                  <p>
+                    <label>
+                      <input id="inputdefault" class="with-gap" name="group1" type="radio" (click) = "buscarpornombre()" checked />
+                      <span class="buscadores"><label class="buscadores">Nombre/Razón social</label></span>
+                    </label>
+                  </p>
+                </div>
+                <div class="col s3" id="cambiodetamanio2">
+                  <p>
+                    <label>
+                      <input class="with-gap" name="group1" type="radio" (click) = "buscarpornuc()" />
+                      <span class="buscadores"><label class="buscadores">NUC</label></span>
+                    </label>
+                  </p>
                 </div>
               </div>
-              <div class="row" >
-                <form  class="row">
-                  <div class="row">
-                    <div class="col s10">
-                      <div class="row">
-                        <div class="col s12">
-                          <nav class="col s8 offset-s1" id="divbusquedadearriba">
-                            <div class="col s12">
-                              <form>
-                                <div class="input-field">
-                                  <div class="col s1">
-                                    <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                                  </div>
-                                  <div class="col s11">
-                                    <input specialOnly style="text-transform: uppercase" autocomplete="off" placeholder="" id="nombre" name="nombre" type="text" class="form-control"
-                                    [(ngModel)]="registroabuscar" (ngModelChange)="mychange($event)" >
-                                  </div>
+            </div>
+            <div class="row" >
+              <form  class="row">
+                <div class="row">
+                  <div class="col s10">
+                    <div class="row">
+                      <div class="col s12">
+                        <nav class="col s8 offset-s1" id="divbusquedadearriba">
+                          <div class="col s12">
+                            <form>
+                              <div class="input-field">
+                                <div class="col s1">
+                                  <label class="label-icon" for="search"><i class="material-icons">search</i></label>
                                 </div>
-                              </form>
-                            </div>
-                          </nav>
-                        </div>
+                                <div class="col s11" id="cambiotamaniosearch2">
+                                  <input specialOnly style="text-transform: uppercase" autocomplete="off" placeholder="" id="nombre" name="nombre" type="text" class="form-control"
+                                  [(ngModel)]="registroabuscar" (ngModelChange)="mychange($event)" >
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </nav>
                       </div>
                     </div>
                   </div>
-                </form>
-              </div>
+                </div>
+              </form>
             </div>
-            <div class="row" *ngIf="divdebusqueda">
-              <div class="row">
-                <div class="col s10 offset-s1" id="cardinformacionconsecionarios">
-                  <div class="row" *ngFor="let consecion  of data; let i = index" (click)="seleccionarregistro(consecion)">
+          </div>
+          <div class="row" *ngIf="divdebusqueda">
+            <div class="row">
+              <div class="col s10 offset-s1" id="cardinformacionconsecionarios">
+                <div class="row" *ngFor="let consecion  of data; let i = index" (click)="seleccionarregistro(consecion)">
+                  <div class="col s12">
                     <div class="col s12">
-                      <div class="col s12">
-                        <label class="conseciontitulored" *ngIf="consecion.tipo_persona=='F'">Nombre: </label>
-                        <label class="conseciontitulored" *ngIf="consecion.tipo_persona=='M'">Razón Social:  </label>
-                        <label class="conseciontitulo" *ngIf="consecion.tipo_persona=='F'">{{consecion.nombre}} {{consecion.primer_apellido}} {{consecion.segundo_apellido}}</label>
-                        <label class="conseciontitulo" *ngIf="consecion.tipo_persona=='M'">{{consecion.razon_social}} </label>
-                      </div>
-                      <div class="col s12">
-                        <label class="conseciontitulopequeñored">NUC:</label>
-                        <label class="conseciontitulopequeño"> {{consecion.nuc}}</label><br><br>
-                      </div><br>
-                      <div class="progress">
-                        <div class="determinate" style="width: 100%"></div>
-                      </div>
-                    </div><br> <br>
-                  </div>
+                      <label class="conseciontitulored" *ngIf="consecion.tipo_persona=='F'">Nombre: </label>
+                      <label class="conseciontitulored" *ngIf="consecion.tipo_persona=='M'">Razón Social:  </label>
+                      <label class="conseciontitulo" *ngIf="consecion.tipo_persona=='F'">{{consecion.nombre}} {{consecion.primer_apellido}} {{consecion.segundo_apellido}}</label>
+                      <label class="conseciontitulo" *ngIf="consecion.tipo_persona=='M'">{{consecion.razon_social}} </label>
+                    </div>
+                    <div class="col s12">
+                      <label class="conseciontitulopequeñored">NUC:</label>
+                      <label class="conseciontitulopequeño"> {{consecion.nuc}}</label><br><br>
+                    </div><br>
+                    <div class="progress">
+                      <div class="determinate" style="width: 100%"></div>
+                    </div>
+                  </div><br> <br>
                 </div>
               </div>
-              <div class="row" >
-                <div class="col s12">
-                  <div class="col s10 offset-s1" >
-                    <table class="punteado">
-                      <tbody>
+            </div>
+            <div class="row" >
+              <div class="col s12">
+                <div class="col s10 offset-s1" >
+                  <table class="punteado">
+                    <tbody>
                            <!--
                            <tr>
                              <td class="classtitulosceldas" *ngIf="registroamostrar.tipo_persona=='F'"><label class="cardtitulosred">Nombre:</label></td>
@@ -191,16 +180,16 @@
                              </label></td>
                            </tr>
                            -->
-                      </tbody>
-                    </table><br><br>
-                  </div>
-                  <div class="col s10 offset-s1">
-                    <a class="waves-effect waves-light btn-small"  *ngIf="mostrarbien" (click)="segundoproceso()" ><i class="material-icons left">arrow_downward</i>Continuar</a>
-                  </div>
+                    </tbody>
+                  </table><br><br>
+                </div>
+                <div class="col s10 offset-s1">
+                  <a class="waves-effect waves-light btn-small"  *ngIf="mostrarbien" (click)="segundoproceso()" ><i class="material-icons left">arrow_downward</i>Continuar</a>
                 </div>
               </div>
             </div>
-         </li>
+          </div>
+        </li>
         <li>
           <div class="collapsible-header" id="divheader3"><i class="material-icons">assignment</i>Solicitudes</div>
           <div class="row" *ngIf="div3solicitud"><br>

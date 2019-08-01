@@ -670,6 +670,61 @@ width: 70%; /*Aquí va el ancho de la Celda*/
   margin-left: 5%;
 }
 
+#cambiodetamanio1 {
+  width: 100%;
+}
+
+#cambiodetamanio2 {
+  width: 100%;
+}
+
+#divbusquedadearriba{
+  width: 90%;
+  margin-left: 18%;
+}
+
+#cambiodetamanio3 {
+  width: 100%;
+}
+
+#cambiodetamanio4 {
+  width: 100%;
+}
+
+#cambiodetamanio5 {
+  width: 100%;
+}
+
+#cambiodetamanio6 {
+  width: 100%;
+}
+
+#cambiodetamanio7 {
+  width: 100%;
+}
+
+
+
+  #cambiodetamanio3 {
+    width: 100%;
+  }
+
+  #cambiodetamanio4 {
+    width: 100%;
+  }
+
+  #cambiodetamanio5 {
+    width: 100%;
+  }
+
+  #cambiodetamanio3 {
+    width: 100%;
+  }
+
+   #cambiotamaniosearch2{
+     width: 85%;
+   }
+
 
 
 }
