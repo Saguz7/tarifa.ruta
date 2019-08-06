@@ -70,9 +70,11 @@ export class ConvertNSService {
     switch(centenas)
     {
       case 1:
-      if (decenas > 0)
-      return 'CIENTO ' + this.decenas(decenas);
-      return 'CIEN';
+      if (decenas > 0){
+      return 'CIENTO ' + this.decenas(decenas);}else{
+        return 'CIEN';
+
+      }
       case 2: return 'DOSCIENTOS ' + this.decenas(decenas);
       case 3: return 'TRESCIENTOS ' + this.decenas(decenas);
       case 4: return 'CUATROCIENTOS ' + this.decenas(decenas);
@@ -109,10 +111,10 @@ export class ConvertNSService {
     let resto = num - (cientos * divisor)
     let strMiles = this.seccion(num, divisor, 'MIL', 'MIL');
     let strCentenas;
-    if(resto > 100){
+    if(resto >= 100){
       strCentenas = this.centenas(resto);
     }else{
-      if(resto > 10){
+      if(resto >= 10){
         strCentenas = this.decenas(resto);
       }else{
         strCentenas = this.unidades(resto);

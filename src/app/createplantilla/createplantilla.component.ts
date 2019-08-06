@@ -10,6 +10,11 @@
  import { Municipio, AllMunicipiosGQL } from '../graphql/listmunicipios';
  import { Modalidad, AllModalidadesGQL } from '../graphql/listmodalidades';
  import { ConvertNSService } from '../core/services/convertns.service';
+ import {Plantilla} from "../models/vo/plantilla";
+ import {RutaInterna} from "../models/vo/rutaInterna";
+ import { InsertPlantillaGQL } from '../graphql/createtemplate';
+ import {PlantillaComponent} from '../plantilla/plantilla.component';
+
 
 @Component({
   selector: 'app-createplantilla',
@@ -32,6 +37,7 @@ export class CreatePlantillaComponent implements OnInit {
   localidadobj: any;
   modalidadobj: any;
   modalidad:any;
+  nombre: any;
   mostardespuesmunicipio: boolean = false;
   mostardespueslocalidad: boolean = false;
   mostardespuesmodalidad: boolean = false;
@@ -39,17 +45,21 @@ export class CreatePlantillaComponent implements OnInit {
 
   modalidades: any;
   verificarrutas: boolean = false;
+  velidacionrepetidos: boolean = false;
 
   constructor(
     private apollo?: Apollo,
     private allPeriodicosGQL?: AllPeriodicosGQL,
     private allMunicipiosGQL?: AllMunicipiosGQL,
     private allModalidadesGQL?: AllModalidadesGQL,
-    private convertNSService?: ConvertNSService)
+    private insertPlantillaGQL?: InsertPlantillaGQL,
+    private convertNSService?: ConvertNSService,
+    private plantillaComponent?: PlantillaComponent)
               {}
 
   ngOnInit() {
-    this.allPeriodicosGQL.watch()
+
+     this.allPeriodicosGQL.watch()
     .valueChanges.subscribe(result => {
       this.asignarperiodicos(result.data);
     });
@@ -161,20 +171,22 @@ export class CreatePlantillaComponent implements OnInit {
      }
   }
 
-
   addruta(){
-    this.buscarlocalidad();
-      let rutanueva = new Ruta();
-     rutanueva.origen = "";
-     rutanueva.destino = "";
-     rutanueva.tarifaenletras = "";
+     this.buscarlocalidad();
+     let rutanueva = new Ruta();
+     let ruta = new RutaInterna();
+     rutanueva.ruta = ruta;
+     ruta.origen = "";
+     ruta.destino = "";
+     rutanueva.orden = 0;
+     rutanueva.descripcion_tarifa = "";
      this.arrayrutas.push(rutanueva);
-     this.validarrutas();
+      this.validarrutas();
 
   }
 
   deleteruta(numero: any){
-    this.arrayrutas.splice(numero, 1);
+     this.arrayrutas.splice(numero, 1);
   }
 
 
@@ -203,12 +215,35 @@ export class CreatePlantillaComponent implements OnInit {
 
     this.buscarlocalidad();
     this.buscarmodalidad();
-    console.log(this.localidadobj);
-    console.log(this.modalidadobj);
-    console.log(this.localidadobj.municipio);
-    console.log(this.descripcion);
-    console.log(this.newspaperselect);
+    let nuevaplantilla = new Plantilla();
+    nuevaplantilla.nombre = this.nombre;
+    nuevaplantilla.descripcion = this.descripcion;
+    nuevaplantilla.municipio = this.localidadobj.municipio.id;
+    nuevaplantilla.localidad = this.localidadobj.id;
+    nuevaplantilla.modalidad = this.modalidadobj.id;
+    nuevaplantilla.periodico = this.newspaperselect.id;
+
+    console.log(nuevaplantilla);
+
+    for(var x = 0; x < this.arrayrutas.length; x++){
+      this.arrayrutas[x].orden = x+1;
+    }
     console.log(this.arrayrutas);
+
+    this.insertPlantillaGQL
+      .mutate({
+        plantilla: nuevaplantilla,
+        rutas: this.arrayrutas
+      })
+      .subscribe(({ data }) => {
+         $('.modal.open').modal('close')
+         this.plantillaComponent.listPlantillas();
+
+        M.toast({html: "Se ha agregado una nueva plantilla."})
+                 }, (error) => {
+                   var divisiones = error.message.split(":", 2);
+                   M.toast({html: divisiones[1]})
+       });
 
 
   }
@@ -243,7 +278,7 @@ export class CreatePlantillaComponent implements OnInit {
   }
 
   convertirALetras(rutaacambiar: any){
-      rutaacambiar.tarifaenletras = this.convertNSService.convert(rutaacambiar.tarifa);
+      rutaacambiar.descripcion_tarifa = this.convertNSService.convert(rutaacambiar.tarifa);
       this.validarrutas();
   }
 
@@ -255,6 +290,7 @@ export class CreatePlantillaComponent implements OnInit {
        this.localidades= null;
        this.municipio= null;
        this.descripcion= null;
+       this.nombre= null;
        this.newspapers= null;
        this.mensaje= null;
        this.newspaperselect= null;
@@ -277,8 +313,19 @@ export class CreatePlantillaComponent implements OnInit {
          this.verificarrutas = true;
        }
         for(var i = 0; i < this.arrayrutas.length;i++){
-         if(this.arrayrutas[i].origen == "" || this.arrayrutas[i].destino == "" || this.arrayrutas[i].tarifaenletras == ""){
-             this.verificarrutas = false;
+         if(this.arrayrutas[i].ruta.origen == "" || this.arrayrutas[i].ruta.destino == "" || this.arrayrutas[i].descripcion_tarifa == ""){
+              this.verificarrutas = false;
+         }
+       }
+
+         this.velidacionrepetidos = true;
+        for(var i = 0; i < this.arrayrutas.length;i++){
+         for(var x = 0; x < this.arrayrutas.length;x++){
+              if((this.arrayrutas[i].ruta.origen == this.arrayrutas[x].ruta.origen && this.arrayrutas[i].ruta.origen!= "") && (this.arrayrutas[i].ruta.destino == this.arrayrutas[x].ruta.destino && this.arrayrutas[i].ruta.destino!= "") && x != i && this.velidacionrepetidos)
+             {
+               M.toast({html: "No se pueden registrar dos rutas iguales"})
+               this.velidacionrepetidos = false;
+             }
          }
        }
      }
@@ -287,7 +334,6 @@ export class CreatePlantillaComponent implements OnInit {
        var inputlocalidad = (<HTMLInputElement>document.getElementById("autocomplete")).value;
        var decision = false;
        this.mostardespueslocalidad = false;
-
         for(var i = 0; i <this.localidades.length;i++){
            if(this.localidades[i].nombre == inputlocalidad){
                this.mostardespueslocalidad = true;

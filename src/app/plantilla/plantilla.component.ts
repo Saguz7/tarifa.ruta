@@ -16,6 +16,7 @@
 })
 export class PlantillaComponent implements OnInit {
   newspapers: any;
+  plantillas: any;
   newspaperselect: any;
   btninhabilitar: boolean = false;
 
@@ -32,6 +33,8 @@ export class PlantillaComponent implements OnInit {
         $(document).ready(function(){
           $('.modal').modal({dismissible: false});
         });
+
+        this.listPlantillas();
         this.allPeriodicosGQL.watch()
         .valueChanges.subscribe(result => {
           this.asignarperiodicos(result.data);
@@ -56,6 +59,59 @@ export class PlantillaComponent implements OnInit {
                    });
       }
 
+
+      listPlantillas(){
+        this.apollo.query({query: gql`
+          query listPlantillas($localidad:ID,$modalidad:ID){
+    plantillas(localidad:$localidad,modalidad:$modalidad){
+      id,
+      nombre,
+      descripcion,
+      municipio{
+        id,
+        nombre
+      },
+      localidad{
+        id,
+        nombre,
+        municipio{
+          id,
+          nombre
+        }
+      },
+      modalidad{
+        id,
+        nombre,
+        descripcion,
+        abreviatura
+      },
+      periodico{
+        id,
+        descripcion,
+        fecha_publicacion,
+        tomo,
+        numero,
+        estatus,
+        createdAt
+      },
+      estatus,
+      createdAt
+    }
+  },
+                   `, fetchPolicy: 'network-only',
+                   variables: {
+                           localidad: null,
+                           modalidad: null
+                  }})
+                   .subscribe(result => {
+                     this.asignarplantillas(result.data)
+                   });
+      }
+
+      asignarplantillas(periodicos: any){
+        this.plantillas = periodicos.plantillas;
+      }
+
       seleccionardiario(rowData: any,event: any){
         if(event.target.tagName == "TD"){
           for(var i = 1; i < event.target.parentNode.parentNode.parentNode.rows.length; i++){
@@ -78,5 +134,5 @@ export class PlantillaComponent implements OnInit {
         this.newspaperselect = rowData;
         this.btninhabilitar = true;
       }
-      
+
 }

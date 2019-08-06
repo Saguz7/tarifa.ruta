@@ -39,7 +39,13 @@ export class InsertPeriodicoGQL extends Apollo.Mutation<
   document: any = gql`
   mutation newPeriodico($descripcion:String,$fecha_publicacion:Date,$tomo:String,$numero:Int){
   crearPeriodico(descripcion:$descripcion,fecha_publicacion:$fecha_publicacion,tomo:$tomo,numero:$numero){
-    mensaje
+    id,
+    descripcion,
+    fecha_publicacion,
+    tomo,
+    numero,
+    estatus,
+    createdAt
   }
 }
   `;

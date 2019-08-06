@@ -41,14 +41,23 @@ export class TarifaComponent implements OnInit {
     formlineadecaptura: boolean = false;
     formhojavalorada: boolean = false;
     div1validacionpago: boolean = true;
-    div2busquedadeconcesionario: boolean = true;
-    div3solicitud: boolean = true;
-    div4descarga: boolean = true;
+    div2busquedadeconcesionario: boolean = false;
+    div3solicitud: boolean = false;
+    div4descarga: boolean = false;
     divdebusqueda: boolean = true;
     arrayrutasdepruebas: any;
     data: Observable<any>;
     registroabuscar: any;
+    tamaniointervalo: any;
+    busquedapornuc: boolean = false;
+    busquedapornombre: boolean = true;
 
+    plantillasencontradas: any;
+    divplantillas: boolean = false;
+    btninhabilitar: boolean = false;
+    plantillaseleccionada: any;
+    btngetRutas: boolean = false;
+    btngetTarjeton: boolean = false;
 
     static getBarcodeData(text: string, size = 900) {
       return kjua({
@@ -66,77 +75,17 @@ export class TarifaComponent implements OnInit {
 
     ngOnInit() {
 
-      //this.pagosService.getConsulta().subscribe(response => console.log(response.body));
+      console.log(this.registroamostrar);
+
       this.datenow = new Date();
       this.minDate = new Date(2010);
       this.arrayrutasdepruebas = [];
-      let rutanueva = new Ruta();
-      rutanueva.origen = "SANTA MARIA HUATULCO";
-      rutanueva.destino = "SANTA MARIA HUATULCO";
-      rutanueva.tarifa = 35.00;
-      let rutanueva2 = new Ruta();
-      rutanueva2.origen = "SANTA MARIA HUATULCO";
-      rutanueva2.destino = "PASO ANCHO HUATULCO";
-      rutanueva2.tarifa = 30.00;
-      let rutanueva3 = new Ruta();
-      rutanueva3.origen = "SANTA MARIA HUATULCO";
-      rutanueva3.destino = "SALINA CRUZ";
-      rutanueva3.tarifa = 1200.00;
-      let rutanueva4 = new Ruta();
-      rutanueva4.origen = "SANTA MARIA HUATULCO";
-      rutanueva4.destino = "CRUCECITA";
-      rutanueva4.tarifa = 130.50;
 
-      this.arrayrutasdepruebas.push(rutanueva4);
-      this.arrayrutasdepruebas.push(rutanueva3);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva2);
-      this.arrayrutasdepruebas.push(rutanueva3);
+      document.getElementById("divheader1").style.backgroundColor ="white";
+
+
+
+
       this.es = {
             firstDayOfWeek: 1,
             dayNames: [ "domingo","lunes","martes","miércoles","jueves","viernes","sábado" ],
@@ -153,6 +102,8 @@ export class TarifaComponent implements OnInit {
         $(document).ready(function() {
           $('input#input_text, textarea#textarea2').characterCounter();
         });
+
+        this.obtenertamañodeseparacion();
       }
 
 
@@ -203,8 +154,16 @@ export class TarifaComponent implements OnInit {
               pdf.addFont("Calibri.ttf", "Calibri", "normal");
               pdf.setFont("Calibri");
 
+              var concesionarionombre= "";
+              if(this.registroamostrar.tipo_persona == "F"){
+                concesionarionombre = 'CONCESIONARIO: ' + this.registroamostrar.nombre + " " + this.registroamostrar.primer_apellido + " " + this.registroamostrar.segundo_apellido ;
+
+              }else{
+                concesionarionombre = 'CONCESIONARIO: ' + this.registroamostrar.razon_social ;
+
+              }
               this.qrmensagge =
-                           " Hola mundo" ;
+                       "" + concesionarionombre + "NUC:" + this.registroamostrar.nuc + "Folio Hoja Valorada:" + this.pago3;
                const barcodeData = TarifaComponent.getBarcodeData(this.qrmensagge);
                pdf.addImage(barcodeData, "JPG", 10, 45,18, 18);
 
@@ -226,8 +185,16 @@ export class TarifaComponent implements OnInit {
               pdf.addFont("Calibri.ttf", "Calibri", "normal");
               pdf.setFont("Calibri");
 
-              pdf.text(115, 67, 'CONCESIONARIO: CESAR SANTIAGO GUZMAN');
-              pdf.text(115, 71, 'NUC: XXXXX/XXXXXXXXXX');
+              if(this.registroamostrar.tipo_persona == "F"){
+                pdf.text(115, 67, 'CONCESIONARIO: ' + this.registroamostrar.nombre + " " + this.registroamostrar.primer_apellido + " " + this.registroamostrar.segundo_apellido);
+
+              }else{
+                pdf.text(115, 67, 'CONCESIONARIO: ' + this.registroamostrar.razon_social );
+
+              }
+
+               pdf.text(115, 71, 'NUC: ' + this.registroamostrar.nuc);
+
 
 
               pdf.text('La  Secretaría  de  Movilidad  del  Poder  Ejecutivo  del  estado  de  Oaxaca , con  fundamento  en  lo  dispuesto   por  los  artículos  2 párrafo  tercero y   82  de  la   Constitución   Política   del   Estado  Libre  y  Soberado  de  Oaxaca;  1 ,  27   fracción  VII  y  40   de   la   Ley  Orgánica   del   Poder   Ejecutivo  del  Estado de  Oaxaca, articulo  114  y  116 de  la  Ley  del  Transporte  del  Estado de Oaxaca; en  relación  con  los  artículos 43  fracción II, 72,  73,  75  y 76 del  Reglamento  de la  Ley  de Transporte del  Estado de Oaxaca;  y  de  conformidad  con el  Acuerdo  Administrativo  de  fecha  17  de  diciembre  del  2018,  publicado  en  el  Periódico Oficial de Gobierno del Estado de Oaxaca el 19 de enero del 2019 y en el diario Enlace de la costa, el  día  15 de febrero de 2019 , queda autorizada   la siguiente:', 14,78, {maxWidth: 182, align: "justify"});
@@ -277,7 +244,7 @@ export class TarifaComponent implements OnInit {
                 body: a_permisoxf2,
                 startY: 100,
                 showHead: 'firstPage',
-                styles: { overflow: 'linebreak', fontSize: 5, cellPadding: 1  },
+                styles: { overflow: 'linebreak', fontSize: 5, cellPadding: this.tamaniointervalo  },
 
                 columnStyles: {
                   0: {cellWidth: 6},
@@ -314,8 +281,16 @@ export class TarifaComponent implements OnInit {
               img.src = './assets/SEMOVI2.png'
               pdf.addFont("Calibri.ttf", "Calibri", "normal");
               pdf.setFont("Calibri");
+              var concesionarionombre= "";
+              if(this.registroamostrar.tipo_persona == "F"){
+                concesionarionombre = 'CONCESIONARIO: ' + this.registroamostrar.nombre + " " + this.registroamostrar.primer_apellido + " " + this.registroamostrar.segundo_apellido ;
+
+              }else{
+                concesionarionombre = 'CONCESIONARIO: ' + this.registroamostrar.razon_social ;
+
+              }
               this.qrmensagge =
-                       " Hola mundo" ;
+                       "" + concesionarionombre + "NUC:" + this.registroamostrar.nuc + "Folio Hoja Valorada:" + this.pago3;
               const barcodeData = TarifaComponent.getBarcodeData(this.qrmensagge);
               pdf.addImage(barcodeData, "JPG", 10, 45,18, 18);
               pdf.setDrawColor(0);
@@ -333,8 +308,15 @@ export class TarifaComponent implements OnInit {
               pdf.setFontSize(8);
               pdf.addFont("Calibri.ttf", "Calibri", "normal");
               pdf.setFont("Calibri");
-              pdf.text(115, 67, 'CONCESIONARIO: CESAR SANTIAGO GUZMAN');
-              pdf.text(115, 71, 'NUC: XXXXX/XXXXXXXXXX');
+              if(this.registroamostrar.tipo_persona == "F"){
+                pdf.text(115, 67, 'CONCESIONARIO: ' + this.registroamostrar.nombre + " " + this.registroamostrar.primer_apellido + " " + this.registroamostrar.segundo_apellido);
+
+              }else{
+                pdf.text(115, 67, 'CONCESIONARIO: ' + this.registroamostrar.razon_social );
+
+              }
+
+               pdf.text(115, 71, 'NUC: ' + this.registroamostrar.nuc);
               pdf.text('La  Secretaría  de  Movilidad  del  Poder  Ejecutivo  del  estado  de  Oaxaca , con  fundamento  en  lo  dispuesto   por  los  artículos  2 párrafo  tercero y   82  de  la   Constitución   Política   del   Estado  Libre  y  Soberado  de  Oaxaca;  1 ,  27   fracción  VII  y  40   de   la   Ley  Orgánica   del   Poder   Ejecutivo  del  Estado de  Oaxaca, articulo  114  y  116 de  la  Ley  del  Transporte  del  Estado de Oaxaca; en  relación  con  los  artículos 43  fracción II, 72,  73,  75  y 76 del  Reglamento  de la  Ley  de Transporte del  Estado de Oaxaca;  y  de  conformidad  con el  Acuerdo  Administrativo  de  fecha  17  de  diciembre  del  2018,  publicado  en  el  Periódico Oficial de Gobierno del Estado de Oaxaca el 19 de enero del 2019 y en el diario Enlace de la costa, el  día  15 de febrero de 2019 , queda autorizada   la siguiente:', 14,78, {maxWidth: 182, align: "justify"});
               pdf.setFontSize(16);
               pdf.text(96, 97, 'TARIFA');
@@ -343,15 +325,18 @@ export class TarifaComponent implements OnInit {
                    this.arrayrutasdepruebas[i]
                    a_permisoxf.push([
                    (i+1),
-                   this.arrayrutasdepruebas[i].origen +" - "+ this.arrayrutasdepruebas[i].destino,
-                   this.convertNSService.convert(this.arrayrutasdepruebas[i].tarifa),
+                   this.arrayrutasdepruebas[i].ruta.origen +" - "+ this.arrayrutasdepruebas[i].ruta.destino,
+                   this.arrayrutasdepruebas[i].descripcion_tarifa,
                    "$"+this.arrayrutasdepruebas[i].tarifa.toFixed(2)    ]);
+                 }
+                 var tamanioletra = 6;
+                 if(this.tamaniointervalo==0){
+                   tamanioletra = 5;
                  }
                  pdf.autoTable({
                    head: [['NU','ORIGEN-DESTINO', 'TARIFA EN TEXTO', '' ]],
-                   styles: {
-                   fontSize: 6
-                   },
+                   styles: {overflow: 'linebreak', fontSize: tamanioletra  ,overflowColumns: 'linebreak' , cellPadding: this.tamaniointervalo},
+
                    columnStyles: {
                      0: {cellWidth: 6},
                      1: {cellWidth: 40},
@@ -364,23 +349,24 @@ export class TarifaComponent implements OnInit {
              }else{
                for(var i = 0; i < 25; i++){
                  a_permisoxf.push([
-                 (i+1),this.arrayrutasdepruebas[i].origen +" - "+ this.arrayrutasdepruebas[i].destino,
-                 this.convertNSService.convert(this.arrayrutasdepruebas[i].tarifa),
+                 (i+1),this.arrayrutasdepruebas[i].ruta.origen +" - "+ this.arrayrutasdepruebas[i].ruta.destino,
+                 this.arrayrutasdepruebas[i].descripcion_tarifa,
                  "$"+this.arrayrutasdepruebas[i].tarifa.toFixed(2)    ]);
                }
                for(var a = 25; a < restorutas; a++){
                  a_permisoxf2.push([
-                   (a+1),this.arrayrutasdepruebas[a].origen +" - "+ this.arrayrutasdepruebas[a].destino,
-                   this.convertNSService.convert(this.arrayrutasdepruebas[a].tarifa),
+                   (a+1),this.arrayrutasdepruebas[a].ruta.origen +" - "+ this.arrayrutasdepruebas[a].ruta.destino,
+                    this.arrayrutasdepruebas[a].descripcion_tarifa,
                    "$"+this.arrayrutasdepruebas[a].tarifa.toFixed(2)    ]);
                  }
+
                let pageNumber = pdf.internal.getNumberOfPages();
                pdf.autoTable({
                  head: [['NU','ORIGEN-DESTINO', 'TARIFA', ' ' ]],
                  body: a_permisoxf,
                  startY: 100,
                  showHead: 'firstPage',
-                 styles: {overflow: 'linebreak', fontSize: 5  ,overflowColumns: 'linebreak' , cellPadding: 1},
+                 styles: {overflow: 'linebreak', columnWidth: 'wrap', fontSize: 5  ,overflowColumns: 'linebreak' , cellPadding: this.tamaniointervalo},
                  columnStyles: {
                    0: {cellWidth: 6},
                    1: {cellWidth: 40},
@@ -396,7 +382,7 @@ export class TarifaComponent implements OnInit {
                    body: a_permisoxf2,
                    startY: 100,
                    showHead: 'firstPage',
-                   styles: { overflow: 'linebreak', fontSize: 5, cellPadding: 1  },
+                   styles: { overflow: 'linebreak', columnWidth: 'wrap', fontSize: 5,overflowColumns: 'linebreak', cellPadding: this.tamaniointervalo  },
                    columnStyles: {
                      0: {cellWidth: 6},
                      1: {cellWidth: 40},
@@ -408,11 +394,12 @@ export class TarifaComponent implements OnInit {
                }
              }
              pdf.setFontSize(9);
-             pdf.text(25, 264, 'del Servicio Público de Transporte de pasajeros en la modalidad de TAXI; para el Municipio de SANTA MARÍA HUATULCO.');
+             pdf.text(25, 264, 'del Servicio Público de Transporte de pasajeros en la modalidad de ' + this.plantillaseleccionada.modalidad.nombre+ '; para el Municipio de ' +this.registroamostrar.municipio.nombre +  ".");
              pdf.save("ejemplo.pdf");
            }
 
       vistaprevia(){
+        this.btngetTarjeton = true;
       }
     validarfoliopago(){
       var n = this.pago1.toString();
@@ -471,31 +458,39 @@ export class TarifaComponent implements OnInit {
     }
 
     verificarfecha(){
-
-
-        this.fechaverificada = true;
-
+      this.fechaverificada = true;
     }
 
       mychange(event)
        {
             this.divdebusqueda = true;
-            this.llamarregistros();
+            if(this.busquedapornombre==true){
+               this.llamarregistros(1);
+             }else{
+                if(this.busquedapornuc==true){
+                  this.llamarregistros(2);
+         }
+       }
       }
 
-      llamarregistros(){
+      llamarregistros(decision: any){
          this.apollo
           .watchQuery({
             query: gql`
-            query listConcesionarios($input:String,$n:String){
-                  concesionarios(entrada:$input,nuc:$n){
-                                 id_concesion,nombre,primer_apellido,segundo_apellido,tipo_persona,razon_social,nuc,vigente,localidad,municipio,amparados
-                                 }
-                          },
+            query listConcesionarios($entrada:String,$campo:Int){
+              concesionarios(entrada:$entrada,campo:$campo){
+                id_concesion,nombre,primer_apellido,segundo_apellido,tipo_persona,razon_social,nuc,
+                localidad{id,nombre,municipio{id,nombre}},
+                municipio{id,nombre},
+                amparados,
+                modalidad{id,nombre,descripcion,abreviatura},
+                vigente
+              }
+            },
             `,
             variables: {
-                    input: "%"+this.registroabuscar+"%",
-                    n: null,
+                    entrada:  this.registroabuscar ,
+                    campo: decision,
           }
           })
           .valueChanges.subscribe(result => {
@@ -503,29 +498,185 @@ export class TarifaComponent implements OnInit {
           });
       }
 
-      seleccionarregistro(registro: any){
-         this.registroamostrar = registro;
 
+      llamarregistrospornuc(){
          this.apollo
           .watchQuery({
             query: gql`
-            query getPlantillasLocalidad($id_localidad:ID){
-                plantillas(id_localidad:$id_localidad){
-                   id,nombre
-                  }
-               },
+            query listConcesionarios($entrada:String,$campo:Int){
+              concesionarios(entrada:$entrada,campo:$campo){
+                id_concesion,nombre,primer_apellido,segundo_apellido,tipo_persona,razon_social,nuc,
+                localidad{id,nombre,
+                municipio{id,nombre}},
+                municipio{id,nombre},
+                amparados,
+                modalidad{
+                  id,nombre,descripcion,abreviatura
+                },
+                vigente
+              }
+            },
             `,
             variables: {
-                    id_localidad: registro.localidad.id
+                    input: null,
+                    n:  "%"+this.registroabuscar+"%" ,
           }
           })
           .valueChanges.subscribe(result => {
-            // this.checartotalamparos(result.data)
-           });
+           this.crearregistros(result.data)
+          });
+      }
+
+      seleccionarregistro(registro: any){
+           this.registroamostrar = registro;
+            this.divdebusqueda = false;
+
+
+
+         this.apollo.query({query: gql`
+           query listPlantillas($localidad:ID,$modalidad:ID){
+             plantillas(localidad:$localidad,modalidad:$modalidad){
+               id,nombre,descripcion,
+               municipio{id,nombre},
+               localidad{id,nombre,
+               municipio{id,nombre}},
+               modalidad{id,nombre,descripcion,abreviatura},
+               periodico{id,descripcion,fecha_publicacion,tomo,numero,estatus,createdAt},
+               estatus,createdAt
+             }
+           },
+             `, fetchPolicy: 'network-only',
+                variables: {
+                  localidad: this.registroamostrar.localidad.id,
+                  modalidad: this.registroamostrar.modalidad.id
+                }})
+                .subscribe(result => {
+                  this.asignarplantillasseleccionadas(result.data);
+              });
+         }
+
+         asignarplantillasseleccionadas(plantillas: any){
+           this.plantillasencontradas = plantillas.plantillas;
+           this.divplantillas = true;
+
          }
 
       crearregistros(registrosencontrados: any){
          this.data = registrosencontrados.concesionarios;
+      }
+      obtenertamañodeseparacion(){
+        this.tamaniointervalo = 1;
+        for(var i = 0; i < this.arrayrutasdepruebas.length; i++){
+
+          var tamanio = this.arrayrutasdepruebas[i].ruta.origen +" - "+ this.arrayrutasdepruebas[i].ruta.destino;
+          console.log(tamanio);
+          console.log(tamanio.length);
+
+          if(tamanio.length> 34){
+            this.tamaniointervalo = 1
+            if(tamanio.length> 75){
+              this.tamaniointervalo = 0.4
+            }
+          }
+         }
+
+         console.log(this.tamaniointervalo);
+
+       }
+
+      buscarpornuc(){
+        this.busquedapornuc = true;
+        this.busquedapornombre = false;
+      }
+
+      buscarpornombre(){
+        this.busquedapornuc = false;
+        this.busquedapornombre = true;
+      }
+
+      seleccionarplantilla(rowData: any,event: any){
+        if(event.target.tagName == "TD"){
+          for(var i = 1; i < event.target.parentNode.parentNode.parentNode.rows.length; i++){
+            event.target.parentNode.parentNode.parentNode.rows[i].style.backgroundColor = "#FFF";
+          }
+          event.target.parentNode.style.backgroundColor = "#f5f5f5";
+        }
+        if(event.target.tagName == "LABEL"){
+          for(var i = 0; i < event.target.parentNode.parentNode.parentNode.parentNode.rows.length; i++){
+            event.target.parentNode.parentNode.parentNode.parentNode.rows[i].style.backgroundColor = "#FFF";
+          }
+          event.target.parentNode.parentNode.parentNode.style.backgroundColor = "#f5f5f5";
+        }
+        if(event.target.tagName == "DIV"){
+          for(var i = 0; i < event.target.parentNode.parentNode.parentNode.parentNode.rows.length-1; i++){
+            event.target.parentNode.parentNode.parentNode.rows[i].style.backgroundColor = "#FFF";
+          }
+          event.target.parentNode.parentNode.style.backgroundColor = "#f5f5f5";
+        }
+        this.plantillaseleccionada = rowData;
+        this.btngetRutas = true;
+
+      }
+
+
+      getRutas(){
+        this.divplantillas = false;
+
+        this.apollo.query({query: gql`
+          query listRutas4Plantilla($plantilla:ID){
+            plantillasRutas(plantilla:$plantilla){
+              id,
+              ruta{id,origen,destino,estatus,createdAt},
+              tarifa,descripcion_tarifa,estatus,createdAt
+            }
+          },
+            `, fetchPolicy: 'network-only',
+               variables: {
+                  plantilla: this.plantillaseleccionada.id
+                }})
+              .subscribe(result => {
+                this.asignarrutas(result.data);
+              });
+      }
+
+      asignarrutas(rutas: any){
+        this.arrayrutasdepruebas = rutas.plantillasRutas;
+        this.solicituddatosactive();
+        this.obtenertamañodeseparacion()
+      }
+
+      buscarOtroConcesionario(){
+        this.div2busquedadeconcesionario = true;
+        this.divdebusqueda = true;
+        this.divplantillas = false;
+
+      }
+
+      busquedaconcesionarioactive(){
+        this.div1validacionpago = false;
+        this.div2busquedadeconcesionario = true;
+        this.div3solicitud = false;
+        this.div4descarga = false;
+        document.getElementById("divheader1").style.backgroundColor ="#F1F1F1";
+        document.getElementById("divheader2").style.backgroundColor ="white";
+      }
+
+      solicituddatosactive(){
+        this.div1validacionpago = false;
+        this.div2busquedadeconcesionario = false;
+        this.div3solicitud = true;
+        this.div4descarga = false;
+        document.getElementById("divheader2").style.backgroundColor ="#F1F1F1";
+        document.getElementById("divheader3").style.backgroundColor ="white";
+      }
+
+      descargaractive(){
+        this.div1validacionpago = false;
+        this.div2busquedadeconcesionario = false;
+        this.div3solicitud = false;
+        this.div4descarga = true;
+        document.getElementById("divheader3").style.backgroundColor ="#F1F1F1";
+        document.getElementById("divheader4").style.backgroundColor ="white";
       }
 
 }

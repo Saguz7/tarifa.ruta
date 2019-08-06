@@ -1,9 +1,16 @@
 export class Plantilla {
-    origen: String;
-    destino: String;
-
+    nombre: String;
+    descripcion: String;
+    municipio: String;
+    localidad: String;
+    modalidad: String;
+    periodico: String;
     constructor(
-      origen?: String,
-      destino?: String 
+      nombre?: String,
+      descripcion?: String,
+      municipio?: String,
+      localidad?: String,
+      modalidad?: String,
+      periodico?: String,
      ) {}
 }

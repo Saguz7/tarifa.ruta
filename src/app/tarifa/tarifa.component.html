@@ -1,191 +1,222 @@
 <div class="container"><br>
-  <app-payment (componentStatus)="getStatusComponentPayment($event)"></app-payment>
-  <div class="row">
-    <div class="col s12">
-      <p>Estado del componente payment:: {{statusComponentPayment}}</p>
-    </div>
-  </div>
   <div class="card">
-    <div class="row">
-      <ul class="collapsible">
-        <li>
-          <div class="collapsible-header" id="divheader1"><i class="material-icons">attach_money</i> Validación de pago</div>
-          <div class="row" *ngIf="div1validacionpago"><br>
-            <div class="row">
-              <div class="col s10 offset-s1"> <br> <br>
-                <div class="col s6" id="cambiodetamanio3">
-                  <div>
-                    <label  class="atributoscuestionariotitulos">Folio de pago.</label>
-                  </div>
-                  <div>
-                    <input  autocomplete="off" type="text" numbersOnly required onKeyPress="if(this.value.length==11) return false;" [(ngModel)]="pago1" id="pago1" name="pago1" class="form-control"  (ngModelChange)="validarfoliopago()">
-                    <label for="input_text" id="pago1advertencia"  class="advertenciacontador">{{pago1aux.length - 1}} /11</label>
-                  </div>
+    <ul class="collapsible">
+      <li>
+        <div class="collapsible-header" id="divheader1"><i class="material-icons">attach_money</i> Validación de pago</div>
+        <div class="row" *ngIf="div1validacionpago"><br>
+          <div class="row">
+            <div class="col s10 offset-s1"> <br> <br>
+              <div class="col s6" id="cambiodetamanio3">
+                <div>
+                  <label  class="atributoscuestionariotitulos">Folio de pago.</label>
                 </div>
-                <div class="col s6" id="cambiodetamanio4">
-                  <div>
-                    <label  class="atributoscuestionariotitulos">Linea de Captura.</label>
-                  </div>
-                  <div *ngIf="formlineadecaptura">
-                    <input  autocomplete="off" type="text" numbersOnly required onKeyPress="if(this.value.length==19) return false;" [(ngModel)]="pago2" id="pago2" name="pago2" class="form-control"  (ngModelChange)="validarnumerodecaptura()">
-                    <label for="input_text"  id="pago2advertencia"  class="advertenciacontador">{{pago2aux.length - 1}} /19</label>
-                  </div>
-                  <div *ngIf="!formlineadecaptura">
-                    <input type="text" id="auxiliardepago" name="auxiliardepago" min="0" length="11" class="form-control" [(ngModel)]="pago2" disabled>
-                    <label id="pago3advertencia"  class="advertenciacontador">{{pago2aux.length - 1}} /19</label>
-                  </div>
-                </div>
-                <div class="col s6" id="cambiodetamanio5">
-                  <div>
-                    <label  class="atributoscuestionariotitulos">Folio de hoja valorada.</label>
-                  </div>
-                  <div *ngIf="!formhojavalorada">
-                    <input type="number" name="test_name" min="0" length="11" class="form-control" oninput="validity.valid||(value='');"   [(ngModel)]="pago3" disabled>
-                    <label for="input_text" id="pago3advertencia" class="advertenciacontador">{{pago3aux.length - 1}} /9</label>
-                  </div>
-                  <div *ngIf="formhojavalorada">
-                    <input type="text" numbersOnly required onKeyPress="if(this.value.length==9) return false;" [(ngModel)]="pago3" id="pago3" name="pago3" class="form-control" (ngModelChange)="validarhojavalorada()">
-                    <label for="input_text" id="pago3advertencia" class="advertenciacontador">{{pago3aux.length - 1}} /9</label>
-                  </div>
-                </div>
-                <div class="col s6" id="cambiodetamanio5">
-                  <div>
-                    <label  class="atributoscuestionariotitulos">Fecha de pago.</label>
-                  </div>
-                  <div>
-                    <div class="col s12">
-
-                         <p-calendar *ngIf="btnverficarfecha" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" [(ngModel)]="datepay"  [minDate]="minDate" [maxDate]="datenow" [locale]="es" dateFormat="dd/mm/yy" (ngModelChange)="verificarfecha()"></p-calendar>
-             
-                    </div>
-                  </div>
-                </div> <br> <br>
-              </div>
-            </div>
-            <div class="col s11 offset-s1" id="cambiodetamanio6">
-              <a id="btnverificarpago" *ngIf="!btnhojavalorada"  class="waves-effect waves-light btn-small" disabled><i class="material-icons left">arrow_downward</i>Verificar Pago</a>
-              <a id="btnverificarpago" *ngIf="btnhojavalorada" (click)="habilitarpasotres()"  class="waves-effect waves-light btn-small"><i class="material-icons left">arrow_downward</i>Verificar Pago</a>
-            </div> <br> <br>
-            <div class="col s11 offset-s1" id="cambiodetamanio7">
-              <a id="btnverificarpago2" *ngIf="!fechaverificada" class="waves-effect waves-light btn-small" disabled><i class="material-icons left">arrow_downward</i>Confirmar pago</a>
-              <a id="btnverificarpago2" *ngIf="fechaverificada" class="waves-effect waves-light btn-small" (click)="tercerproceso()"><i class="material-icons left">arrow_downward</i>Confirmar pago</a> <br> <br>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="collapsible-header" id="divheader2"><i class="material-icons">search</i>Busqueda de concesionario</div>
-          <div class="row" *ngIf="div2busquedadeconcesionario"><br><br>
-            <div class="row" >
-              <div class="col s11 offset-s1">
-                <div class="col s4" id="cambiodetamanio1">
-                  <p>
-                    <label>
-                      <input id="inputdefault" class="with-gap" name="group1" type="radio" (click) = "buscarpornombre()" checked />
-                      <span class="buscadores"><label class="buscadores">Nombre/Razón social</label></span>
-                    </label>
-                  </p>
-                </div>
-                <div class="col s3" id="cambiodetamanio2">
-                  <p>
-                    <label>
-                      <input class="with-gap" name="group1" type="radio" (click) = "buscarpornuc()" />
-                      <span class="buscadores"><label class="buscadores">NUC</label></span>
-                    </label>
-                  </p>
+                <div>
+                  <input  autocomplete="off" type="text" numbersOnly required onKeyPress="if(this.value.length==11) return false;" [(ngModel)]="pago1" id="pago1" name="pago1" class="form-control"  (ngModelChange)="validarfoliopago()">
+                  <label for="input_text" id="pago1advertencia"  class="advertenciacontador">{{pago1aux.length - 1}} /11</label>
                 </div>
               </div>
-            </div>
-            <div class="row" >
-              <form  class="row">
-                <div class="row">
-                  <div class="col s10">
-                    <div class="row">
-                      <div class="col s12">
-                        <nav class="col s8 offset-s1" id="divbusquedadearriba">
-                          <div class="col s12">
-                            <form>
-                              <div class="input-field">
-                                <div class="col s1">
-                                  <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                                </div>
-                                <div class="col s11" id="cambiotamaniosearch2">
-                                  <input specialOnly style="text-transform: uppercase" autocomplete="off" placeholder="" id="nombre" name="nombre" type="text" class="form-control"
-                                  [(ngModel)]="registroabuscar" (ngModelChange)="mychange($event)" >
-                                </div>
-                              </div>
-                            </form>
-                          </div>
-                        </nav>
-                      </div>
-                    </div>
-                  </div>
+              <div class="col s6" id="cambiodetamanio4">
+                <div>
+                  <label  class="atributoscuestionariotitulos">Linea de Captura.</label>
                 </div>
-              </form>
-            </div>
-          </div>
-          <div class="row" *ngIf="divdebusqueda">
-            <div class="row">
-              <div class="col s10 offset-s1" id="cardinformacionconsecionarios">
-                <div class="row" *ngFor="let consecion  of data; let i = index" (click)="seleccionarregistro(consecion)">
+                <div *ngIf="formlineadecaptura">
+                  <input  autocomplete="off" type="text" numbersOnly required onKeyPress="if(this.value.length==19) return false;" [(ngModel)]="pago2" id="pago2" name="pago2" class="form-control"  (ngModelChange)="validarnumerodecaptura()">
+                  <label for="input_text"  id="pago2advertencia"  class="advertenciacontador">{{pago2aux.length - 1}} /19</label>
+                </div>
+                <div *ngIf="!formlineadecaptura">
+                  <input type="text" id="auxiliardepago" name="auxiliardepago" min="0" length="11" class="form-control" [(ngModel)]="pago2" disabled>
+                  <label id="pago3advertencia"  class="advertenciacontador">{{pago2aux.length - 1}} /19</label>
+                </div>
+              </div>
+              <div class="col s6" id="cambiodetamanio5">
+                <div>
+                  <label  class="atributoscuestionariotitulos">Folio de hoja valorada.</label>
+                </div>
+                <div *ngIf="!formhojavalorada">
+                  <input type="number" name="test_name" min="0" length="11" class="form-control" oninput="validity.valid||(value='');"   [(ngModel)]="pago3" disabled>
+                  <label for="input_text" id="pago3advertencia" class="advertenciacontador">{{pago3aux.length - 1}} /9</label>
+                </div>
+                <div *ngIf="formhojavalorada">
+                  <input type="text" numbersOnly required onKeyPress="if(this.value.length==9) return false;" [(ngModel)]="pago3" id="pago3" name="pago3" class="form-control" (ngModelChange)="validarhojavalorada()">
+                  <label for="input_text" id="pago3advertencia" class="advertenciacontador">{{pago3aux.length - 1}} /9</label>
+                </div>
+              </div>
+              <div class="col s6" id="cambiodetamanio5">
+                <div>
+                  <label  class="atributoscuestionariotitulos">Fecha de pago.</label>
+                </div>
+                <div>
                   <div class="col s12">
-                    <div class="col s12">
-                      <label class="conseciontitulored" *ngIf="consecion.tipo_persona=='F'">Nombre: </label>
-                      <label class="conseciontitulored" *ngIf="consecion.tipo_persona=='M'">Razón Social:  </label>
-                      <label class="conseciontitulo" *ngIf="consecion.tipo_persona=='F'">{{consecion.nombre}} {{consecion.primer_apellido}} {{consecion.segundo_apellido}}</label>
-                      <label class="conseciontitulo" *ngIf="consecion.tipo_persona=='M'">{{consecion.razon_social}} </label>
-                    </div>
-                    <div class="col s12">
-                      <label class="conseciontitulopequeñored">NUC:</label>
-                      <label class="conseciontitulopequeño"> {{consecion.nuc}}</label><br><br>
-                    </div><br>
-                    <div class="progress">
-                      <div class="determinate" style="width: 100%"></div>
-                    </div>
-                  </div><br> <br>
+                    <p-calendar *ngIf="btnverficarfecha" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" [(ngModel)]="datepay"  [minDate]="minDate" [maxDate]="datenow" [locale]="es" dateFormat="dd/mm/yy" (ngModelChange)="verificarfecha()"></p-calendar>
+                  </div>
                 </div>
+              </div> <br> <br>
+            </div>
+          </div>
+          <div class="col s11 offset-s1" id="cambiodetamanio6">
+            <a id="btnverificarpago" *ngIf="!btnhojavalorada"  class="waves-effect waves-light btn-small" disabled><i class="material-icons left">arrow_downward</i>Verificar Pago</a>
+            <a id="btnverificarpago" *ngIf="btnhojavalorada" (click)="habilitarpasotres()"  class="waves-effect waves-light btn-small"><i class="material-icons left">arrow_downward</i>Verificar Pago</a>
+          </div> <br> <br>
+          <div class="col s11 offset-s1" id="cambiodetamanio7">
+            <a id="btnverificarpago2" *ngIf="!fechaverificada" class="waves-effect waves-light btn-small" disabled><i class="material-icons left">arrow_downward</i>Confirmar pago</a>
+            <a id="btnverificarpago2" *ngIf="fechaverificada" class="waves-effect waves-light btn-small" (click)="busquedaconcesionarioactive()"><i class="material-icons left">arrow_downward</i>Confirmar pago</a> <br> <br>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="collapsible-header" id="divheader2"><i class="material-icons">search</i>Busqueda de concesionario</div>
+        <div class="row" *ngIf="div2busquedadeconcesionario"><br *ngIf="divdebusqueda"><br *ngIf="divdebusqueda">
+          <div class="row" *ngIf="divdebusqueda">
+            <div class="col s11 offset-s1">
+              <div class="col s4" id="cambiodetamanio1">
+                <p>
+                  <label>
+                    <input id="inputdefault" class="with-gap" name="group1" type="radio" (click) = "buscarpornombre()" checked />
+                    <span class="buscadores"><label class="buscadores">Nombre/Razón social</label></span>
+                  </label>
+                </p>
+              </div>
+              <div class="col s3" id="cambiodetamanio2">
+                <p>
+                  <label>
+                    <input class="with-gap" name="group1" type="radio" (click) = "buscarpornuc()" />
+                    <span class="buscadores"><label class="buscadores">NUC</label></span>
+                  </label>
+                </p>
               </div>
             </div>
-            <div class="row" >
+          </div>
+          <div class="row"  *ngIf="divdebusqueda">
+            <form  class="row">
+              <div class="row">
+                <div class="col s10">
+                  <div class="row">
+                    <div class="col s12">
+                      <nav class="col s8 offset-s1" id="divbusquedadearriba">
+                        <div class="col s12">
+                          <form>
+                            <div class="input-field">
+                              <div class="col s1">
+                                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                              </div>
+                              <div class="col s11" id="cambiotamaniosearch2">
+                                <input specialOnly style="text-transform: uppercase" autocomplete="off" placeholder="" id="nombre" name="nombre" type="text" class="form-control"
+                                [(ngModel)]="registroabuscar" (ngModelChange)="mychange($event)" >
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </nav>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row" *ngIf="div2busquedadeconcesionario">
+          <div class="row" *ngIf="divdebusqueda">
+            <div class="col s10 offset-s1" id="cardinformacionconsecionarios">
+              <div class="row" *ngFor="let consecion  of data; let i = index" (click)="seleccionarregistro(consecion)">
+                <div class="col s12">
+                  <div class="col s12">
+                    <label class="conseciontitulored" *ngIf="consecion.tipo_persona=='F'">Nombre: </label>
+                    <label class="conseciontitulored" *ngIf="consecion.tipo_persona=='M'">Razón Social:  </label>
+                    <label class="conseciontitulo" *ngIf="consecion.tipo_persona=='F'">{{consecion.nombre}} {{consecion.primer_apellido}} {{consecion.segundo_apellido}}</label>
+                    <label class="conseciontitulo" *ngIf="consecion.tipo_persona=='M'">{{consecion.razon_social}} </label>
+                  </div>
+                  <div class="col s12">
+                    <label class="conseciontitulopequeñored">NUC:</label>
+                    <label class="conseciontitulo"> {{consecion.nuc}}</label>
+                  </div><br>
+                  <div class="col s12">
+                    <label class="conseciontitulopequeñored">Localidad:</label>
+                    <label class="conseciontitulo"> {{consecion.localidad.nombre}}</label>
+                  </div><br>
+                  <div class="col s12">
+                    <label class="conseciontitulopequeñored">Municipio:</label>
+                    <label class="conseciontitulo"> {{consecion.localidad.municipio.nombre}}</label><br><br>
+                  </div>
+                  <div class="progress">
+                    <div class="determinate" style="width: 100%"></div>
+                  </div>
+                </div><br> <br>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row"  *ngIf="div2busquedadeconcesionario">
+          <div class="col s12" *ngIf="divplantillas">
+            <div class="col s11 offset-s1" *ngIf="registroamostrar!=undefined" >
               <div class="col s12">
-                <div class="col s10 offset-s1" >
-                  <table class="punteado">
-                    <tbody>
-                           <!--
-                           <tr>
-                             <td class="classtitulosceldas" *ngIf="registroamostrar.tipo_persona=='F'"><label class="cardtitulosred">Nombre:</label></td>
-                             <td class="classinfoceldas" *ngIf="registroamostrar.tipo_persona=='F'"><label class="cardtitulos">
-                               {{registroamostrar.nombre}} {{registroamostrar.primer_apellido}} {{registroamostrar.segundo_apellido}}
-                             </label></td>
-
-                             <td class="classtitulosceldas" *ngIf="registroamostrar.tipo_persona=='M'"><label class="cardtitulosred">Razón Social:</label></td>
-                             <td class="classinfoceldas" *ngIf="registroamostrar.tipo_persona=='M'"><label class="cardtitulos">
-                               {{registroamostrar.razon_social}}
-                             </label></td>
-                           </tr>
-
-                           <tr>
-                             <td class="classtitulosceldas"><label class="cardtitulosred">NUC:</label></td>
-                             <td class="classinfoceldas"><label class="cardtitulos">
-                               {{registroamostrar.nuc}}
-                             </label></td>
-                           </tr>
-                           <tr>
-                             <td class="classtitulosceldas"><label class="cardtitulosred">Localidad:</label></td>
-                             <td class="classinfoceldas"><label class="cardtitulos">{{registroamostrar.localidad}}</label></td>
-                           </tr>
-                           <tr>
-                             <td class="classtitulosceldas"><label class="cardtitulosred">Municipio:
-                             </label></td>
-                             <td class="classinfoceldas"><label class="cardtitulos">{{registroamostrar.municipio}}
-                             </label></td>
-                           </tr>
-                           -->
-                    </tbody>
-                  </table><br><br>
+                <div class="col s6" id="cambiodetamanio3">
+                  <label class="conseciontitulopequeñored" >Concesionario:</label><br>
+                  <label class="conseciontitulo" *ngIf="registroamostrar.tipo_persona == 'F' && registroamostrar!=undefined">{{ registroamostrar.nombre + " " + registroamostrar.primer_apellido + " " + registroamostrar.segundo_apellido }}</label>
+                  <label class="conseciontitulo" *ngIf="registroamostrar.tipo_persona == 'M' && registroamostrar!=undefined">{{ registroamostrar.razon_social }}</label>
                 </div>
-                <div class="col s10 offset-s1">
-                  <a class="waves-effect waves-light btn-small"  *ngIf="mostrarbien" (click)="segundoproceso()" ><i class="material-icons left">arrow_downward</i>Continuar</a>
+                <div class="col s6" id="cambiodetamanio3">
+                  <label class="conseciontitulopequeñored">NUC:</label><br>
+                  <label class="conseciontitulo" *ngIf="registroamostrar!=undefined">{{registroamostrar.nuc}}</label></div>
                 </div>
+                <div class="col s12">
+                  <div class="col s6" id="cambiodetamanio3">
+                    <label class="conseciontitulopequeñored">Municipio:</label><br>
+                    <label class="conseciontitulo"  *ngIf="registroamostrar!=undefined">{{registroamostrar.localidad.municipio.nombre}}</label>
+                  </div>
+                  <div class="col s6" id="cambiodetamanio3">
+                    <label class="conseciontitulopequeñored">Localidad:</label><br>
+                    <label class="conseciontitulo"  *ngIf="registroamostrar!=undefined">{{registroamostrar.localidad.nombre}}</label>
+                  </div>
+                </div>
+                <div class="col s12">
+                  <div class="col s6" id="cambiodetamanio3">
+                    <label class="conseciontitulopequeñored">Modalidad:</label><br>
+                    <label class="conseciontitulo" *ngIf="registroamostrar!=undefined">{{registroamostrar.modalidad.nombre}}</label>
+                  </div>
+                </div>
+            </div>
+
+
+            <div class="col s10 offset-s1" >
+              <p-table  #dt  [value]="plantillasencontradas" [paginator]="true" [rows]="10" [responsive]="true">
+                <ng-template pTemplate="caption">
+                  <div class="col s8" id="divsearchmob">
+                    <div class="input-field">
+                      <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                      <input id="inputsearchuser" type="text" pInputText size="50"  (input)="dt.filterGlobal($event.target.value, 'contains')" ><br>
+                    </div><br>
+                  </div>
+                  <div class="col s10 offset-s1" >
+                    <label class="conseciontitulo" >Selecciona la plantilla.</label><br>
+
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                  <tr>
+                    <th style="width:30%"><label class="tabladiariooficial">Nombre</label></th>
+                    <th style="width:20%"><label class="tabladiariooficial">Localidad</label></th>
+                    <th style="width:20%"><label class="tabladiariooficial">Municipio</label></th>
+                    <th style="width:10%"><label class="tabladiariooficial">Modalidad</label></th>
+                    <th style="width:20%"><label class="tabladiariooficial">Periódico / Fecha</label></th>
+                  </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr (click)=seleccionarplantilla(rowData,$event);  class="sinfondo">
+                      <td><div><label  class="tabladiariooficial">{{rowData.nombre}}</label></div></td>
+                      <td><div><label  class="tabladiariooficial">{{rowData.localidad.nombre}}</label></div></td>
+                      <td><div><label  class="tabladiariooficial">{{rowData.localidad.municipio.nombre}}</label></div></td>
+                      <td><div><label  class="tabladiariooficial">{{rowData.modalidad.nombre}}</label></div></td>
+                      <td><div><label  class="tabladiariooficial">{{rowData.periodico.fecha_publicacion}}</label></div></td>
+                    </tr>
+                  </ng-template>
+                </p-table><br><br>
+              </div>
+              <div class="col s10 offset-s1">
+                <a class="waves-effect waves-light btn-small"  *ngIf="!divdebusqueda" (click)="buscarOtroConcesionario()" > Buscar Otro concesionario</a>
+              </div>
+              <div class="col s10 offset-s1">
+                <br *ngIf="btngetRutas">
+                <a class="waves-effect waves-light btn-small"  *ngIf="btngetRutas" (click)="getRutas()" ><i class="material-icons left">arrow_downward</i>Continuar</a>
               </div>
             </div>
           </div>
@@ -208,13 +239,14 @@
                     <label  class="atributoscuestionariotitulos">Fecha de recepción.</label>
                   </div>
                   <div>
-                    <p-calendar [(ngModel)]="date1" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"  [locale]="es" dateFormat="dd/mm/yy"></p-calendar>
+                    <p-calendar [(ngModel)]="date1" [maxDate]="datenow" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"  [locale]="es" dateFormat="dd/mm/yy"></p-calendar>
                   </div>
                 </div><br> <br>
               </div>
             </div>
             <div class="col s11 offset-s1" id="cambiodetamanio6">
-              <a id="btnverificarpago" class="waves-effect waves-light btn-small"  ><i class="material-icons left">arrow_downward</i>Descargar Tarjetón</a>
+              <a *ngIf="foliosolicitud == null || date1 == null" id="btnverificarpago" class="waves-effect waves-light btn-small disabled"><i class="material-icons left">arrow_downward</i>Descargar Tarjetón</a>
+              <a *ngIf="foliosolicitud != null && date1 != null" id="btnverificarpago" class="waves-effect waves-light btn-small"  (click)="descargaractive()"><i class="material-icons left">arrow_downward</i>Descargar Tarjetón</a>
             </div> <br> <br>
           </div>
         </li>
@@ -225,13 +257,13 @@
               <a id="cambiodetamanio26" class="waves-effect waves-light btn-small  modal-trigger" data-target="modalvistaprevia"  (click)="vistaprevia()"><i class="material-icons left">arrow_downward</i>Vista previa.</a>
             </div><br>
             <div class="col s11 offset-s1" id="cambiodetamanio6"><br> <br>
-              <a id="btnverificarpago" class="waves-effect waves-light btn-small"  (click)="generate()"><i class="material-icons left">arrow_downward</i>Descargar PDF</a>
+              <a *ngIf="!btngetTarjeton" id="btnverificarpago" class="waves-effect waves-light btn-small disabled" ><i class="material-icons left">arrow_downward</i>Descargar PDF</a>
+              <a *ngIf="btngetTarjeton" id="btnverificarpago" class="waves-effect waves-light btn-small"  (click)="generate()"><i class="material-icons left">arrow_downward</i>Descargar PDF</a>
             </div> <br> <br>
           </div>
-          <br> <br>
+          <br *ngIf="div4descarga"> <br *ngIf="div4descarga">
         </li>
       </ul>
-     </div>
   </div>
 </div>
 
@@ -249,65 +281,59 @@
                 <div class="col s12">
                   <div class="input-field col s12">
                     <div class="row">
-                      <div class="col s11 offset-s1"><br><br><br>
-                        <label class="atributoscuestionariotitulos">Concesionario:</label><br>
-                        <label class="atributoscuestionariotitulos">CESAR SANTIAGO GUZMAN</label><br>
-                        <label class="atributoscuestionariotitulos">NUC:</label><br>
-                        <label class="atributoscuestionariotitulos">XXX/XXXXXXXXXX</label><br><br>
+                      <div class="col s11 offset-s1" *ngIf="registroamostrar!=undefined" >
+                        <div class="col s12">
+                          <div class="col s6" id="cambiodetamanio3">
+                            <label class="conseciontitulopequeñored" >Concesionario:</label><br>
+                            <label class="conseciontitulo" *ngIf="registroamostrar.tipo_persona == 'F' && registroamostrar!=undefined">{{ registroamostrar.nombre + " " + registroamostrar.primer_apellido + " " + registroamostrar.segundo_apellido }}</label>
+                            <label class="conseciontitulo" *ngIf="registroamostrar.tipo_persona == 'M' && registroamostrar!=undefined">{{ registroamostrar.razon_social }}</label>
+                          </div>
+                          <div class="col s6" id="cambiodetamanio3">
+                            <label class="conseciontitulopequeñored">NUC:</label><br>
+                            <label class="conseciontitulo" *ngIf="registroamostrar!=undefined">{{registroamostrar.nuc}}</label></div>
+                          </div>
+                          <div class="col s12">
+                            <div class="col s6" id="cambiodetamanio3">
+                              <label class="conseciontitulopequeñored">Municipio:</label><br>
+                              <label class="conseciontitulo"  *ngIf="registroamostrar!=undefined">{{registroamostrar.localidad.municipio.nombre}}</label>
+                            </div>
+                            <div class="col s6" id="cambiodetamanio3">
+                              <label class="conseciontitulopequeñored">Localidad:</label><br>
+                              <label class="conseciontitulo"  *ngIf="registroamostrar!=undefined">{{registroamostrar.localidad.nombre}}</label>
+                            </div>
+                          </div>
+                          <div class="col s12">
+                            <div class="col s6" id="cambiodetamanio3">
+                              <label class="conseciontitulopequeñored">Modalidad:</label><br>
+                              <label class="conseciontitulo" *ngIf="registroamostrar!=undefined">{{registroamostrar.modalidad.nombre}}</label>
+                            </div>
+                          </div>
                       </div>
-                      <div class="col s12">
-                        <p-table  #dt  [value]="arrayrutasdepruebas" [paginator]="true" [rows]="10" [responsive]="true" [globalFilterFields]="['destino','tarifa']">
+                      <div class="col s10 offset-s1">
+                        <p-table  #tt  [value]="arrayrutasdepruebas" [paginator]="true" [rows]="10" [responsive]="true" [globalFilterFields]="['ruta.origen','ruta.destino','descripcion_tarifa','tarifa']">
                           <ng-template pTemplate="caption">
-                            <div class="col s8" id="divsearchmob">
+                            <div class="col s6 offset-s5" id="divsearchmob">
                               <div class="input-field">
                                 <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                                <input id="inputsearchuser" type="text" pInputText size="50"  (input)="dt.filterGlobal($event.target.value, 'contains')" ><br>
+                                <input id="inputsearchuser" type="text" pInputText size="50"  (input)="tt.filterGlobal($event.target.value, 'contains')" ><br>
                                </div>
                                <br>
                             </div>
                           </ng-template>
                           <ng-template pTemplate="header" let-columns>
                             <tr>
-                              <th style="width:40%">
-                                <label  class="tabladiariooficial">
-                                  Destino
-                                </label>
-                              </th>
-                              <th style="width:40%">
-                                <label  class="tabladiariooficial">
-                                  Tarifa en letras
-                                </label>
-                              </th>
-                              <th style="width:20%">
-                                <label  class="tabladiariooficial">
-                                  Tarifa en numero
-                                </label>
-                              </th>
+                              <th style="width:30%"><label  class="tabladiariooficial">Origen</label></th>
+                              <th style="width:30%"><label  class="tabladiariooficial">Destino</label></th>
+                              <th style="width:30%"><label  class="tabladiariooficial">Tarifa en letras</label></th>
+                              <th style="width:10%"><label  class="tabladiariooficial">Tarifa en numero</label></th>
                             </tr>
                           </ng-template>
                           <ng-template pTemplate="body" let-rowData let-columns="columns">
-                            <tr (click)=habilitarbotones(rowData,$event);  class="sinfondo">
-                              <td>
-                                <div>
-                                  <label  class="tabladiariooficial">
-                                    {{rowData.destino}}
-                                  </label>
-                                </div>
-                              </td>
-                              <td>
-                                <div>
-                                  <label  class="tabladiariooficial">
-                                    {{convertNSService.convert(rowData.tarifa)}}
-                                  </label>
-                                </div>
-                              </td>
-                              <td>
-                                <div>
-                                  <label  class="tabladiariooficial">
-                                    {{"$"+rowData.tarifa.toFixed(2)}}
-                                  </label>
-                                </div>
-                              </td>
+                            <tr class="sinfondo">
+                              <td><div><label  class="tabladiariooficial">{{rowData.ruta.origen}}</label></div></td>
+                              <td><div><label  class="tabladiariooficial">{{rowData.ruta.destino}}</label></div></td>
+                              <td><div><label  class="tabladiariooficial">{{convertNSService.convert(rowData.tarifa)}}</label></div></td>
+                              <td><div><label  class="tabladiariooficial">{{"$"+rowData.tarifa.toFixed(2)}}</label></div></td>
                             </tr>
                           </ng-template>
                         </p-table>

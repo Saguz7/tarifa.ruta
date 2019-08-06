@@ -1,13 +1,15 @@
+import { RutaInterna } from '../vo/rutaInterna';
+
 export class Ruta {
-    origen: String;
-    destino: String;
-    tarifaenletras: String;
-    tarifa: number;
+  ruta: RutaInterna;
+    descripcion_tarifa: String;
+    tarifa: Number;
+    orden: Number;
 
     constructor(
-      origen?: String,
-      destino?: String,
-      tarifaenletras?: String,
-      tarifa?: number
+      rutaInterna?: RutaInterna,
+      descripcion_tarifa?: String,
+      tarifa?: Number,
+      orden?: Number
     ) {}
 }
