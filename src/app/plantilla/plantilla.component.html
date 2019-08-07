@@ -60,7 +60,7 @@
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-rowData let-columns="columns">
-                  <tr (click)=habilitarbotones(rowData,$event);  class="sinfondo">
+                  <tr class="sinfondo">
                     <td>
                       <div>
                         <label  class="tabladiariooficial">
@@ -127,7 +127,7 @@
                               <span class="tooltiptext">Inhabilitar periódico oficial</span>
                             </div>
                           </div>
-                          <div class="col s1 offset-s1" id="cambioenmob5" *ngIf="btnhabilitar">
+                          <div class="col s1 offset-s1" id="cambioenmob5" *ngIf="btninhabilitar">
                             <div class="tooltip">
                               <a class="btn-floating tooltipped"   data-position="bottom" data-tooltip="Activar usuario" ><i class="material-icons">check</i></a>
                               <span class="tooltiptext">Habilitar periódico oficial</span>

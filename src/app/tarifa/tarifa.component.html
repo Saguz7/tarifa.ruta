@@ -8,20 +8,20 @@
             <div class="col s10 offset-s1"> <br> <br>
               <div class="col s6" id="cambiodetamanio3">
                 <div>
-                  <label  class="atributoscuestionariotitulos">Folio de pago.</label>
+                  <label class="atributoscuestionariotitulos">Folio de pago.</label>
                 </div>
                 <div>
-                  <input  autocomplete="off" type="text" numbersOnly required onKeyPress="if(this.value.length==11) return false;" [(ngModel)]="pago1" id="pago1" name="pago1" class="form-control"  (ngModelChange)="validarfoliopago()">
+                  <input autocomplete="off" type="text" numbersOnly required onKeyPress="if(this.value.length==11) return false;" [(ngModel)]="pago1" id="pago1" name="pago1" class="form-control"  (ngModelChange)="validarfoliopago()">
                   <label for="input_text" id="pago1advertencia"  class="advertenciacontador">{{pago1aux.length - 1}} /11</label>
                 </div>
               </div>
               <div class="col s6" id="cambiodetamanio4">
                 <div>
-                  <label  class="atributoscuestionariotitulos">Linea de Captura.</label>
+                  <label class="atributoscuestionariotitulos">Linea de Captura.</label>
                 </div>
                 <div *ngIf="formlineadecaptura">
-                  <input  autocomplete="off" type="text" numbersOnly required onKeyPress="if(this.value.length==19) return false;" [(ngModel)]="pago2" id="pago2" name="pago2" class="form-control"  (ngModelChange)="validarnumerodecaptura()">
-                  <label for="input_text"  id="pago2advertencia"  class="advertenciacontador">{{pago2aux.length - 1}} /19</label>
+                  <input autocomplete="off" type="text" numbersOnly required onKeyPress="if(this.value.length==19) return false;" [(ngModel)]="pago2" id="pago2" name="pago2" class="form-control"  (ngModelChange)="validarnumerodecaptura()">
+                  <label for="input_text" id="pago2advertencia" class="advertenciacontador">{{pago2aux.length - 1}} /19</label>
                 </div>
                 <div *ngIf="!formlineadecaptura">
                   <input type="text" id="auxiliardepago" name="auxiliardepago" min="0" length="11" class="form-control" [(ngModel)]="pago2" disabled>
@@ -156,14 +156,15 @@
                 </div>
                 <div class="col s6" id="cambiodetamanio3">
                   <label class="conseciontitulopequeñored">NUC:</label><br>
-                  <label class="conseciontitulo" *ngIf="registroamostrar!=undefined">{{registroamostrar.nuc}}</label></div>
+                  <label class="conseciontitulo" *ngIf="registroamostrar!=undefined">{{registroamostrar.nuc}}</label>
                 </div>
-                <div class="col s12">
-                  <div class="col s6" id="cambiodetamanio3">
+              </div>
+              <div class="col s12">
+                 <div class="col s6" id="cambiodetamanio3">
                     <label class="conseciontitulopequeñored">Municipio:</label><br>
                     <label class="conseciontitulo"  *ngIf="registroamostrar!=undefined">{{registroamostrar.localidad.municipio.nombre}}</label>
-                  </div>
-                  <div class="col s6" id="cambiodetamanio3">
+                 </div>
+                 <div class="col s6" id="cambiodetamanio3">
                     <label class="conseciontitulopequeñored">Localidad:</label><br>
                     <label class="conseciontitulo"  *ngIf="registroamostrar!=undefined">{{registroamostrar.localidad.nombre}}</label>
                   </div>
@@ -175,21 +176,21 @@
                   </div>
                 </div>
             </div>
-
-
-            <div class="col s10 offset-s1" >
+            <div class="col s10 offset-s1">
+              <div class="col s12" >
+                <br>
+                <label class="buscadores" >Selecciona la plantilla.</label><br>
+                </div><br>
               <p-table  #dt  [value]="plantillasencontradas" [paginator]="true" [rows]="10" [responsive]="true">
                 <ng-template pTemplate="caption">
+                  <!--
                   <div class="col s8" id="divsearchmob">
                     <div class="input-field">
                       <label class="label-icon" for="search"><i class="material-icons">search</i></label>
                       <input id="inputsearchuser" type="text" pInputText size="50"  (input)="dt.filterGlobal($event.target.value, 'contains')" ><br>
                     </div><br>
                   </div>
-                  <div class="col s10 offset-s1" >
-                    <label class="conseciontitulo" >Selecciona la plantilla.</label><br>
-
-                    </div>
+                  -->
                 </ng-template>
                 <ng-template pTemplate="header" let-columns>
                   <tr>
@@ -212,11 +213,11 @@
                 </p-table><br><br>
               </div>
               <div class="col s10 offset-s1">
-                <a class="waves-effect waves-light btn-small"  *ngIf="!divdebusqueda" (click)="buscarOtroConcesionario()" > Buscar Otro concesionario</a>
+                <a class="waves-effect waves-light btn-small" *ngIf="!divdebusqueda" (click)="buscarOtroConcesionario()" > Buscar Otro concesionario</a>
               </div>
               <div class="col s10 offset-s1">
                 <br *ngIf="btngetRutas">
-                <a class="waves-effect waves-light btn-small"  *ngIf="btngetRutas" (click)="getRutas()" ><i class="material-icons left">arrow_downward</i>Continuar</a>
+                <a class="waves-effect waves-light btn-small" *ngIf="btngetRutas" (click)="getRutas()" ><i class="material-icons left">arrow_downward</i>Continuar</a>
               </div>
             </div>
           </div>
@@ -228,15 +229,15 @@
               <div class="col s10 offset-s1"> <br> <br>
                 <div class="col s6" id="cambiodetamanio3">
                   <div>
-                    <label  class="atributoscuestionariotitulos">Folio solicitud.</label>
+                    <label class="atributoscuestionariotitulos">Folio solicitud.</label>
                   </div>
                   <div>
-                    <input  autocomplete="off" type="text"  [(ngModel)]="foliosolicitud" id="foliosolicitud" name="foliosolicitud" class="form-control" >
+                    <input autocomplete="off" type="text"  [(ngModel)]="foliosolicitud" id="foliosolicitud" name="foliosolicitud" class="form-control" >
                   </div>
                 </div>
                 <div class="col s6" id="cambiodetamanio3">
                   <div>
-                    <label  class="atributoscuestionariotitulos">Fecha de recepción.</label>
+                    <label class="atributoscuestionariotitulos">Fecha de recepción.</label>
                   </div>
                   <div>
                     <p-calendar [(ngModel)]="date1" [maxDate]="datenow" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"  [locale]="es" dateFormat="dd/mm/yy"></p-calendar>
@@ -258,7 +259,7 @@
             </div><br>
             <div class="col s11 offset-s1" id="cambiodetamanio6"><br> <br>
               <a *ngIf="!btngetTarjeton" id="btnverificarpago" class="waves-effect waves-light btn-small disabled" ><i class="material-icons left">arrow_downward</i>Descargar PDF</a>
-              <a *ngIf="btngetTarjeton" id="btnverificarpago" class="waves-effect waves-light btn-small"  (click)="generate()"><i class="material-icons left">arrow_downward</i>Descargar PDF</a>
+              <a *ngIf="btngetTarjeton" id="btnverificarpago" class="waves-effect waves-light btn-small"  (click)="creaciondetarjeton()"><i class="material-icons left">arrow_downward</i>Descargar PDF</a>
             </div> <br> <br>
           </div>
           <br *ngIf="div4descarga"> <br *ngIf="div4descarga">
@@ -310,7 +311,7 @@
                           </div>
                       </div>
                       <div class="col s10 offset-s1">
-                        <p-table  #tt  [value]="arrayrutasdepruebas" [paginator]="true" [rows]="10" [responsive]="true" [globalFilterFields]="['ruta.origen','ruta.destino','descripcion_tarifa','tarifa']">
+                        <p-table #tt [value]="arrayrutasdepruebas" [paginator]="true" [rows]="10" [responsive]="true" [globalFilterFields]="['ruta.origen','ruta.destino','descripcion_tarifa','tarifa']">
                           <ng-template pTemplate="caption">
                             <div class="col s6 offset-s5" id="divsearchmob">
                               <div class="input-field">
@@ -322,18 +323,18 @@
                           </ng-template>
                           <ng-template pTemplate="header" let-columns>
                             <tr>
-                              <th style="width:30%"><label  class="tabladiariooficial">Origen</label></th>
-                              <th style="width:30%"><label  class="tabladiariooficial">Destino</label></th>
-                              <th style="width:30%"><label  class="tabladiariooficial">Tarifa en letras</label></th>
-                              <th style="width:10%"><label  class="tabladiariooficial">Tarifa en numero</label></th>
+                              <th style="width:30%"><label class="tabladiariooficial">Origen</label></th>
+                              <th style="width:30%"><label class="tabladiariooficial">Destino</label></th>
+                              <th style="width:30%"><label class="tabladiariooficial">Tarifa en letras</label></th>
+                              <th style="width:10%"><label class="tabladiariooficial">Tarifa en numero</label></th>
                             </tr>
                           </ng-template>
                           <ng-template pTemplate="body" let-rowData let-columns="columns">
                             <tr class="sinfondo">
-                              <td><div><label  class="tabladiariooficial">{{rowData.ruta.origen}}</label></div></td>
-                              <td><div><label  class="tabladiariooficial">{{rowData.ruta.destino}}</label></div></td>
-                              <td><div><label  class="tabladiariooficial">{{convertNSService.convert(rowData.tarifa)}}</label></div></td>
-                              <td><div><label  class="tabladiariooficial">{{"$"+rowData.tarifa.toFixed(2)}}</label></div></td>
+                              <td><div><label class="tabladiariooficial">{{rowData.ruta.origen}}</label></div></td>
+                              <td><div><label class="tabladiariooficial">{{rowData.ruta.destino}}</label></div></td>
+                              <td><div><label class="tabladiariooficial">{{ rowData.descripcion_tarifa }}</label></div></td>
+                              <td><div><label class="tabladiariooficial">{{"$"+rowData.tarifa.toFixed(2)}}</label></div></td>
                             </tr>
                           </ng-template>
                         </p-table>

@@ -63,49 +63,24 @@ export class PlantillaComponent implements OnInit {
       listPlantillas(){
         this.apollo.query({query: gql`
           query listPlantillas($localidad:ID,$modalidad:ID){
-    plantillas(localidad:$localidad,modalidad:$modalidad){
-      id,
-      nombre,
-      descripcion,
-      municipio{
-        id,
-        nombre
-      },
-      localidad{
-        id,
-        nombre,
-        municipio{
-          id,
-          nombre
-        }
-      },
-      modalidad{
-        id,
-        nombre,
-        descripcion,
-        abreviatura
-      },
-      periodico{
-        id,
-        descripcion,
-        fecha_publicacion,
-        tomo,
-        numero,
-        estatus,
-        createdAt
-      },
-      estatus,
-      createdAt
-    }
-  },
-                   `, fetchPolicy: 'network-only',
-                   variables: {
-                           localidad: null,
-                           modalidad: null
-                  }})
-                   .subscribe(result => {
-                     this.asignarplantillas(result.data)
-                   });
+              plantillas(localidad:$localidad,modalidad:$modalidad){
+                  id,nombre,descripcion,
+                  municipio{id,nombre},
+                  localidad{id,nombre,municipio{id,nombre}},
+                  modalidad{id,nombre,descripcion,abreviatura},
+                  periodico{id,descripcion,fecha_publicacion,tomo,numero,estatus,createdAt
+                  },
+                  estatus,createdAt
+              }
+          },
+           `, fetchPolicy: 'network-only',
+              variables: {
+                localidad: null,
+                modalidad: null
+              }})
+              .subscribe(result => {
+                this.asignarplantillas(result.data)
+              });
       }
 
       asignarplantillas(periodicos: any){

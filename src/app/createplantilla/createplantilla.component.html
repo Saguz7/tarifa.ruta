@@ -11,7 +11,7 @@
     <div class="col s10  offset-s1">
       <div class="col s12">
         <div class="input-field col s12">
-          <input  [(ngModel)]="municipio"  id="autocomplete2" name="autocomplete2"  autocomplete="off" type="text" (ngModelChange)="esconderdespuesdebuscar()" >
+          <input  [(ngModel)]="municipio"  style="text-transform: uppercase" id="autocomplete2" name="autocomplete2"  autocomplete="off" type="text" (ngModelChange)="esconderdespuesdebuscar()" >
           <label class="atributoscuestionariotitulos" for="municipio">Municipio</label>
         </div>
         <div  class="col s6">
@@ -22,7 +22,7 @@
     <div class="col s10  offset-s1" *ngIf="mostardespuesmunicipio"><br>
       <div class="col s12">
         <div class="input-field col s12">
-          <input autocomplete="off" type="text" id="autocomplete" name="autocomplete"  [(ngModel)]="localidad" (change)="validarlocalidad()" (ngModelChange)="validarlocalidad()">
+          <input autocomplete="off" style="text-transform: uppercase" type="text" id="autocomplete" name="autocomplete"  [(ngModel)]="localidad" (change)="validarlocalidad()" (ngModelChange)="validarlocalidad()">
           <label class="atributoscuestionariotitulos" for="localidad">Localidad</label>
         </div>
       </div>
@@ -30,7 +30,7 @@
     <div class="col s10  offset-s1" *ngIf="mostardespueslocalidad">
       <div class="col s12">
         <div class="input-field col s12">
-          <input autocomplete="off" type="text" id="autocomplete3" name="autocomplete3"  [(ngModel)]="modalidad" (change)="validarmodalidad()">
+          <input autocomplete="off" style="text-transform: uppercase" type="text" id="autocomplete3" name="autocomplete3"  [(ngModel)]="modalidad" (change)="validarmodalidad()">
           <label class="atributoscuestionariotitulos" for="modalidad">Modalidad</label>
         </div>
       </div>
@@ -144,19 +144,19 @@
         <label  class="atributoscuestionariotitulos">Ruta {{i+1}}</label>
       </div>
       <div class="col s12" *ngIf="mostardespuesperiodicooficial">
-        <div class="col s4 input-field inline">
+        <div class="col s4 input-field inline" id="cambiodetamanio">
           <input autocomplete="off" id="origen{{i+1}}" [(ngModel)]="ruta.ruta.origen" type="text" class="form-control" (ngModelChange)="validarrutas()">
           <label class="atributoscuestionariotitulos" for="origen{{i+1}}">Origen ruta {{i+1}}</label><br>
         </div>
-        <div class="col s4 input-field inline" *ngIf="mostardespuesperiodicooficial">
+        <div class="col s4 input-field inline" *ngIf="mostardespuesperiodicooficial" id="cambiodetamanio">
           <input autocomplete="off" id="destino{{i+1}}" [(ngModel)]="ruta.ruta.destino" type="text" class="form-control" (ngModelChange)="validarrutas()">
           <label class="atributoscuestionariotitulos" for="destino{{i+1}}">Destino ruta {{i+1}}</label><br>
         </div>
-        <div class="col s2 input-field inline" *ngIf="mostardespuesperiodicooficial">
+        <div class="col s2 input-field inline" *ngIf="mostardespuesperiodicooficial" id="cambiodetamanio">
           <input autocomplete="off" id="tarifa{{i+1}}" [(ngModel)]="ruta.tarifa" type="number" class="form-control" specialNumberAndDecimalOnly step=".5" (ngModelChange)="convertirALetras(ruta)">
-          <label class="atributoscuestionariotitulos" for="tarifa{{i+1}}">Tarifa ruta {{i+1}}</label><br>
+          <label class="atributoscuestionariotitulos" for="tarifa{{i+1}}">Tarifa {{i+1}}</label><br>
         </div>
-        <div class="col s2 input-field inline" *ngIf="mostardespuesperiodicooficial">
+        <div class="col s2 input-field inline" *ngIf="mostardespuesperiodicooficial" id="cambiodetamanio">
           <a class="btn-floating " (click)="deleteruta(i)"><i class="material-icons">clear</i></a>
         </div>
       </div>

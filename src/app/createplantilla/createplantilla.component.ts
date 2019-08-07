@@ -56,20 +56,22 @@ export class CreatePlantillaComponent implements OnInit {
     private convertNSService?: ConvertNSService,
     private plantillaComponent?: PlantillaComponent)
               {}
-
+//Se solicitan los periodicos y municipios totales para usarlos en el componente
   ngOnInit() {
-
-     this.allPeriodicosGQL.watch()
-    .valueChanges.subscribe(result => {
-      this.asignarperiodicos(result.data);
+    $(document).ready(function(){
+      $('.modal').modal({dismissible: false});
     });
+    this.allPeriodicosGQL.watch()
+        .valueChanges.subscribe(result => {
+          this.asignarperiodicos(result.data);
+        });
     this.allMunicipiosGQL.watch()
-    .valueChanges.subscribe(result => {
-      this.asignarmunicipios(result.data);
-    });
+        .valueChanges.subscribe(result => {
+          this.asignarmunicipios(result.data);
+        });
   }
-
-  listDiarios(){
+//Listar periodicos
+    listDiarios(){
      this.apollo.query({query: gql`
       query listPeriodicos{
         periodicos{
@@ -81,9 +83,11 @@ export class CreatePlantillaComponent implements OnInit {
         this.asignarperiodicos(result.data)
       });
     }
+//Asignar periodicos
     asignarperiodicos(periodicos: any){
       this.newspapers = periodicos.periodicos;
     }
+//Asignar modalidades
     asignarmodalidades(modalidades: any){
       this.modalidades = modalidades.modalidades;
       var datos = new Object();
@@ -99,9 +103,9 @@ export class CreatePlantillaComponent implements OnInit {
            }
          });
        });
-     }
-
-     asignarmunicipios(municipios: any){
+    }
+//Asignar Municipios
+    asignarmunicipios(municipios: any){
        this.municipios = municipios.municipios;
        var datos = new Object();
        datos = {};
@@ -116,8 +120,8 @@ export class CreatePlantillaComponent implements OnInit {
              }
            });
          });
-       }
-
+    }
+//Buscar localidad para validar
     buscarlocalidades(){
       this.listDiarios();
       var nombreMunicipio = (<HTMLInputElement>document.getElementById("autocomplete2")).value;
@@ -126,27 +130,25 @@ export class CreatePlantillaComponent implements OnInit {
           this.municipioobj = this.municipios[i];
         }
       }
+      this.apollo
+          .watchQuery({
+             query: gql`
+                    query listLocalidades($municipio:ID){
+                          localidades(municipio:$municipio){
+                          id,nombre,municipio{id,nombre}
+                          }
+                    },
+              `,
+             variables: {
+                   municipio: this.municipioobj.id
+             }
+           })
+           .valueChanges.subscribe(result => {
+               this.asignarlocalidades(result.data)
+           });
+    }
 
-
-    this.apollo
-     .watchQuery({
-       query: gql`
-       query listLocalidades($municipio:ID){
-             localidades(municipio:$municipio){
-               id,nombre,municipio{id,nombre}
-            }
-          },
-       `,
-       variables: {
-               municipio: this.municipioobj.id
-     }
-     })
-     .valueChanges.subscribe(result => {
-        this.asignarlocalidades(result.data)
-      });
-  }
-
-
+//Asignar Localidades
   asignarlocalidades(localidades: any){
     this.localidades = localidades.localidades;
     this.mostardespuesmunicipio = true;
@@ -171,6 +173,8 @@ export class CreatePlantillaComponent implements OnInit {
      }
   }
 
+  //Metodo para crear una ruta mas
+
   addruta(){
      this.buscarlocalidad();
      let rutanueva = new Ruta();
@@ -184,6 +188,8 @@ export class CreatePlantillaComponent implements OnInit {
       this.validarrutas();
 
   }
+
+  //Eliminar una ruta
 
   deleteruta(numero: any){
      this.arrayrutas.splice(numero, 1);
@@ -211,6 +217,8 @@ export class CreatePlantillaComponent implements OnInit {
      }
   }
 
+
+//Creacion de la plantilla
   crearruta(){
 
     this.buscarlocalidad();
@@ -222,14 +230,9 @@ export class CreatePlantillaComponent implements OnInit {
     nuevaplantilla.localidad = this.localidadobj.id;
     nuevaplantilla.modalidad = this.modalidadobj.id;
     nuevaplantilla.periodico = this.newspaperselect.id;
-
-    console.log(nuevaplantilla);
-
     for(var x = 0; x < this.arrayrutas.length; x++){
       this.arrayrutas[x].orden = x+1;
     }
-    console.log(this.arrayrutas);
-
     this.insertPlantillaGQL
       .mutate({
         plantilla: nuevaplantilla,
@@ -238,17 +241,15 @@ export class CreatePlantillaComponent implements OnInit {
       .subscribe(({ data }) => {
          $('.modal.open').modal('close')
          this.plantillaComponent.listPlantillas();
-
+         this.limpiar();
         M.toast({html: "Se ha agregado una nueva plantilla."})
                  }, (error) => {
                    var divisiones = error.message.split(":", 2);
                    M.toast({html: divisiones[1]})
        });
-
-
   }
 
-
+//Metodo para seleccionar el periodico y pintar el periodico seleccionado
   seleccionardiario(rowData: any,event: any){
      if(event.target.tagName == "TD"){
       for(var i = 1; i < event.target.parentNode.parentNode.parentNode.rows.length; i++){
@@ -276,7 +277,7 @@ export class CreatePlantillaComponent implements OnInit {
     this.newspaperselect = rowData;
     this.mostardespuesperiodicooficial = true;
   }
-
+//Convierte un numero a un formato de letras aceptado, usa un servicio externo para este proposito
   convertirALetras(rutaacambiar: any){
       rutaacambiar.descripcion_tarifa = this.convertNSService.convert(rutaacambiar.tarifa);
       this.validarrutas();
@@ -305,7 +306,7 @@ export class CreatePlantillaComponent implements OnInit {
        this.modalidades= null;
      }
 
-
+//Metodo que valida que no se encuentren rutas repetidas en las agregadas por el usuario, si existen rutas repetidas se desabilita elboton de crear plantilla
      validarrutas(){
        if(this.arrayrutas.length==0){
          this.verificarrutas = false;
@@ -317,8 +318,7 @@ export class CreatePlantillaComponent implements OnInit {
               this.verificarrutas = false;
          }
        }
-
-         this.velidacionrepetidos = true;
+       this.velidacionrepetidos = true;
         for(var i = 0; i < this.arrayrutas.length;i++){
          for(var x = 0; x < this.arrayrutas.length;x++){
               if((this.arrayrutas[i].ruta.origen == this.arrayrutas[x].ruta.origen && this.arrayrutas[i].ruta.origen!= "") && (this.arrayrutas[i].ruta.destino == this.arrayrutas[x].ruta.destino && this.arrayrutas[i].ruta.destino!= "") && x != i && this.velidacionrepetidos)
@@ -329,7 +329,7 @@ export class CreatePlantillaComponent implements OnInit {
          }
        }
      }
-
+//Comprueba de que la Localidad si exista
      validarlocalidad(){
        var inputlocalidad = (<HTMLInputElement>document.getElementById("autocomplete")).value;
        var decision = false;
@@ -344,7 +344,7 @@ export class CreatePlantillaComponent implements OnInit {
               }
           }
       }
-
+//Comprueba de que la modalidad si exista
      validarmodalidad(){
        this.mostardespuesmodalidad = false;
        var inputmodalidad = (<HTMLInputElement>document.getElementById("autocomplete3")).value;
