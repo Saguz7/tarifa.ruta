@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login/login.component';
-import { PaymentComponent } from './payment/payment.component';
 import { CoreModule } from "./core/core.module";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TarifaComponent } from './tarifa/tarifa.component';
@@ -29,7 +28,6 @@ import {DropdownModule} from 'primeng/dropdown';
     LoginComponent,
     PaymentComponent,
     TarifaComponent,
-    PaymentComponent,
     PlantillaComponent,
     OnlynumberDirective,
     SpecialNumberAndDecimalDirective,
