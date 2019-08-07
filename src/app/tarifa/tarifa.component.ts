@@ -13,7 +13,6 @@
   import {CALIBRI} from "../core/key/calibri";
   import {CALIBRIB} from "../core/key/calibrib";
   import { ConvertNSService } from '../core/services/convertns.service';
-  import { PagosService } from '../core/services/pagos.service';
 
  @Component({
   selector: 'app-tarifa', templateUrl: './tarifa.component.html', styleUrls: ['./tarifa.component.css']
@@ -69,8 +68,7 @@ export class TarifaComponent implements OnInit {
     constructor(
       private router?: Router,
       private apollo?: Apollo,
-      private convertNSService?: ConvertNSService,
-      private pagosService?: PagosService
+      private convertNSService?: ConvertNSService
     ){}
 
 

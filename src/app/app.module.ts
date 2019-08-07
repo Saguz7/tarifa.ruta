@@ -26,7 +26,6 @@ import {DropdownModule} from 'primeng/dropdown';
   declarations: [
     AppComponent,
     LoginComponent,
-    PaymentComponent,
     TarifaComponent,
     PlantillaComponent,
     OnlynumberDirective,
