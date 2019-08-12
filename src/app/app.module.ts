@@ -22,6 +22,9 @@ import {ButtonModule} from 'primeng/button';
 import {TableModule} from 'primeng/table';
 import {DropdownModule} from 'primeng/dropdown';
 
+
+import { PaymentsModule } from 'semovi-payments';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +49,8 @@ import {DropdownModule} from 'primeng/dropdown';
     BrowserAnimationsModule,
     ButtonModule,
     TableModule,
-    DropdownModule
+    DropdownModule,
+    PaymentsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

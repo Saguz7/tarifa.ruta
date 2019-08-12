@@ -5,58 +5,30 @@
         <div class="collapsible-header" id="divheader1"><i class="material-icons">attach_money</i> Validación de pago</div>
         <div class="row" *ngIf="div1validacionpago"><br>
           <div class="row">
-            <div class="col s10 offset-s1"> <br> <br>
-              <div class="col s6" id="cambiodetamanio3">
-                <div>
-                  <label class="atributoscuestionariotitulos">Folio de pago.</label>
-                </div>
-                <div>
-                  <input autocomplete="off" type="text" numbersOnly required onKeyPress="if(this.value.length==11) return false;" [(ngModel)]="pago1" id="pago1" name="pago1" class="form-control"  (ngModelChange)="validarfoliopago()">
-                  <label for="input_text" id="pago1advertencia"  class="advertenciacontador">{{pago1aux.length - 1}} /11</label>
-                </div>
-              </div>
-              <div class="col s6" id="cambiodetamanio4">
-                <div>
-                  <label class="atributoscuestionariotitulos">Linea de Captura.</label>
-                </div>
-                <div *ngIf="formlineadecaptura">
-                  <input autocomplete="off" type="text" numbersOnly required onKeyPress="if(this.value.length==19) return false;" [(ngModel)]="pago2" id="pago2" name="pago2" class="form-control"  (ngModelChange)="validarnumerodecaptura()">
-                  <label for="input_text" id="pago2advertencia" class="advertenciacontador">{{pago2aux.length - 1}} /19</label>
-                </div>
-                <div *ngIf="!formlineadecaptura">
-                  <input type="text" id="auxiliardepago" name="auxiliardepago" min="0" length="11" class="form-control" [(ngModel)]="pago2" disabled>
-                  <label id="pago3advertencia"  class="advertenciacontador">{{pago2aux.length - 1}} /19</label>
-                </div>
-              </div>
-              <div class="col s6" id="cambiodetamanio5">
-                <div>
-                  <label  class="atributoscuestionariotitulos">Folio de hoja valorada.</label>
-                </div>
-                <div *ngIf="!formhojavalorada">
-                  <input type="number" name="test_name" min="0" length="11" class="form-control" oninput="validity.valid||(value='');"   [(ngModel)]="pago3" disabled>
-                  <label for="input_text" id="pago3advertencia" class="advertenciacontador">{{pago3aux.length - 1}} /9</label>
-                </div>
-                <div *ngIf="formhojavalorada">
-                  <input type="text" numbersOnly required onKeyPress="if(this.value.length==9) return false;" [(ngModel)]="pago3" id="pago3" name="pago3" class="form-control" (ngModelChange)="validarhojavalorada()">
-                  <label for="input_text" id="pago3advertencia" class="advertenciacontador">{{pago3aux.length - 1}} /9</label>
-                </div>
-              </div>
-              <div class="col s6" id="cambiodetamanio5">
-                <div>
-                  <label  class="atributoscuestionariotitulos">Fecha de pago.</label>
-                </div>
-                <div>
-                  <div class="col s12">
-                    <p-calendar *ngIf="btnverficarfecha" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" [(ngModel)]="datepay"  [minDate]="minDate" [maxDate]="datenow" [locale]="es" dateFormat="dd/mm/yy" (ngModelChange)="verificarfecha()"></p-calendar>
+            <div class="col s10 offset-s1"><br>
+              <semovi-payments [IModel]="paymentsModel" (Ostatus)="check($event)"></semovi-payments>
+              <div class="row" *ngIf="mostrardespuesdewebservice">
+                <div class="col s6" id="cambiodetamanio5">
+                  <div>
+                    <label  class="atributoscuestionariotitulos">Folio de hoja valorada.</label>
+                  </div>
+                  <div class="input-field">
+                    <input type="text" numbersOnly required onKeyPress="if(this.value.length==9) return false;" [(ngModel)]="pago3" id="pago3" name="pago3" class="form-control" (ngModelChange)="validarhojavalorada()">
                   </div>
                 </div>
-              </div> <br> <br>
+                <div class="col s6" id="cambiodetamanio5" *ngIf=mostrarfechapago>
+                  <div>
+                    <label  class="atributoscuestionariotitulos">Fecha de pago.</label>
+                  </div>
+                  <div>
+                    <div class="input-field">
+                      <p-calendar  [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" [(ngModel)]="datepay"  [minDate]="minDate" [maxDate]="datenow" [locale]="es" dateFormat="dd/mm/yy" (ngModelChange)="verificarfecha()"></p-calendar>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="col s11 offset-s1" id="cambiodetamanio6">
-            <a id="btnverificarpago" *ngIf="!btnhojavalorada"  class="waves-effect waves-light btn-small" disabled><i class="material-icons left">arrow_downward</i>Verificar Pago</a>
-            <a id="btnverificarpago" *ngIf="btnhojavalorada" (click)="habilitarpasotres()"  class="waves-effect waves-light btn-small"><i class="material-icons left">arrow_downward</i>Verificar Pago</a>
-          </div> <br> <br>
           <div class="col s11 offset-s1" id="cambiodetamanio7">
             <a id="btnverificarpago2" *ngIf="!fechaverificada" class="waves-effect waves-light btn-small" disabled><i class="material-icons left">arrow_downward</i>Confirmar pago</a>
             <a id="btnverificarpago2" *ngIf="fechaverificada" class="waves-effect waves-light btn-small" (click)="busquedaconcesionarioactive()"><i class="material-icons left">arrow_downward</i>Confirmar pago</a> <br> <br>
@@ -146,7 +118,13 @@
           </div>
         </div>
         <div class="row"  *ngIf="div2busquedadeconcesionario">
-          <div class="col s12" *ngIf="divplantillas">
+          <div class="col s12" *ngIf="registroamostrar!=undefined">
+            <div>
+              <div class="col s11 offset-s1">
+                <br>
+                <label class="buscadores" >Datos del concesionario.</label><br>
+              </div>
+            </div>
             <div class="col s11 offset-s1" *ngIf="registroamostrar!=undefined" >
               <div class="col s12">
                 <div class="col s6" id="cambiodetamanio3">
@@ -176,21 +154,75 @@
                   </div>
                 </div>
             </div>
-            <div class="col s10 offset-s1">
-              <div class="col s12" >
-                <br>
-                <label class="buscadores" >Selecciona la plantilla.</label><br>
-                </div><br>
+            <br>
+            <br>
+            <!-- Aqui iria lo de vehiculo y serie -->
+            <div class="col s11 offset-s1">
+
+                <div class="col s12" *ngIf="!formbuscarnumserie">
+                  <br>
+                  <br>
+                  <br>
+                  <div class="row">
+                    <div class="col s12">
+                      <label class="atributoscuestionariotitulos">N° Serie:</label>
+                    </div>
+                    <div class="col s6" id="cambiodetamanio8">
+                      <div class="file-path-wrapper">
+                        <div class="col s12">
+                          <input  autocomplete="off" id="serie" name="serie" type="text" class="form-control" [(ngModel)]="vehiculo.serie" style="text-transform: uppercase">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col s2" id="cambiodetamanio9">
+                      <div class="btn" (click)="buscarnumserie()"  id="divbuttonvalidar">
+                        <div class="valign-wrapper">
+                          <label class="buscadorcss">Validar</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="mostrarformulario2">
+                <div class="col s11 offset-s1">
+                  <br>
+                  <label class="buscadores" >Datos del vehículo.</label><br>
+
+
+                </div>
+              </div>
+
+              <div *ngIf="mostrarformulario2">
+                <div class="col s11 offset-s1">
+                  <div class="col s12">
+                    <div class="col s6" id="cambiodetamanio3">
+                      <label class="conseciontitulopequeñored" >Serie:</label><br>
+                      <label class="conseciontitulo">{{vehiculo.serie}}</label>
+                    </div>
+                    <div class="col s6" id="cambiodetamanio3">
+                      <label class="conseciontitulopequeñored">Sitio:</label><br>
+                      <label class="conseciontitulo">SITIO ESTATICO</label>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  </div>
+              </div>
+
+              <div *ngIf="mostrarplantillas">
+                <div class="col s11 offset-s1">
+                  <br>
+                  <label class="buscadores" >Selecciona la plantilla.</label><br>
+
+
+                </div>
+              </div>
+              <br>
+            <div class="col s10 offset-s1" *ngIf="mostrarplantillas">
+
               <p-table  #dt  [value]="plantillasencontradas" [paginator]="true" [rows]="10" [responsive]="true">
                 <ng-template pTemplate="caption">
-                  <!--
-                  <div class="col s8" id="divsearchmob">
-                    <div class="input-field">
-                      <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                      <input id="inputsearchuser" type="text" pInputText size="50"  (input)="dt.filterGlobal($event.target.value, 'contains')" ><br>
-                    </div><br>
-                  </div>
-                  -->
                 </ng-template>
                 <ng-template pTemplate="header" let-columns>
                   <tr>
