@@ -21,9 +21,7 @@ export class AllModalidadesGQL extends Query<Response> {
   query listModalidades{
   modalidades{
     id,
-    nombre,
-    descripcion,
-    abreviatura
+    nombre 
   }
 }
   `;

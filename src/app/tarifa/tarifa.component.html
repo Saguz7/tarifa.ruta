@@ -13,7 +13,10 @@
                     <label  class="atributoscuestionariotitulos">Folio de hoja valorada.</label>
                   </div>
                   <div class="input-field">
-                    <input type="text" numbersOnly required onKeyPress="if(this.value.length==9) return false;" [(ngModel)]="pago3" id="pago3" name="pago3" class="form-control" (ngModelChange)="validarhojavalorada()">
+                                <input id="input_text" type="text" data-length="10">
+                    <!--
+                    <input type="text" numbersOnly required onKeyPress="if(this.value.length==9) return false;" [(ngModel)]="pago3" id="input_text" name="pago3" class="form-control" data-length="9">
+                    -->
                   </div>
                 </div>
                 <div class="col s6" id="cambiodetamanio5" *ngIf=mostrarfechapago>
@@ -28,15 +31,15 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col s11 offset-s1" id="cambiodetamanio7">
-            <a id="btnverificarpago2" *ngIf="!fechaverificada" class="waves-effect waves-light btn-small" disabled><i class="material-icons left">arrow_downward</i>Confirmar pago</a>
-            <a id="btnverificarpago2" *ngIf="fechaverificada" class="waves-effect waves-light btn-small" (click)="busquedaconcesionarioactive()"><i class="material-icons left">arrow_downward</i>Confirmar pago</a> <br> <br>
+            <div class="col s11 offset-s1" id="cambiodetamanio7" *ngIf="pago3 != undefined">
+              <a id="btnverificarpago2" *ngIf="pago3.length != 9 || !validarfecha" class="waves-effect waves-light btn-small" disabled><i class="material-icons left">arrow_downward</i>Confirmar pago</a>
+              <a id="btnverificarpago2" *ngIf="pago3.length == 9 && validarfecha" class="waves-effect waves-light btn-small" (click)="busquedaconcesionarioactive()"><i class="material-icons left">arrow_downward</i>Confirmar pago</a> <br> <br>
+            </div>
           </div>
         </div>
       </li>
       <li>
-        <div class="collapsible-header" id="divheader2"><i class="material-icons">search</i>Busqueda de concesionario</div>
+        <div class="collapsible-header" id="divheader2"><i class="material-icons">search</i>Búsqueda de concesionario</div>
         <div class="row" *ngIf="div2busquedadeconcesionario"><br *ngIf="divdebusqueda"><br *ngIf="divdebusqueda">
           <div class="row" *ngIf="divdebusqueda">
             <div class="col s11 offset-s1">
@@ -92,10 +95,10 @@
               <div class="row" *ngFor="let consecion  of data; let i = index" (click)="seleccionarregistro(consecion)">
                 <div class="col s12">
                   <div class="col s12">
-                    <label class="conseciontitulored" *ngIf="consecion.tipo_persona=='F'">Nombre: </label>
-                    <label class="conseciontitulored" *ngIf="consecion.tipo_persona=='M'">Razón Social:  </label>
-                    <label class="conseciontitulo" *ngIf="consecion.tipo_persona=='F'">{{consecion.nombre}} {{consecion.primer_apellido}} {{consecion.segundo_apellido}}</label>
-                    <label class="conseciontitulo" *ngIf="consecion.tipo_persona=='M'">{{consecion.razon_social}} </label>
+                    <label class="conseciontitulored" *ngIf="consecion.concesionario.tipoPersona=='F'">Nombre: </label>
+                    <label class="conseciontitulored" *ngIf="consecion.concesionario.tipoPersona=='M'">Razón Social:  </label>
+                    <label class="conseciontitulo" *ngIf="consecion.concesionario.tipoPersona=='F'">{{consecion.concesionario.nombre}} {{consecion.concesionario.primerApellido	}} {{consecion.concesionario.segundoApellido}}</label>
+                    <label class="conseciontitulo" *ngIf="consecion.concesionario.tipoPersona=='M'">{{consecion.concesionario.razonSocial}} </label>
                   </div>
                   <div class="col s12">
                     <label class="conseciontitulopequeñored">NUC:</label>
@@ -103,11 +106,11 @@
                   </div><br>
                   <div class="col s12">
                     <label class="conseciontitulopequeñored">Localidad:</label>
-                    <label class="conseciontitulo"> {{consecion.localidad.nombre}}</label>
+                    <label class="conseciontitulo"> {{consecion.concesionario.localidad.nombre}}</label>
                   </div><br>
                   <div class="col s12">
                     <label class="conseciontitulopequeñored">Municipio:</label>
-                    <label class="conseciontitulo"> {{consecion.localidad.municipio.nombre}}</label><br><br>
+                    <label class="conseciontitulo"> {{consecion.concesionario.localidad.municipio.nombre}}</label><br><br>
                   </div>
                   <div class="progress">
                     <div class="determinate" style="width: 100%"></div>
@@ -120,8 +123,7 @@
         <div class="row"  *ngIf="div2busquedadeconcesionario">
           <div class="col s12" *ngIf="registroamostrar!=undefined">
             <div>
-              <div class="col s11 offset-s1">
-                <br>
+              <div class="col s11 offset-s1"><br>
                 <label class="buscadores" >Datos del concesionario.</label><br>
               </div>
             </div>
@@ -129,8 +131,8 @@
               <div class="col s12">
                 <div class="col s6" id="cambiodetamanio3">
                   <label class="conseciontitulopequeñored" >Concesionario:</label><br>
-                  <label class="conseciontitulo" *ngIf="registroamostrar.tipo_persona == 'F' && registroamostrar!=undefined">{{ registroamostrar.nombre + " " + registroamostrar.primer_apellido + " " + registroamostrar.segundo_apellido }}</label>
-                  <label class="conseciontitulo" *ngIf="registroamostrar.tipo_persona == 'M' && registroamostrar!=undefined">{{ registroamostrar.razon_social }}</label>
+                  <label class="conseciontitulo" *ngIf="registroamostrar.concesionario.tipoPersona == 'F' && registroamostrar!=undefined">{{ registroamostrar.concesionario.nombre + " " + registroamostrar.concesionario.primerApellido + " " + registroamostrar.concesionario.segundoApellido }}</label>
+                  <label class="conseciontitulo" *ngIf="registroamostrar.concesionario.tipoPersona == 'M' && registroamostrar!=undefined">{{ registroamostrar.concesionario.razonSocial }}</label>
                 </div>
                 <div class="col s6" id="cambiodetamanio3">
                   <label class="conseciontitulopequeñored">NUC:</label><br>
@@ -139,12 +141,12 @@
               </div>
               <div class="col s12">
                  <div class="col s6" id="cambiodetamanio3">
-                    <label class="conseciontitulopequeñored">Municipio:</label><br>
-                    <label class="conseciontitulo"  *ngIf="registroamostrar!=undefined">{{registroamostrar.localidad.municipio.nombre}}</label>
+                   <label class="conseciontitulopequeñored">Municipio:</label><br>
+                   <label class="conseciontitulo"  *ngIf="registroamostrar!=undefined">{{registroamostrar.concesionario.localidad.municipio.nombre}}</label>
                  </div>
                  <div class="col s6" id="cambiodetamanio3">
-                    <label class="conseciontitulopequeñored">Localidad:</label><br>
-                    <label class="conseciontitulo"  *ngIf="registroamostrar!=undefined">{{registroamostrar.localidad.nombre}}</label>
+                   <label class="conseciontitulopequeñored">Localidad:</label><br>
+                   <label class="conseciontitulo"  *ngIf="registroamostrar!=undefined">{{registroamostrar.concesionario.localidad.nombre}}</label>
                   </div>
                 </div>
                 <div class="col s12">
@@ -153,74 +155,55 @@
                     <label class="conseciontitulo" *ngIf="registroamostrar!=undefined">{{registroamostrar.modalidad.nombre}}</label>
                   </div>
                 </div>
-            </div>
-            <br>
-            <br>
-            <!-- Aqui iria lo de vehiculo y serie -->
+            </div><br><br>
             <div class="col s11 offset-s1">
-
-                <div class="col s12" *ngIf="!formbuscarnumserie">
-                  <br>
-                  <br>
-                  <br>
-                  <div class="row">
-                    <div class="col s12">
-                      <label class="atributoscuestionariotitulos">N° Serie:</label>
-                    </div>
-                    <div class="col s6" id="cambiodetamanio8">
-                      <div class="file-path-wrapper">
-                        <div class="col s12">
-                          <input  autocomplete="off" id="serie" name="serie" type="text" class="form-control" [(ngModel)]="vehiculo.serie" style="text-transform: uppercase">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col s2" id="cambiodetamanio9">
-                      <div class="btn" (click)="buscarnumserie()"  id="divbuttonvalidar">
-                        <div class="valign-wrapper">
-                          <label class="buscadorcss">Validar</label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div *ngIf="mostrarformulario2">
-                <div class="col s11 offset-s1">
-                  <br>
-                  <label class="buscadores" >Datos del vehículo.</label><br>
-
-
-                </div>
-              </div>
-
-              <div *ngIf="mostrarformulario2">
-                <div class="col s11 offset-s1">
+              <div class="col s12" *ngIf="!formbuscarnumserie"><br><br><br>
+                <div class="row">
                   <div class="col s12">
-                    <div class="col s6" id="cambiodetamanio3">
-                      <label class="conseciontitulopequeñored" >Serie:</label><br>
-                      <label class="conseciontitulo">{{vehiculo.serie}}</label>
+                    <label class="atributoscuestionariotitulos">N° Serie:</label>
+                  </div>
+                  <div class="col s6" id="cambiodetamanio8">
+                    <div class="file-path-wrapper">
+                      <div class="col s12">
+                        <input  autocomplete="off" id="serie" name="serie" type="text" class="form-control" [(ngModel)]="vehiculo.serie" style="text-transform: uppercase">
+                      </div>
                     </div>
-                    <div class="col s6" id="cambiodetamanio3">
-                      <label class="conseciontitulopequeñored">Sitio:</label><br>
-                      <label class="conseciontitulo">SITIO ESTATICO</label>
+                  </div>
+                  <div class="col s2" id="cambiodetamanio9">
+                    <div class="btn" (click)="buscarnumserie()"  id="divbuttonvalidar">
+                      <div class="valign-wrapper">
+                        <label class="buscadorcss">Validar</label>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div>
-                  </div>
               </div>
-
-              <div *ngIf="mostrarplantillas">
-                <div class="col s11 offset-s1">
-                  <br>
-                  <label class="buscadores" >Selecciona la plantilla.</label><br>
-
-
+            </div>
+            <div *ngIf="mostrarformulario2">
+              <div class="col s11 offset-s1"><br>
+                <label class="buscadores" >Datos del vehículo.</label><br>
+              </div>
+            </div>
+            <div *ngIf="mostrarformulario2">
+              <div class="col s11 offset-s1">
+                <div class="col s12">
+                  <div class="col s6" id="cambiodetamanio3">
+                    <label class="conseciontitulopequeñored" >Serie:</label><br>
+                    <label class="conseciontitulo">{{vehiculo.serie}}</label>
+                  </div>
+                  <div class="col s6" id="cambiodetamanio3">
+                    <label class="conseciontitulopequeñored">Sitio:</label><br>
+                    <label class="conseciontitulo">{{registroamostrar.sitio.nombre}}</label>
+                  </div>
                 </div>
               </div>
-              <br>
+            </div>
+            <div *ngIf="mostrarplantillas">
+              <div class="col s11 offset-s1"><br>
+                <label class="buscadores" >Selecciona la plantilla.</label><br>
+              </div>
+            </div><br>
             <div class="col s10 offset-s1" *ngIf="mostrarplantillas">
-
               <p-table  #dt  [value]="plantillasencontradas" [paginator]="true" [rows]="10" [responsive]="true">
                 <ng-template pTemplate="caption">
                 </ng-template>
@@ -232,76 +215,72 @@
                     <th style="width:10%"><label class="tabladiariooficial">Modalidad</label></th>
                     <th style="width:20%"><label class="tabladiariooficial">Periódico / Fecha</label></th>
                   </tr>
-                  </ng-template>
-                  <ng-template pTemplate="body" let-rowData let-columns="columns">
-                    <tr (click)=seleccionarplantilla(rowData,$event);  class="sinfondo">
-                      <td><div><label  class="tabladiariooficial">{{rowData.nombre}}</label></div></td>
-                      <td><div><label  class="tabladiariooficial">{{rowData.localidad.nombre}}</label></div></td>
-                      <td><div><label  class="tabladiariooficial">{{rowData.localidad.municipio.nombre}}</label></div></td>
-                      <td><div><label  class="tabladiariooficial">{{rowData.modalidad.nombre}}</label></div></td>
-                      <td><div><label  class="tabladiariooficial">{{rowData.periodico.fecha_publicacion}}</label></div></td>
-                    </tr>
-                  </ng-template>
-                </p-table><br><br>
-              </div>
-              <div class="col s10 offset-s1">
-                <a class="waves-effect waves-light btn-small" *ngIf="!divdebusqueda" (click)="buscarOtroConcesionario()" > Buscar Otro concesionario</a>
-              </div>
-              <div class="col s10 offset-s1">
-                <br *ngIf="btngetRutas">
-                <a class="waves-effect waves-light btn-small" *ngIf="btngetRutas" (click)="getRutas()" ><i class="material-icons left">arrow_downward</i>Continuar</a>
-              </div>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                  <tr (click)=seleccionarplantilla(rowData,$event);  class="sinfondo">
+                    <td><div><label  class="tabladiariooficial">{{rowData.nombre}}</label></div></td>
+                    <td><div><label  class="tabladiariooficial">{{rowData.localidad.nombre}}</label></div></td>
+                    <td><div><label  class="tabladiariooficial">{{rowData.localidad.municipio.nombre}}</label></div></td>
+                    <td><div><label  class="tabladiariooficial">{{rowData.modalidad.nombre}}</label></div></td>
+                    <td><div><label  class="tabladiariooficial">{{rowData.periodico.fecha_publicacion}}</label></div></td>
+                  </tr>
+                </ng-template>
+              </p-table><br><br>
+            </div>
+            <div class="col s10 offset-s1">
+              <a class="waves-effect waves-light btn-small" *ngIf="!divdebusqueda" (click)="buscarOtroConcesionario()" > Buscar Otro concesionario</a>
+            </div>
+            <div class="col s10 offset-s1"><br *ngIf="btngetRutas">
+              <a class="waves-effect waves-light btn-small" *ngIf="btngetRutas" (click)="getRutas()" ><i class="material-icons left">arrow_downward</i>Continuar</a>
             </div>
           </div>
-        </li>
-        <li>
-          <div class="collapsible-header" id="divheader3"><i class="material-icons">assignment</i>Solicitudes</div>
-          <div class="row" *ngIf="div3solicitud"><br>
-            <div class="row">
-              <div class="col s10 offset-s1"> <br> <br>
-                <div class="col s6" id="cambiodetamanio3">
-                  <div>
-                    <label class="atributoscuestionariotitulos">Folio solicitud.</label>
-                  </div>
-                  <div>
-                    <input autocomplete="off" type="text"  [(ngModel)]="foliosolicitud" id="foliosolicitud" name="foliosolicitud" class="form-control" >
-                  </div>
+        </div>
+      </li>
+      <li>
+        <div class="collapsible-header" id="divheader3"><i class="material-icons">assignment</i>Solicitudes</div>
+        <div class="row" *ngIf="div3solicitud"><br>
+          <div class="row">
+            <div class="col s10 offset-s1"> <br> <br>
+              <div class="col s6" id="cambiodetamanio3">
+                <div>
+                  <label class="atributoscuestionariotitulos">Folio solicitud.</label>
                 </div>
-                <div class="col s6" id="cambiodetamanio3">
-                  <div>
-                    <label class="atributoscuestionariotitulos">Fecha de recepción.</label>
-                  </div>
-                  <div>
-                    <p-calendar [(ngModel)]="date1" [maxDate]="datenow" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"  [locale]="es" dateFormat="dd/mm/yy"></p-calendar>
-                  </div>
-                </div><br> <br>
+                <div>
+                  <input autocomplete="off" type="text"  [(ngModel)]="foliosolicitud" id="foliosolicitud" name="foliosolicitud" class="form-control" >
+                </div>
               </div>
+              <div class="col s6" id="cambiodetamanio3">
+                <div>
+                  <label class="atributoscuestionariotitulos">Fecha de recepción.</label>
+                </div>
+                <div>
+                  <p-calendar [(ngModel)]="date1" [maxDate]="datenow" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"  [locale]="es" dateFormat="dd/mm/yy"></p-calendar>
+                </div>
+              </div><br> <br>
             </div>
-            <div class="col s11 offset-s1" id="cambiodetamanio6">
-              <a *ngIf="foliosolicitud == null || date1 == null" id="btnverificarpago" class="waves-effect waves-light btn-small disabled"><i class="material-icons left">arrow_downward</i>Descargar Tarjetón</a>
-              <a *ngIf="foliosolicitud != null && date1 != null" id="btnverificarpago" class="waves-effect waves-light btn-small"  (click)="descargaractive()"><i class="material-icons left">arrow_downward</i>Descargar Tarjetón</a>
-            </div> <br> <br>
           </div>
-        </li>
-        <li>
-          <div class="collapsible-header" id="divheader4"><i class="material-icons">details</i>Descarga</div>
-          <div class="row" *ngIf="div4descarga"><br>
-            <div class="col s11 offset-s1" id="cambiodetamanio6">
-              <a id="cambiodetamanio26" class="waves-effect waves-light btn-small  modal-trigger" data-target="modalvistaprevia"  (click)="vistaprevia()"><i class="material-icons left">arrow_downward</i>Vista previa.</a>
-            </div><br>
-            <div class="col s11 offset-s1" id="cambiodetamanio6"><br> <br>
-              <a *ngIf="!btngetTarjeton" id="btnverificarpago" class="waves-effect waves-light btn-small disabled" ><i class="material-icons left">arrow_downward</i>Descargar PDF</a>
-              <a *ngIf="btngetTarjeton" id="btnverificarpago" class="waves-effect waves-light btn-small"  (click)="creaciondetarjeton()"><i class="material-icons left">arrow_downward</i>Descargar PDF</a>
-            </div> <br> <br>
-          </div>
-          <br *ngIf="div4descarga"> <br *ngIf="div4descarga">
-        </li>
-      </ul>
+          <div class="col s11 offset-s1" id="cambiodetamanio6">
+            <a *ngIf="foliosolicitud == null || date1 == null" id="btnverificarpago" class="waves-effect waves-light btn-small disabled"><i class="material-icons left">arrow_downward</i>Descargar Tarjetón</a>
+            <a *ngIf="foliosolicitud != null && date1 != null" id="btnverificarpago" class="waves-effect waves-light btn-small"  (click)="descargaractive()"><i class="material-icons left">arrow_downward</i>Descargar Tarjetón</a>
+          </div> <br> <br>
+        </div>
+      </li>
+      <li>
+        <div class="collapsible-header" id="divheader4"><i class="material-icons">details</i>Descarga</div>
+        <div class="row" *ngIf="div4descarga"><br>
+          <div class="col s11 offset-s1" id="cambiodetamanio6">
+            <a id="cambiodetamanio26" class="waves-effect waves-light btn-small  modal-trigger" data-target="modalvistaprevia"  (click)="vistaprevia()"><i class="material-icons left">arrow_downward</i>Vista previa.</a>
+          </div><br>
+          <div class="col s11 offset-s1" id="cambiodetamanio6"><br> <br>
+            <a *ngIf="!btngetTarjeton" id="btnverificarpago" class="waves-effect waves-light btn-small disabled" ><i class="material-icons left">arrow_downward</i>Descargar PDF</a>
+            <a *ngIf="btngetTarjeton" id="btnverificarpago" class="waves-effect waves-light btn-small"  (click)="creaciondetarjeton()"><i class="material-icons left">arrow_downward</i>Descargar PDF</a>
+          </div> <br> <br>
+        </div>
+        <br *ngIf="div4descarga"> <br *ngIf="div4descarga">
+      </li>
+    </ul>
   </div>
 </div>
-
-
-
 
 <div id="modalvistaprevia" class="modal">
   <div class="modal-content">
@@ -314,12 +293,18 @@
                 <div class="col s12">
                   <div class="input-field col s12">
                     <div class="row">
+                      <div *ngIf="registroamostrar != undefined">
+                        <div class="col s11 offset-s1">
+                          <br>
+                          <label class="buscadores" >Datos del concesionario.</label><br>
+                        </div>
+                      </div>
                       <div class="col s11 offset-s1" *ngIf="registroamostrar!=undefined" >
                         <div class="col s12">
                           <div class="col s6" id="cambiodetamanio3">
                             <label class="conseciontitulopequeñored" >Concesionario:</label><br>
-                            <label class="conseciontitulo" *ngIf="registroamostrar.tipo_persona == 'F' && registroamostrar!=undefined">{{ registroamostrar.nombre + " " + registroamostrar.primer_apellido + " " + registroamostrar.segundo_apellido }}</label>
-                            <label class="conseciontitulo" *ngIf="registroamostrar.tipo_persona == 'M' && registroamostrar!=undefined">{{ registroamostrar.razon_social }}</label>
+                            <label class="conseciontitulo" *ngIf="registroamostrar.concesionario.tipoPersona == 'F' && registroamostrar!=undefined">{{ registroamostrar.concesionario.nombre + " " + registroamostrar.concesionario.primerApellido + " " + registroamostrar.concesionario.segundoApellido }}</label>
+                            <label class="conseciontitulo" *ngIf="registroamostrar.concesionario.tipoPersona == 'M' && registroamostrar!=undefined">{{ registroamostrar.concesionario.razonSocial }}</label>
                           </div>
                           <div class="col s6" id="cambiodetamanio3">
                             <label class="conseciontitulopequeñored">NUC:</label><br>
@@ -328,11 +313,11 @@
                           <div class="col s12">
                             <div class="col s6" id="cambiodetamanio3">
                               <label class="conseciontitulopequeñored">Municipio:</label><br>
-                              <label class="conseciontitulo"  *ngIf="registroamostrar!=undefined">{{registroamostrar.localidad.municipio.nombre}}</label>
+                              <label class="conseciontitulo"  *ngIf="registroamostrar!=undefined">{{registroamostrar.concesionario.localidad.municipio.nombre}}</label>
                             </div>
                             <div class="col s6" id="cambiodetamanio3">
                               <label class="conseciontitulopequeñored">Localidad:</label><br>
-                              <label class="conseciontitulo"  *ngIf="registroamostrar!=undefined">{{registroamostrar.localidad.nombre}}</label>
+                              <label class="conseciontitulo"  *ngIf="registroamostrar!=undefined">{{registroamostrar.concesionario.localidad.nombre}}</label>
                             </div>
                           </div>
                           <div class="col s12">
@@ -341,6 +326,37 @@
                               <label class="conseciontitulo" *ngIf="registroamostrar!=undefined">{{registroamostrar.modalidad.nombre}}</label>
                             </div>
                           </div>
+                      </div>
+                      <div *ngIf="registroamostrar != undefined">
+                        <div class="col s11 offset-s1"><br>
+                          <label class="buscadores" >Datos del vehículo.</label><br>
+                        </div>
+                      </div>
+                      <div *ngIf="registroamostrar != undefined">
+                        <div class="col s11 offset-s1">
+                          <div class="col s12">
+                            <div class="col s6" id="cambiodetamanio3">
+                              <label class="conseciontitulopequeñored">Serie:</label><br>
+                              <label class="conseciontitulo">{{vehiculo.serie}}</label>
+                            </div>
+                            <div class="col s6" id="cambiodetamanio3">
+                              <label class="conseciontitulopequeñored">Sitio:</label><br>
+                              <label class="conseciontitulo">{{registroamostrar.sitio.nombre}}</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col s11 offset-s1">
+                          <div class="col s12">
+                            <div class="col s6" id="cambiodetamanio3">
+                              <label class="conseciontitulopequeñored">Motor:</label><br>
+                              <label class="conseciontitulo">{{vehiculo.motor}}</label>
+                            </div>
+                            <div class="col s6" id="cambiodetamanio3">
+                              <label class="conseciontitulopequeñored">Año Modelo:</label><br>
+                              <label class="conseciontitulo">{{vehiculo.anioModelo}}</label>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                       <div class="col s10 offset-s1">
                         <p-table #tt [value]="arrayrutasdepruebas" [paginator]="true" [rows]="10" [responsive]="true" [globalFilterFields]="['ruta.origen','ruta.destino','descripcion_tarifa','tarifa']">
