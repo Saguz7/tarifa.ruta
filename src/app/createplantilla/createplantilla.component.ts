@@ -65,19 +65,35 @@ export class CreatePlantillaComponent implements OnInit {
         .valueChanges.subscribe(result => {
           this.asignarperiodicos(result.data);
         });
-    this.allMunicipiosGQL.watch()
-        .valueChanges.subscribe(result => {
-          this.asignarmunicipios(result.data);
-        });
+
+        this.apollo.use('backsicac').query({query: gql`
+          query listMunicipios{
+        municipios{
+          id,
+          nombre
+        }
+        },
+         `, fetchPolicy: 'network-only'})
+         .subscribe(result => {
+           this.asignarmunicipios(result.data)
+         });
+
+
   }
 //Listar periodicos
     listDiarios(){
      this.apollo.query({query: gql`
-      query listPeriodicos{
-        periodicos{
-          id,descripcion,fecha_publicacion,tomo,numero,estatus,createdAt
-        }
-      },
+       query listPeriodicos {
+   periodicos {
+     id,
+     descripcion,
+     fechaPublicacion,
+     tomo,
+     numero,
+     estatus,
+     createdAt
+   }
+ },
       `, fetchPolicy: 'network-only'})
       .subscribe(result => {
         this.asignarperiodicos(result.data)
@@ -130,7 +146,7 @@ export class CreatePlantillaComponent implements OnInit {
           this.municipioobj = this.municipios[i];
         }
       }
-      this.apollo
+      this.apollo.use('backsicac')
           .watchQuery({
              query: gql`
                     query listLocalidades($municipio:ID){
@@ -183,7 +199,7 @@ export class CreatePlantillaComponent implements OnInit {
      ruta.origen = "";
      ruta.destino = "";
      rutanueva.orden = 0;
-     rutanueva.descripcion_tarifa = "";
+     rutanueva.descripcionTarifa = "";
      this.arrayrutas.push(rutanueva);
       this.validarrutas();
 
@@ -226,7 +242,6 @@ export class CreatePlantillaComponent implements OnInit {
     let nuevaplantilla = new Plantilla();
     nuevaplantilla.nombre = this.nombre;
     nuevaplantilla.descripcion = this.descripcion;
-    nuevaplantilla.municipio = this.localidadobj.municipio.id;
     nuevaplantilla.localidad = this.localidadobj.id;
     nuevaplantilla.modalidad = this.modalidadobj.id;
     nuevaplantilla.periodico = this.newspaperselect.id;
@@ -279,7 +294,7 @@ export class CreatePlantillaComponent implements OnInit {
   }
 //Convierte un numero a un formato de letras aceptado, usa un servicio externo para este proposito
   convertirALetras(rutaacambiar: any){
-      rutaacambiar.descripcion_tarifa = this.convertNSService.convert(rutaacambiar.tarifa);
+      rutaacambiar.descripcionTarifa = this.convertNSService.convert(rutaacambiar.tarifa);
       this.validarrutas();
   }
 
@@ -314,7 +329,7 @@ export class CreatePlantillaComponent implements OnInit {
          this.verificarrutas = true;
        }
         for(var i = 0; i < this.arrayrutas.length;i++){
-         if(this.arrayrutas[i].ruta.origen == "" || this.arrayrutas[i].ruta.destino == "" || this.arrayrutas[i].descripcion_tarifa == ""){
+         if(this.arrayrutas[i].ruta.origen == "" || this.arrayrutas[i].ruta.destino == "" || this.arrayrutas[i].descripcionTarifa == ""){
               this.verificarrutas = false;
          }
        }
@@ -337,10 +352,23 @@ export class CreatePlantillaComponent implements OnInit {
         for(var i = 0; i <this.localidades.length;i++){
            if(this.localidades[i].nombre == inputlocalidad){
                this.mostardespueslocalidad = true;
-               this.allModalidadesGQL.watch()
-               .valueChanges.subscribe(result => {
-                  this.asignarmodalidades(result.data);
-               });
+
+
+               this.apollo.use('backsicac')
+                   .watchQuery({
+                      query: gql`
+                      query listModalidades{
+                      modalidades{
+                        id,
+                        nombre
+                      }
+                    },
+                       `
+                    })
+                    .valueChanges.subscribe(result => {
+                        this.asignarmodalidades(result.data)
+                    });
+
               }
           }
       }

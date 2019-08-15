@@ -25,7 +25,7 @@ export class AllPeriodicosGQL extends Query<Response> {
 periodicos{
   id,
   descripcion,
-  fecha_publicacion,
+  fechaPublicacion,
   tomo,
   numero,
   estatus,

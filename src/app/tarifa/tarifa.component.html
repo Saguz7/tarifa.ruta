@@ -13,10 +13,7 @@
                     <label  class="atributoscuestionariotitulos">Folio de hoja valorada.</label>
                   </div>
                   <div class="input-field">
-                                <input id="input_text" type="text" data-length="10">
-                    <!--
                     <input type="text" numbersOnly required onKeyPress="if(this.value.length==9) return false;" [(ngModel)]="pago3" id="input_text" name="pago3" class="form-control" data-length="9">
-                    -->
                   </div>
                 </div>
                 <div class="col s6" id="cambiodetamanio5" *ngIf=mostrarfechapago>
@@ -222,7 +219,7 @@
                     <td><div><label  class="tabladiariooficial">{{rowData.localidad.nombre}}</label></div></td>
                     <td><div><label  class="tabladiariooficial">{{rowData.localidad.municipio.nombre}}</label></div></td>
                     <td><div><label  class="tabladiariooficial">{{rowData.modalidad.nombre}}</label></div></td>
-                    <td><div><label  class="tabladiariooficial">{{rowData.periodico.fecha_publicacion}}</label></div></td>
+                    <td><div><label  class="tabladiariooficial">{{rowData.periodico.fechaPublicacion}}</label></div></td>
                   </tr>
                 </ng-template>
               </p-table><br><br>
@@ -359,7 +356,7 @@
                         </div>
                       </div>
                       <div class="col s10 offset-s1">
-                        <p-table #tt [value]="arrayrutasdepruebas" [paginator]="true" [rows]="10" [responsive]="true" [globalFilterFields]="['ruta.origen','ruta.destino','descripcion_tarifa','tarifa']">
+                        <p-table #tt [value]="arrayrutasdepruebas" [paginator]="true" [rows]="10" [responsive]="true" [globalFilterFields]="['ruta.origen','ruta.destino','descripcionTarifa','tarifa']">
                           <ng-template pTemplate="caption">
                             <div class="col s6 offset-s5" id="divsearchmob">
                               <div class="input-field">
@@ -381,7 +378,7 @@
                             <tr class="sinfondo">
                               <td><div><label class="tabladiariooficial">{{rowData.ruta.origen}}</label></div></td>
                               <td><div><label class="tabladiariooficial">{{rowData.ruta.destino}}</label></div></td>
-                              <td><div><label class="tabladiariooficial">{{ rowData.descripcion_tarifa }}</label></div></td>
+                              <td><div><label class="tabladiariooficial">{{ rowData.descripcionTarifa }}</label></div></td>
                               <td><div><label class="tabladiariooficial">{{"$"+rowData.tarifa.toFixed(2)}}</label></div></td>
                             </tr>
                           </ng-template>

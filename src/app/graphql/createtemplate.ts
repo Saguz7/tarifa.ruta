@@ -32,8 +32,9 @@ export class InsertPlantillaGQL extends Apollo.Mutation<
 > {
   document: any = gql`
   mutation newInt($plantilla:PlantillaInput,$rutas:[IntInput]){
-  crearInt(plantilla:$plantilla,rutas:$rutas){
-    mensaje
+  crearPlantillaRuta(plantilla:$plantilla,rutas:$rutas){
+    estatus,
+    createdAt
   }
 }
   `;

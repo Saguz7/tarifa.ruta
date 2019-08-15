@@ -45,7 +45,7 @@ export class CreateDiarioOficialComponent implements OnInit {
     this.insertPeriodicoGQL
       .mutate({
         descripcion: this.descripcion,
-        fecha_publicacion: this.date1,
+        fechaPublicacion: this.date1,
         tomo: this.tomo,
         numero: this.numero
 

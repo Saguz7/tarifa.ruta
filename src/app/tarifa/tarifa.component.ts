@@ -3,8 +3,7 @@
   import {Apollo} from 'apollo-angular';
   import gql from 'graphql-tag';
   import {Observable,Observer} from 'rxjs';
-  import {User} from "../core/models/user.model";
-  declare var M: any;
+   declare var M: any;
   import {saveAs} from 'file-saver';
   import * as jsPDF from 'jspdf';
   import 'jspdf-autotable';
@@ -21,6 +20,13 @@
   import {IMAGE} from "../core/key/imglogo";
   import {CEROTOLERANCIA} from "../core/key/cerotolerancia";
   import { InsertTarjetonGQL } from '../graphql/createcard';
+  import {IMAGEOAXACAWEB} from "../core/key/imgoaxacagobmx";
+  import {HojaValoradaInput} from '../models/vo/hojavaloradainput';
+  import {LineaCapturaInput} from '../models/vo/lineacapturainput';
+  import {SolicitudInput} from '../models/vo/solicitudinput';
+  import {User} from "../core/models/user.model";
+  import {StorageService} from "../core/services/storage.service";
+
 
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -34,6 +40,7 @@ export class TarifaComponent implements OnInit {
     datepay: Date;
     datenow: Date;
     minDate: Date;
+
     qrmensagge: any;
     statusComponentPayment: boolean = false;
     es: any;
@@ -82,6 +89,7 @@ export class TarifaComponent implements OnInit {
     fechaperiodicooficial: any;
 
     validarfecha: boolean = false;
+    user: any;
 
     infoqr = "Concesionario";
     nombreconcesionario = "";
@@ -100,11 +108,17 @@ export class TarifaComponent implements OnInit {
       private router?: Router,
       private apollo?: Apollo,
       private convertNSService?: ConvertNSService,
-      private insertTarjetonGQL?: InsertTarjetonGQL
+      private insertTarjetonGQL?: InsertTarjetonGQL,
+      private storageService?: StorageService
+
     ){}
 
 
     ngOnInit() {
+      this.user = this.storageService.getCurrentUser();
+
+      $('input#input_text').characterCounter();
+
       this.paymentsModel = new Payments('3IFAAA065');
       const meses = [
             "Enero", "Febrero", "Marzo",
@@ -146,15 +160,27 @@ export class TarifaComponent implements OnInit {
 
 
    creaciondetarjeton(){
-     /*
+     let solicitudinput = new SolicitudInput();
+     solicitudinput.folio = this.foliosolicitud;
+     solicitudinput.fecha = this.date1;
+
+     let lineaCaptura = new LineaCapturaInput();
+     lineaCaptura.lineaCaptura = this.paymentsModel.capture_line;
+     lineaCaptura.folioPago = this.paymentsModel.folio;
+     lineaCaptura.totalAmparados = 1;
+     lineaCaptura.fechaPago = new Date();
+     lineaCaptura.totalPago =  Number(this.paymentsModel.total_payment);
+
+     let hojaValorada = new HojaValoradaInput();
+     hojaValorada.folio = this.pago3;
      this.insertTarjetonGQL
        .mutate({
-         idConcesion: this.registroamostrar.id,
-         idLocalidad: this.registroamostrar.concesion.localidad.id,
-         idMunicipio: this.registroamostrar.concesion.localidad.municipio.id,
-         idModalidad: this.registroamostrar,concesion.modalidad.id,
-         idPlantilla: this.plantillaseleccionada.id,
-         idVehiculo: this.vehiculo.id
+         concesion: this.registroamostrar.id,
+         plantilla: this.plantillaseleccionada.id,
+         solicitud: solicitudinput,
+         lineaCaptura: lineaCaptura,
+         hojaValorada: hojaValorada,
+         token: this.storageService.getCurrentToken()
        })
        .subscribe(({ data }) => {
          this.asignaciontarjeton(data);
@@ -162,18 +188,14 @@ export class TarifaComponent implements OnInit {
        var divisiones = error.message.split(":", 2);
        M.toast({html: divisiones[1]})
      });
-     */
    }
 
 
    asignaciontarjeton(tarjeton : any){
-     this.objtarjeton = tarjeton;
+     this.objtarjeton = tarjeton.crearTarjeton;
+     this.registroamostrar = tarjeton.crearTarjeton.concesion;
+     this.plantillaseleccionada = tarjeton.crearTarjeton.plantilla;
 
-     /*
-     this.registroamostrar = tarjeton.concesion.concesionario
-     this.plantillaseleccionada = tarjeton.plantilla
-     this.arrayrutasdepruebas = tarjeton.plantilla.rutas
-     */
      this.generate();
    }
 
@@ -202,7 +224,7 @@ export class TarifaComponent implements OnInit {
      img.src = './assets/SEMOVI2.png'
      pdf.addFont("Calibri.ttf", "Calibri", "normal");
      pdf.setFont("Calibri");
-     this.qrmensagge = this.infoqr + " Folio Hoja Valorada: " +  this.pago3;
+     this.qrmensagge = this.infoqr + " \r\n Folio Hoja Valorada: " +  this.pago3;
      const barcodeData = TarifaComponent.getBarcodeData(this.qrmensagge);
      pdf.setDrawColor(0);
      pdf.setFillColor(255,0,0);
@@ -227,10 +249,8 @@ export class TarifaComponent implements OnInit {
        concesionarionombre = 'CONCESIONARIO: ' + this.registroamostrar.concesionario.razonSocial ;
      }
      pdf.text(100, 67, concesionarionombre);
-
      pdf.text(100, 71, 'NUC: ' + this.registroamostrar.nuc);
      pdf.setFontSize(8);
-
      pdf.text('La  Secretaría  de  Movilidad  del  Poder  Ejecutivo  del  estado  de  Oaxaca , con  fundamento  en  lo  dispuesto   por  los  artículos  2 párrafo  tercero y   82  de  la   Constitución   Política   del   Estado  Libre  y  Soberado  de  Oaxaca;  1 ,  27   fracción  VII  y  40   de   la   Ley  Orgánica   del   Poder   Ejecutivo  del  Estado de  Oaxaca, articulo  114  y  116 de  la  Ley  del  Transporte  del  Estado de Oaxaca; en  relación  con  los  artículos 43  fracción II, 72,  73,  75  y 76 del  Reglamento  de la  Ley  de Transporte del  Estado de Oaxaca;  y  de  conformidad  con el  Acuerdo  Administrativo  de  fecha  17  de  diciembre  del  2018,  publicado  en  el  Periódico Oficial de Gobierno del Estado de Oaxaca el 19 de enero del 2019 y en el diario Enlace de la costa, el  día  15 de febrero de 2019 , queda autorizada   la siguiente:', 14,78, {maxWidth: 182, align: "justify"});
      pdf.setFontSize(16);
      pdf.text(96, 97, 'TARIFA');
@@ -240,10 +260,9 @@ export class TarifaComponent implements OnInit {
          a_permisoxf.push([
            this.arrayrutasdepruebas[i].orden,
            this.arrayrutasdepruebas[i].ruta.origen +" - "+ this.arrayrutasdepruebas[i].ruta.destino,
-           this.arrayrutasdepruebas[i].descripcion_tarifa,
+           this.arrayrutasdepruebas[i].descripcionTarifa,
            "$"+this.arrayrutasdepruebas[i].tarifa.toFixed(2)]);
          }
-
          pdf.autoTable({
            head: [['No','ORIGEN-DESTINO', 'TARIFA EN TEXTO', '' ]],
            styles: {overflow: 'linebreak', fontSize: 5.7  ,overflowColumns: 'linebreak' , cellPadding: {top: 1.5, right: 2, bottom: 1.5, left: 1} },
@@ -261,14 +280,14 @@ export class TarifaComponent implements OnInit {
            a_permisoxf.push([
              this.arrayrutasdepruebas[i].orden,
              this.arrayrutasdepruebas[i].ruta.origen +" - "+ this.arrayrutasdepruebas[i].ruta.destino,
-             this.arrayrutasdepruebas[i].descripcion_tarifa,
+             this.arrayrutasdepruebas[i].descripcionTarifa,
              "$"+this.arrayrutasdepruebas[i].tarifa.toFixed(2)]);
            }
          for(var a = 25; a < restorutas; a++){
            a_permisoxf2.push([
              this.arrayrutasdepruebas[a].orden,
              this.arrayrutasdepruebas[a].ruta.origen +" - "+ this.arrayrutasdepruebas[a].ruta.destino,
-             this.arrayrutasdepruebas[a].descripcion_tarifa,
+             this.arrayrutasdepruebas[a].descripcionTarifa,
              "$"+this.arrayrutasdepruebas[a].tarifa.toFixed(2)]);
            }
             let pageNumber = pdf.internal.getNumberOfPages();
@@ -343,6 +362,7 @@ export class TarifaComponent implements OnInit {
                            { width: 50, text: ''}
                          ]
                        },
+
                        { columns: [
                            { width: 282, text: ''},
                            { width: 38, text: 'ORIGEN:', fontSize: 9,bold: true },
@@ -363,38 +383,39 @@ export class TarifaComponent implements OnInit {
                        },
                        { columns: [
                            { width: 270, text: '' },
-                           { width: 350, text: 'San Antonino de la Cal, Oax., ' +this.fechaactual, fontSize: 8, margin: [0, 10] }
+                           { width: 240, text: 'San Antonio de la Cal, Oax., ' +this.fechaactual, fontSize: 8, margin: [0, 10] }
                          ], columnGap: 10
                        },
+
                        { columns: [
                            { width: 10, text: '' },
-                           { alignment: 'justify', width: 250, text: this.nombreconcesionario + ' CONCESIONARIO DEL SERVICIO PÚBLICO DE TRANSPORTE EN LA MODALIDAD DE ' + this.plantillaseleccionada.modalidad.nombre+', EN LA LOCALIDAD DE '+ this.registroamostrar.concesionario.localidad.nombre +', MUNICIPIO DE '+this.registroamostrar.concesionario.localidad.municipio.nombre + ".", fontSize: 10, bold: true }
+                           { alignment: 'justify', width: 250, text: this.nombreconcesionario + ' CONCESIONARIO DEL SERVICIO PÚBLICO DE TRANSPORTE EN LA MODALIDAD DE ' + this.plantillaseleccionada.modalidad.nombre+', EN LA LOCALIDAD DE '+ this.registroamostrar.concesionario.localidad.nombre +', MUNICIPIO DE '+this.registroamostrar.concesionario.localidad.municipio.nombre + ".", fontSize: 10, bold: true },
+                          ]
+                       },
+                       { columns: [
+                           { width: 10, text: '' },
+                           { alignment: 'justify', width: 80, text: 'P R E S E N T E.', fontSize: 10, bold: true }
                          ]
                        },
                        { columns: [
                            { width: 10, text: '' },
-                           { alignment: 'justify', width: 80, text: 'P R E S E N T E', fontSize: 10, bold: true }
-                         ]
-                       },
-                       { columns: [
-                           { width: 10, text: '' },
-                           { alignment: 'justify', width: 465,
+                           { alignment: 'justify', width: 460,
                              text: 'En atención a las diversas solicitudes presentadas ante esta Secretaría por prestadores del servicio público de transporte, en su modalidad de ' + this.plantillaseleccionada.modalidad.nombre+' en esta localidad, con fundamento en los artículos 27 fracción VII, 40 fracción XXXIX de la Ley Orgánica del Poder Ejecutivo del Estado de Oaxaca: 1, 2, 6, 11 fracción II, XII, XXX, 35, 114, 116, 117, 120 fracción II, 121 fracción IX, de la ley de Transporte del Estado de Oaxaca, 31, 52, 73, 74 y 76 del Reglamento de la Ley de Transporte del Estado de Oaxaca y Artículos 31 fracción III y 32 fracción V, del Reglamento Interno de la Secretaria de Vialidad y Transporte del Estado de Oaxaca y con base en las conclusiones del estudio técnico y costos practicado por la Subsecretaria de Planeación y Normatividad para la actualización de las tarifas del servicio público de transporte de pasajeros, considerando la estimación de la demanda del servicio, el inventario de vehículos que prestan el servicio en dicha modalidad y las cotizaciones de costos de refacciones, combustibles y mantenimiento, relacionados directamente con el costo de operación de los vehículos, por instrucciones del encargado de Despacho de la Secretaría de Movilidad del Gobierno del Estado de Oaxaca y en términos del Acuerdo por el que el Secretario de Movilidad delega facultades al Titular de la Dirección de Operación del Transporte Público de la misma Dependencia, publicado en el Periódico Oficial del Gobierno del Estado de Oaxaca el día 6 de Julio del año 2013, la Dirección de Operación del Transporte Público a través del Departamento de Control de Transporte, le comunica que se le autoriza como tarifa para la prestación del servicio público de transporte de pasajeros en la Modalidad de ' + this.plantillaseleccionada.modalidad.nombre+', en la Localidad de ' + this.plantillaseleccionada.localidad.nombre+', Municipio de ' + this.plantillaseleccionada.localidad.municipio.nombre+', Oax., una cantidad que no deberá ser mayor a:', fontSize: 8, margin: [0, 10] }
                          ]
                        },
                        { columns: [
                            { width: 190, text: '' },
-                           { alignment: 'justify', width: 160, text: 'TARJETÓN ANEXO', fontSize: 10, margin: [0, 20], bold: true }
+                           { alignment: 'justify', width: 155, text: 'TARJETÓN ANEXO', fontSize: 10, margin: [0, 20], bold: true }
                          ]
                        },
                        { columns: [
                            { width: 10, text: '' },
-                           { alignment: 'justify', width: 465, text: 'No omito manifestarles que deberán prestar el servicio en los términos marcados en sus concesiones, que la tarifa entrará en vigor una vez cumplidas las formalidades que indica la Ley de Transporte del Estado de Oaxaca, su Reglamento y demás legislación en vigor y permanecerá vigente hasta nueva determinación por parte de Secretaria de Movilidad, quedando el concesionario sujeto a la normatividad aplicable', fontSize: 8 }
+                           { alignment: 'justify', width: 460, text: 'No omito manifestarles que deberán prestar el servicio en los términos marcados en sus concesiones, que la tarifa entrará en vigor una vez cumplidas las formalidades que indica la Ley de Transporte del Estado de Oaxaca, su Reglamento y demás legislación en vigor y permanecerá vigente hasta nueva determinación por parte de Secretaria de Movilidad, quedando el concesionario sujeto a la normatividad aplicable', fontSize: 8 }
                          ]
                        },
                        { columns: [
                            { width: 10, text: '' },
-                           { alignment: 'justify', width: 510, text: 'Sin otro particular; el envió un cordial saludo:', fontSize: 8, margin: [0, 20] }
+                           { alignment: 'justify', width: 460, text: 'Sin otro particular; le envió un cordial saludo.', fontSize: 8, margin: [0, 20] }
                          ]
                        },
                        { columns: [
@@ -418,7 +439,8 @@ export class TarifaComponent implements OnInit {
                            { width: 10, text: '', margin: [0, 8] }
                          ]
                        },
-                       { columns: [
+                       {
+                         columns: [
                            { width: 10, text: '' },
                            { alignment: 'justify', width: 300, text: 'FELIPE REYNA ROMERO', fontSize: 8,bold: true },
                            { alignment: 'justify', width: 400, text: 'MARINO HERNÁNDEZ LÓPEZ', fontSize: 8,bold: true }
@@ -496,11 +518,17 @@ export class TarifaComponent implements OnInit {
                        {
                          columns: [
                            { width: 15, text: '' },
-                           { image: 'data:image/jpeg;base64,'+CEROTOLERANCIA.IMAGE,width: 36,height: 46}
-
+                           {
+                             image:  'data:image/jpeg;base64,'+CEROTOLERANCIA.IMAGE,width: 62,height: 75,
+                             absolutePosition: {x: 50, y: 670}
+                           }
                          ]
+                       },
+                       {
+                         image:  'data:image/jpeg;base64,'+IMAGEOAXACAWEB.IMAGE_W,width: 44,height: 460,
+                         absolutePosition: {x: 540, y: 200}
                        }
-                     ]
+                      ]
                    };
                  pdfMake.createPdf(dd).download('OFC'+this.registroamostrar.nuc + '.pdf');
            }
@@ -542,20 +570,6 @@ export class TarifaComponent implements OnInit {
         document.getElementById("pago2advertencia").style.color = "red";
       }
     }
-
-
-/*
-    validarhojavalorada(){
-      var n = this.pago3.toString();
-       console.log(this.mostrarfechapago);
-
-      if(n.length == 9 && !this.mostrarfechapago){
-          this.fechaverificada = true;
-        }
-    }
-
-    */
-
     tercerproceso(){
       this.div1validacionpago = false;
       this.div2busquedadeconcesionario = true;
@@ -622,6 +636,10 @@ export class TarifaComponent implements OnInit {
          M.toast({html: toastHTML});
        }, (error) => {
          this.mostrardespuesdewebservice = true;
+
+         $(document).ready(function() {
+           $('input#input_text').characterCounter();
+         });
        });
     }
 
@@ -717,38 +735,41 @@ export class TarifaComponent implements OnInit {
       llamarregistros(decision: any){
          this.apollo.use('backsicac').watchQuery({
             query: gql`
-            query listConcesiones($entrada:String,$opcion:Int,$top:Int){
-              concesiones(entrada:$entrada,opcion:$opcion,top:$top){
-                id,
-                unidadesAmparadas,
-                modalidad{
-                  id,
-                  nombre
-                },
-                sitio{
-                  id,
-                  nombre
-                },
-                nuc,
-                vigente,
-                estatus,
-                concesionario{
-                  tipoPersona,
-                  nombre,
-                  primerApellido,
-                  segundoApellido,
-                  razonSocial,
-                  localidad{
-                    id,
-                    nombre,
-                    municipio{
-                      id,
-                      nombre
-                    }
-                  }
-                }
-              }
-            },
+            query listConcesiones($entrada: String, $opcion: Int, $top: Int) {
+  concesiones(entrada: $entrada, opcion: $opcion, top: $top) {
+    id
+    unidadesAmparadas
+    modalidad {
+      id
+      nombre
+    }
+    sitio {
+      id
+      nombre
+    }
+    nuc
+    estatus
+    concesionario {
+      tipoPersona
+      nombre
+      primerApellido
+      segundoApellido
+      razonSocial
+      localidad {
+        id
+        nombre
+        municipio {
+          id
+          nombre
+        }
+      }
+    }
+    condiciones{
+      vigente
+      bloqueado
+    }
+  }
+},
             `,
             variables: {
                     entrada: this.registroabuscar,
@@ -762,20 +783,45 @@ export class TarifaComponent implements OnInit {
       }
 
       seleccionarregistro(registro: any){
+        if(registro.condiciones.bloqueado==false){
+          if(registro.condiciones.vigente==true){
           this.registroamostrar = registro;
           this.divdebusqueda = false;
+
           this.apollo.query({query: gql`
-           query listPlantillas($localidad:ID,$modalidad:ID){
-             plantillas(localidad:$localidad,modalidad:$modalidad){
-               id,nombre,descripcion,
-               municipio{id,nombre},
-               localidad{id,nombre,
-               municipio{id,nombre}},
-               modalidad{id,nombre,descripcion,abreviatura},
-               periodico{id,descripcion,fecha_publicacion,tomo,numero,estatus,createdAt},
-               estatus,createdAt
-               }
-             },
+            query listPlantillas($localidad: ID, $modalidad: ID) {
+    plantillas(localidad: $localidad, modalidad: $modalidad) {
+      id,
+      nombre,
+      descripcion,
+      localidad {
+        id,
+        nombre,
+        municipio {
+          id,
+          nombre
+        }
+      },
+      modalidad {
+        id,
+        nombre,
+        descripcion,
+        estatus,
+        abreviatura
+      },
+      periodico {
+        id,
+        descripcion,
+        fechaPublicacion,
+        tomo,
+        numero,
+        estatus,
+        createdAt
+      },
+      estatus,
+      createdAt
+    }
+  },
              `, fetchPolicy: 'network-only',
                 variables: {
                   localidad: this.registroamostrar.concesionario.localidad.id,
@@ -784,6 +830,20 @@ export class TarifaComponent implements OnInit {
                 .subscribe(result => {
                   this.asignarplantillasseleccionadas(result.data);
               });
+
+        }else{
+
+          var toastHTML = '<span> <div class="valign-wrapper"><i class="material-icons">error_outline</i>  &nbsp;&nbsp;Concesión no vigente</div></span>';
+          M.toast({html: toastHTML});
+        }
+
+      }else{
+
+
+        var toastHTML = '<span> <div class="valign-wrapper"><i class="material-icons">error_outline</i>  &nbsp;&nbsp;Concesión bloqueado</div></span>';
+        M.toast({html: toastHTML});
+      }
+
       }
 
       asignarplantillasseleccionadas(plantillas: any){
@@ -815,7 +875,7 @@ export class TarifaComponent implements OnInit {
          if((this.arrayrutasdepruebas.length+1) < 25){
             for(var i = 0; i < this.arrayrutasdepruebas.length; i++){
               var tamanio = this.arrayrutasdepruebas[i].ruta.origen +" - "+ this.arrayrutasdepruebas[i].ruta.destino;
-              var tamanio2 = this.arrayrutasdepruebas[i].descripcion_tarifa;
+              var tamanio2 = this.arrayrutasdepruebas[i].descripcionTarifa;
               if(tamanio.length< 33 || tamanio2.length< 33){
                 contador1renglon = contador1renglon  + 1 ;
               }
@@ -829,7 +889,7 @@ export class TarifaComponent implements OnInit {
           }else{
             for(var i = 0; i < 25; i++){
               var tamanio = this.arrayrutasdepruebas[i].ruta.origen +" - "+ this.arrayrutasdepruebas[i].ruta.destino;
-              var tamanio2 = this.arrayrutasdepruebas[i].descripcion_tarifa;
+              var tamanio2 = this.arrayrutasdepruebas[i].descripcionTarifa;
               if(tamanio.length<= 36 || tamanio2.length<= 36){
                 contador1renglon = contador1renglon  + 1 ;
               }
@@ -843,7 +903,7 @@ export class TarifaComponent implements OnInit {
             }
             for(var i = 25; i < (this.arrayrutasdepruebas.length); i++){
               var tamanio = this.arrayrutasdepruebas[i].ruta.origen +" - "+ this.arrayrutasdepruebas[i].ruta.destino;
-              var tamanio2 = this.arrayrutasdepruebas[i].descripcion_tarifa;
+              var tamanio2 = this.arrayrutasdepruebas[i].descripcionTarifa;
               if(tamanio.length<= 36 || tamanio2.length<= 36){
                 contadorsegundatabla1renglon = contadorsegundatabla1renglon  + 1 ;
               }
@@ -903,12 +963,14 @@ export class TarifaComponent implements OnInit {
               "Agosto", "Septiembre", "Octubre",
               "Noviembre", "Diciembre"
             ];
-        const date = new Date(this.plantillaseleccionada.periodico.fecha_publicacion);
+        const date = new Date(this.plantillaseleccionada.periodico.fechaPublicacion);
         const dia = date.getDate()
         const mes = date.getMonth()
         const ano = date.getFullYear()
        this.fechaperiodicooficial = `${dia} de ${meses[mes]} del ${ano}`;
         this.btngetRutas = true;
+        var toastHTML = '<span> <div class="valign-wrapper"> &nbsp;&nbsp; Se ha seleccionado '+this.plantillaseleccionada.nombre+'</div></span>';
+        M.toast({html: toastHTML});
       }
 //Metodo que obtiene las rutas de la plantilla seleccionada
       getRutas(){
@@ -918,7 +980,7 @@ export class TarifaComponent implements OnInit {
             plantillasRutas(plantilla:$plantilla){
               id,
               ruta{id,origen,destino,estatus,createdAt},
-              tarifa,descripcion_tarifa,orden,estatus,createdAt
+              tarifa,descripcionTarifa,orden,estatus,createdAt
              }
            },
             `, fetchPolicy: 'network-only',
@@ -943,15 +1005,13 @@ export class TarifaComponent implements OnInit {
         this.divdebusqueda = true;
         this.divplantillas = false;
         this.vehiculo.serie = "";
-
         this.mostrarformulario2 = false;
         this.mostrarplantillas = false;
+        this.btngetRutas=false;
       }
 
       busquedaconcesionarioactive(){
         this.validarfoliodehojavalorada();
-
-
       }
 
       solicituddatosactive(){
@@ -1016,10 +1076,10 @@ export class TarifaComponent implements OnInit {
 
       public check($event){
         if($event.error){
-          if($event.error.status > 500 ){
+          if($event.error.status > 500 ||  $event.error.status == 404){
             alert($event.error.status + ' - Cambiando a modo manual' );
-            this.mostrarfechapago = true;
-            this.mostrardespuesdewebservice = true;
+
+            this.verificarpagomanual();
 
           }else{
             alert($event.error.status + ' - ' + $event.error.description );
@@ -1029,9 +1089,39 @@ export class TarifaComponent implements OnInit {
            this.verificarpago();
            this.verificarfecha();
         }
-        $(document).ready(function() {
-          $('input#input_text').characterCounter();
-        });
+      }
+
+      verificarpagomanual(){
+
+        this.apollo
+        .watchQuery({
+          query: gql`
+          query findLineaCaptura($lineaCaptura:String,$folioPago:String){
+            lineaCaptura(lineaCaptura:$lineaCaptura,folioPago:$folioPago){
+              id,
+              lineaCaptura,
+              folioPago,
+              totalAmparados,
+              fechaPago,
+              totalPago
+            }
+          },
+            `,
+          variables: {
+             lineaCaptura: this.paymentsModel.capture_line ,
+             folioPago:  this.paymentsModel.folio ,
+           }
+         })
+         .valueChanges.subscribe(result => {
+           var toastHTML = '<span> <div class="valign-wrapper"><i class="material-icons">error_outline</i>  &nbsp;&nbsp;Datos ya registrados</div></span>';
+           M.toast({html: toastHTML});
+         }, (error) => {
+           this.mostrarfechapago = true;
+           this.mostrardespuesdewebservice = true;
+           $(document).ready(function() {
+             $('input#input_text').characterCounter();
+           });
+         });
       }
 
 }
