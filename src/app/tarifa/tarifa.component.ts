@@ -16,7 +16,7 @@
   import pdfMake from "pdfmake/build/pdfmake";
   import pdfFonts from "pdfmake/build/vfs_fonts";
   import {Vehiculo} from '../models/vo/vehiculo';
-  import { PaymentsModel } from '../models/vo/paymentsmodel';
+  import { Payments } from '../payments/payments';
   import {SerieConcesionInput} from '../models/vo/serieConcesionInput';
   import {IMAGE} from "../core/key/imglogo";
   import {CEROTOLERANCIA} from "../core/key/cerotolerancia";
@@ -28,7 +28,7 @@
     selector: 'app-tarifa', templateUrl: './tarifa.component.html', styleUrls: ['./tarifa.component.css']
   })
 export class TarifaComponent implements OnInit {
-    public paymentsModel:PaymentsModel;
+    public paymentsModel: Payments;
     public test: any;
     date1: Date;
     datepay: Date;
@@ -105,7 +105,7 @@ export class TarifaComponent implements OnInit {
 
 
     ngOnInit() {
-      this.paymentsModel = new PaymentsModel('3IFAAA065');
+      this.paymentsModel = new Payments('3IFAAA065');
       const meses = [
             "Enero", "Febrero", "Marzo",
             "Abril", "Mayo", "Junio", "Julio",

@@ -9,6 +9,7 @@ import { CoreModule } from "./core/core.module";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TarifaComponent } from './tarifa/tarifa.component';
 import { PlantillaComponent } from './plantilla/plantilla.component';
+import { PaymentsComponent } from './payments/payments.component';
 
 import {CalendarModule} from 'primeng/calendar';
 import * as $ from 'jquery';
@@ -34,7 +35,8 @@ import { PaymentsModule } from 'semovi-payments';
     OnlynumberDirective,
     SpecialNumberAndDecimalDirective,
     CreatePlantillaComponent,
-    CreateDiarioOficialComponent
+    CreateDiarioOficialComponent,
+    PaymentsComponent
   ],
   imports: [
     BrowserModule,
@@ -49,8 +51,7 @@ import { PaymentsModule } from 'semovi-payments';
     BrowserAnimationsModule,
     ButtonModule,
     TableModule,
-    DropdownModule,
-    PaymentsModule
+    DropdownModule
   ],
   providers: [],
   bootstrap: [AppComponent]
