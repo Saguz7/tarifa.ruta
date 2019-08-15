@@ -786,8 +786,8 @@ export class TarifaComponent implements OnInit {
       }
 
       seleccionarregistro(registro: any){
-        if(!registro.condiciones.bloqueado){
-          if(registro.condiciones.vigente){
+        if(registro.condiciones.bloqueado==false){
+          if(registro.condiciones.vigente==true){
           this.registroamostrar = registro;
           this.divdebusqueda = false;
 

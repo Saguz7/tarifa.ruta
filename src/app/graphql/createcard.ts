@@ -45,8 +45,22 @@ export class InsertTarjetonGQL extends Apollo.Mutation<
   InsertTarjeton.Variables
 > {
   document: any = gql`
-  mutation newTarjeton($concesion: ID,$plantilla: ID,$solicitud: SolicitudInput,$lineaCaptura: LineaCapturaInput,$hojaValorada: HojaValoradaInput,$token:String) {
-  crearTarjeton(concesion: $concesion,plantilla: $plantilla,solicitud: $solicitud,lineaCaptura: $lineaCaptura,hojaValorada: $hojaValorada,token:$token) {
+  mutation newTarjeton(
+  $concesion: ID
+  $plantilla: ID
+  $solicitud: SolicitudInput
+  $lineaCaptura: LineaCapturaInput
+  $hojaValorada: HojaValoradaInput
+  $token: String
+) {
+  crearTarjeton(
+    concesion: $concesion
+    plantilla: $plantilla
+    solicitud: $solicitud
+    lineaCaptura: $lineaCaptura
+    hojaValorada: $hojaValorada
+    token: $token
+  ) {
     id
     concesion {
       id
@@ -74,7 +88,6 @@ export class InsertTarjetonGQL extends Apollo.Mutation<
       }
       nuc
       estatus
-      vigente
       concesionario {
         id
         tipoPersona
@@ -92,6 +105,10 @@ export class InsertTarjetonGQL extends Apollo.Mutation<
             nombre
           }
         }
+      }
+      condiciones {
+        vigente
+        bloqueado
       }
     }
     plantilla {
