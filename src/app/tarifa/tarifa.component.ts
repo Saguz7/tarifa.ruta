@@ -119,7 +119,7 @@ export class TarifaComponent implements OnInit {
 
       $('input#input_text').characterCounter();
 
-      this.paymentsModel = new Payments('3IFAAA065');
+      this.paymentsModel = new Payments('3IFBAC017');
       const meses = [
             "Enero", "Febrero", "Marzo",
             "Abril", "Mayo", "Junio", "Julio",
@@ -370,8 +370,8 @@ export class TarifaComponent implements OnInit {
                          ]
                        },
                        { columns: [
-                           { width: 250, text: ''},
-                           { width: 70, text: 'MEMORANDUM:', fontSize: 9,bold: true },
+                           { width: 282, text: ''},
+                           { width: 39, text: 'OFICIO:', fontSize: 9,bold: true },
                            { width: 230, text: 'SEMOVI/SRCT/DOCTP/CT/1987/2018', fontSize: 9 }
                          ]
                        },
@@ -400,7 +400,7 @@ export class TarifaComponent implements OnInit {
                        { columns: [
                            { width: 10, text: '' },
                            { alignment: 'justify', width: 460,
-                             text: 'En atención a las diversas solicitudes presentadas ante esta Secretaría por prestadores del servicio público de transporte, en su modalidad de ' + this.plantillaseleccionada.modalidad.nombre+' en esta localidad, con fundamento en los artículos 27 fracción VII, 40 fracción XXXIX de la Ley Orgánica del Poder Ejecutivo del Estado de Oaxaca: 1, 2, 6, 11 fracción II, XII, XXX, 35, 114, 116, 117, 120 fracción II, 121 fracción IX, de la ley de Transporte del Estado de Oaxaca, 31, 52, 73, 74 y 76 del Reglamento de la Ley de Transporte del Estado de Oaxaca y Artículos 31 fracción III y 32 fracción V, del Reglamento Interno de la Secretaria de Vialidad y Transporte del Estado de Oaxaca y con base en las conclusiones del estudio técnico y costos practicado por la Subsecretaria de Planeación y Normatividad para la actualización de las tarifas del servicio público de transporte de pasajeros, considerando la estimación de la demanda del servicio, el inventario de vehículos que prestan el servicio en dicha modalidad y las cotizaciones de costos de refacciones, combustibles y mantenimiento, relacionados directamente con el costo de operación de los vehículos, por instrucciones del encargado de Despacho de la Secretaría de Movilidad del Gobierno del Estado de Oaxaca y en términos del Acuerdo por el que el Secretario de Movilidad delega facultades al Titular de la Dirección de Operación del Transporte Público de la misma Dependencia, publicado en el Periódico Oficial del Gobierno del Estado de Oaxaca el día 6 de Julio del año 2013, la Dirección de Operación del Transporte Público a través del Departamento de Control de Transporte, le comunica que se le autoriza como tarifa para la prestación del servicio público de transporte de pasajeros en la Modalidad de ' + this.plantillaseleccionada.modalidad.nombre+', en la Localidad de ' + this.plantillaseleccionada.localidad.nombre+', Municipio de ' + this.plantillaseleccionada.localidad.municipio.nombre+', Oax., una cantidad que no deberá ser mayor a:', fontSize: 8, margin: [0, 10] }
+                             text: 'En atención a las diversas solicitudes presentadas ante esta Secretaría por prestadores del servicio público de transporte, en su modalidad de ' + this.plantillaseleccionada.modalidad.nombre+' en esta localidad, con fundamento en los artículos 27 fracción VII, 40 fracción XXXIX de la Ley Orgánica del Poder Ejecutivo del Estado de Oaxaca: 1 , 2, 6, 11, fracción II, XII, XXX, 35, 114, 116, 117, 120 fracción II, 121 fracción IX, de la ley de Transporte del Estado de Oaxaca, 31, 52, 73, 74 y 76 del Reglamento de la Ley de Transporte del Estado de Oaxaca y Artículos 31 fracción III y 32 fracción V, del Reglamento Interno de la Secretaria de Vialidad y Transporte del Estado de Oaxaca y con base en las conclusiones del estudio técnico y costos practicado por la Subsecretaria de Planeación y Normatividad para la actualización de las tarifas del servicio público de transporte de pasajeros, considerando la estimación de la demanda del servicio, el inventario de vehículos que prestan el servicio en dicha modalidad y las cotizaciones de costos de refacciones, combustibles y mantenimiento, relacionados directamente con el costo de operación de los vehículos, por instrucciones del encargado de Despacho de la Secretaría de Movilidad del Gobierno del Estado de Oaxaca y en términos del Acuerdo por el que el Secretario de Movilidad delega facultades al Titular de la Dirección de Operación del Transporte Público de la misma Dependencia, publicado en el Periódico Oficial del Gobierno del Estado de Oaxaca el día 6 de Julio del año 2013, la Dirección de Operación del Transporte Público a través del Departamento de Control de Transporte, le comunica que se le autoriza como tarifa para la prestación del servicio público de transporte de pasajeros en la Modalidad de ' + this.plantillaseleccionada.modalidad.nombre+', en la Localidad de ' + this.plantillaseleccionada.localidad.nombre+', Municipio de ' + this.plantillaseleccionada.localidad.municipio.nombre+', Oax., una cantidad que no deberá ser mayor a:', fontSize: 8, margin: [0, 10] }
                          ]
                        },
                        { columns: [
@@ -467,29 +467,47 @@ export class TarifaComponent implements OnInit {
                        {
                          columns: [
                            { width: 10, text: '' },
-                           { alignment: 'justify', width: 300, text: '-C. Alejandro Villanueva López. - Encargado de Despacho. - Para su conocimiento', fontSize: 5  }
+                           { alignment: 'justify', width: 300, text: '- Lic. Mariana Erandi Nassar Piñeyro.- Secretaria de Movilidad. Para su conocimiento.', fontSize: 5  }
                          ]
                        }
                        ,
                        {
                          columns: [
                            { width: 10, text: '' },
-                           { alignment: 'justify', width: 300, text: '-Lic. Jóse Carlos Cervantes Azcona. - Subsecretario de Regulación y Control de Transporte.- Mismo fin.', fontSize: 5  }
+                           { alignment: 'justify', width: 300, text: '- Lic. Mario Alberto Guzmán Jaime.- Subsecretario de Regulación y Control de Transporte. Mismo fin.', fontSize: 5  }
                          ]
                        },
                        {
                          columns: [
                            { width: 10, text: '' },
-                           { alignment: 'justify', width: 300, text: '-Cp. Jóse Guzmán Santos.- Director de la Policia Vial Estatal. - Igual fin.', fontSize: 5  }
+                           { alignment: 'justify', width: 300, text: '- Lic. Alejandro Villanueva López.- Subsecretario de Planeación y Normatividad. Mismo fin.', fontSize: 5  }
                          ]
                        },
+                       {
+                         columns: [
+                           { width: 10, text: '' },
+                           { alignment: 'justify', width: 300, text: '-C.P. Jóse Guzmán Santos.- Director de la Policía Vial Estatal. Mismo fin.', fontSize: 5  }
+                         ]
+                       },
+                       {
+                         columns: [
+                           { width: 10, text: '' },
+                           { alignment: 'justify', width: 300, text: '-Módulo SEMOVI Región . Mismo fin', fontSize: 5  }
+                         ]
+                       },
+                       {
+                         columns: [
+                           { width: 10, text: '' },
+                           { alignment: 'justify', width: 300, text: '-Autoridad Municipal . ' + this.plantillaseleccionada.localidad.municipio.nombre + ' Mismo fin', fontSize: 5  }
+                         ]
+                       }
+                       ,
                        {
                          columns: [
                            { width: 10, text: '' },
                            { alignment: 'justify', width: 300, text: 'Arq. Julio César Rojas Rivera. - Jefe de Departamento de Control de Transporte. - Para su control.', fontSize: 5  }
                          ]
-                       }
-                       ,
+                       },
                        {
                          columns: [
                            { width: 170, text: '' },
@@ -511,16 +529,10 @@ export class TarifaComponent implements OnInit {
                        },
                        {
                          columns: [
-                           { width: 170, text: '' },
-                           { alignment: 'right', width: 300, text: 'www.oaxaca.gob.mx', fontSize: 6  }
-                         ]
-                       },
-                       {
-                         columns: [
                            { width: 15, text: '' },
                            {
-                             image:  'data:image/jpeg;base64,'+CEROTOLERANCIA.IMAGE,width: 62,height: 75,
-                             absolutePosition: {x: 50, y: 670}
+                             image:  'data:image/jpeg;base64,'+CEROTOLERANCIA.IMAGE,width: 50,height: 62,
+                             absolutePosition: {x: 50, y: 675}
                            }
                          ]
                        },
@@ -1075,6 +1087,7 @@ export class TarifaComponent implements OnInit {
       }
 
       public check($event){
+        console.log($event.status);
         if($event.error){
           if($event.error.status > 500 ||  $event.error.status == 404){
             alert($event.error.status + ' - Cambiando a modo manual' );
@@ -1085,9 +1098,11 @@ export class TarifaComponent implements OnInit {
             alert($event.error.status + ' - ' + $event.error.description );
           }
         }else{
-           this.test = JSON.stringify($event);
-           this.verificarpago();
-           this.verificarfecha();
+          if($event.status){
+             this.test = JSON.stringify($event);
+             this.verificarpago();
+             this.verificarfecha();
+          }
         }
       }
 

@@ -13,6 +13,7 @@ export class PaymentsComponent implements OnInit {
   @Input() IModel: Payments;
   @Output() Ostatus = new EventEmitter<any>();
   public paymentsForm: FormGroup;
+  result: any;
 
   constructor(private paymentsService?: PaymentsService) {}
 
@@ -35,7 +36,7 @@ export class PaymentsComponent implements OnInit {
     });
 
     $(document).ready(function(){
-      $('input#folio').characterCounter();
+      $('input#folio,input#capture_line').characterCounter();
     });
   }
 
@@ -59,12 +60,25 @@ export class PaymentsComponent implements OnInit {
     );
 
     this.paymentsService.validate(this.IModel).subscribe((result) => {
-      this.IModel.setAllValues(result);
-      this.Ostatus.emit({status: true});
+      this.result = result;
+      this.IModel.setAllValues(this.result);
+      //eliminar cuando todo este OK
+       this.Ostatus.emit({status: true});
 
-      (<HTMLInputElement>document.getElementById('folio')).disabled = true;
-      (<HTMLInputElement>document.getElementById('capture_line')).disabled = true;
-      (<HTMLInputElement>document.getElementById('formButton')).style.visibility = "hidden";
+     if(this.result!=null){
+       if(this.result.data.status_payment != 'documento vencido'){
+      //    this.Ostatus.emit({status: true});
+         (<HTMLInputElement>document.getElementById('folio')).disabled = true;
+         (<HTMLInputElement>document.getElementById('capture_line')).disabled = true;
+         (<HTMLInputElement>document.getElementById('formButton')).style.visibility = "hidden";
+       }else{
+      //    this.Ostatus.emit({status: false});
+         alert("Pago vencido");
+       }
+     }
+
+
+
     }, (error) => {
       if(error.error.error.status >= 500){
         document.getElementById('formButton').style.visibility = "hidden";
