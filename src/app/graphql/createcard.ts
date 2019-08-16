@@ -3,6 +3,7 @@ export namespace InsertTarjeton {
   export type Variables = {
     concesion: string;
     plantilla: string;
+    vehiculo: string;
     solicitud: SolicitudInput;
     lineaCaptura: LineaCapturaInput;
     hojaValorada: HojaValoradaInput;
@@ -21,6 +22,7 @@ export namespace InsertTarjeton {
     descripcion: Maybe<string>;
     concesion: Maybe<string>;
     plantilla: Maybe<string>;
+    vehiculo: Maybe<string>;
     solicitud: Maybe<SolicitudInput>;
     lineaCaptura: Maybe<LineaCapturaInput>;
     hojaValorada: Maybe<HojaValoradaInput>;
@@ -45,22 +47,8 @@ export class InsertTarjetonGQL extends Apollo.Mutation<
   InsertTarjeton.Variables
 > {
   document: any = gql`
-  mutation newTarjeton(
-  $concesion: ID
-  $plantilla: ID
-  $solicitud: SolicitudInput
-  $lineaCaptura: LineaCapturaInput
-  $hojaValorada: HojaValoradaInput
-  $token: String
-) {
-  crearTarjeton(
-    concesion: $concesion
-    plantilla: $plantilla
-    solicitud: $solicitud
-    lineaCaptura: $lineaCaptura
-    hojaValorada: $hojaValorada
-    token: $token
-  ) {
+  mutation newTarjeton($concesion: ID,$vehiculo:ID,$plantilla: ID,$solicitud: SolicitudInput,$lineaCaptura: LineaCapturaInput,$hojaValorada: HojaValoradaInput,$token: String) {
+  crearTarjeton(concesion: $concesion,vehiculo:$vehiculo,plantilla: $plantilla,solicitud: $solicitud,lineaCaptura: $lineaCaptura,hojaValorada: $hojaValorada,token: $token) {
     id
     concesion {
       id
@@ -97,18 +85,44 @@ export class InsertTarjetonGQL extends Apollo.Mutation<
         curp
         rfc
         razonSocial
+        representanteLegal
         localidad {
           id
           nombre
           municipio {
             id
             nombre
+            distrito{
+              id
+              nombre
+              region{
+                id
+                nombre
+              }
+            }
           }
         }
       }
       condiciones {
         vigente
         bloqueado
+      }
+    }
+    vehiculo{
+      id
+      anioModelo
+      motor
+      serie
+      puertas
+      numeroEconomico
+      estatus
+      marca{
+        id
+        nombre
+      }
+      tipo{
+        id
+        nombre
       }
     }
     plantilla {
@@ -121,6 +135,14 @@ export class InsertTarjetonGQL extends Apollo.Mutation<
         municipio {
           id
           nombre
+          distrito{
+            id
+            nombre
+            region{
+              id
+              nombre
+            }
+          }
         }
       }
       modalidad {
@@ -152,9 +174,9 @@ export class InsertTarjetonGQL extends Apollo.Mutation<
     movimiento {
       id
       descripcion
-      id_usuario
-      descripcion_usuario
-      centro_trabajo
+      idUsuario
+      descripcionUsuario
+      centroTrabajo
       region
       estatus
       createdAt

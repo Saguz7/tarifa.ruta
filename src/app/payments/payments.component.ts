@@ -73,7 +73,7 @@ export class PaymentsComponent implements OnInit {
          (<HTMLInputElement>document.getElementById('formButton')).style.visibility = "hidden";
        }else{
       //    this.Ostatus.emit({status: false});
-         alert("Pago vencido");
+         //alert("Pago vencido");
        }
      }
 
