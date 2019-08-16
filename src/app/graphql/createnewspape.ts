@@ -5,6 +5,7 @@ export namespace InsertPeriodico {
     fechaPublicacion: Date;
     tomo: string;
     numero: number;
+    token: string;
   };
 
   export type Mutation = {
@@ -20,6 +21,7 @@ export namespace InsertPeriodico {
     fechaPublicacion: Maybe<Date>;
     tomo: Maybe<string>;
     numero: Maybe<number>;
+    token: Maybe<string>;
 
 
   };
@@ -37,8 +39,8 @@ export class InsertPeriodicoGQL extends Apollo.Mutation<
   InsertPeriodico.Variables
 > {
   document: any = gql`
-  mutation newPeriodico($descripcion: String,$fechaPublicacion: Date,$tomo: String,$numero: Int) {
-  crearPeriodico(descripcion: $descripcion,fechaPublicacion: $fechaPublicacion,tomo: $tomo,numero: $numero) {
+  mutation newPeriodico($descripcion: String,$fechaPublicacion: Date,$tomo: String,$numero: Int,$token: String) {
+  crearPeriodico(descripcion: $descripcion,fechaPublicacion: $fechaPublicacion,tomo: $tomo,numero: $numero,token: $token) {
     id,
     descripcion,
     fechaPublicacion,

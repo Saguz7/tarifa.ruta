@@ -14,6 +14,7 @@
  import {RutaInterna} from "../models/vo/rutaInterna";
  import { InsertPlantillaGQL } from '../graphql/createtemplate';
  import {PlantillaComponent} from '../plantilla/plantilla.component';
+ import {User} from "../core/models/user.model";
 
 
 @Component({
@@ -54,10 +55,13 @@ export class CreatePlantillaComponent implements OnInit {
     private allModalidadesGQL?: AllModalidadesGQL,
     private insertPlantillaGQL?: InsertPlantillaGQL,
     private convertNSService?: ConvertNSService,
-    private plantillaComponent?: PlantillaComponent)
+    private plantillaComponent?: PlantillaComponent,
+    private storageService?: StorageService
+)
               {}
 //Se solicitan los periodicos y municipios totales para usarlos en el componente
   ngOnInit() {
+
     $(document).ready(function(){
       $('.modal').modal({dismissible: false});
     });
@@ -251,7 +255,8 @@ export class CreatePlantillaComponent implements OnInit {
     this.insertPlantillaGQL
       .mutate({
         plantilla: nuevaplantilla,
-        rutas: this.arrayrutas
+        rutas: this.arrayrutas,
+        token: this.storageService.getCurrentToken()
       })
       .subscribe(({ data }) => {
          $('.modal.open').modal('close')

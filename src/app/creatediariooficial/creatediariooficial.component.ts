@@ -7,6 +7,7 @@
  declare var M: any;
  import { InsertPeriodicoGQL } from '../graphql/createnewspape';
  import {PlantillaComponent} from '../plantilla/plantilla.component';
+ import {User} from "../core/models/user.model";
 
 
 @Component({
@@ -21,10 +22,18 @@ export class CreateDiarioOficialComponent implements OnInit {
   date1: Date;
   descripcion: any;
 
-  constructor(private apollo?: Apollo,private insertPeriodicoGQL?: InsertPeriodicoGQL,private plantillaComponent?: PlantillaComponent)
+  constructor(
+    private apollo?: Apollo,
+    private insertPeriodicoGQL?: InsertPeriodicoGQL,
+    private plantillaComponent?: PlantillaComponent,
+    private storageService?: StorageService
+
+  )
               {}
 
   ngOnInit() {
+ 
+
     $(document).ready(function(){
       $('.modal').modal({dismissible: false});
     });
@@ -47,7 +56,8 @@ export class CreateDiarioOficialComponent implements OnInit {
         descripcion: this.descripcion,
         fechaPublicacion: this.date1,
         tomo: this.tomo,
-        numero: this.numero
+        numero: this.numero,
+        token: this.storageService.getCurrentToken()
 
       })
       .subscribe(({ data }) => {

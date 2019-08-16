@@ -10,6 +10,7 @@
   import * as jsPDF from 'jspdf';
   import 'jspdf-autotable';
   import { Periodico, AllPeriodicosGQL } from '../graphql/newspapers';
+  import {StorageService} from "../core/services/storage.service";
 
  @Component({
   selector: 'app-plantilla', templateUrl: './plantilla.component.html', styleUrls: ['./plantilla.component.css']
@@ -23,7 +24,9 @@ export class PlantillaComponent implements OnInit {
   constructor(
       private router?: Router,
       private apollo?: Apollo,
-      private allPeriodicosGQL?: AllPeriodicosGQL
+      private allPeriodicosGQL?: AllPeriodicosGQL,
+      private storageService?: StorageService
+
     ){}
 
       ngOnInit() {

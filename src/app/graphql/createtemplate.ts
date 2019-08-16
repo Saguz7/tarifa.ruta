@@ -3,6 +3,8 @@ export namespace InsertPlantilla {
   export type Variables = {
     plantilla: Plantilla;
     rutas: Array<Ruta>;
+    token: string;
+
   };
 
   export type Mutation = {
@@ -14,6 +16,7 @@ export namespace InsertPlantilla {
     __typename?: "newPlantilla";
     plantilla: Maybe<Plantilla>;
     rutas: Maybe<Array<Ruta>>;
+    token: Maybe<string>;
   };
 }
 
@@ -31,8 +34,8 @@ export class InsertPlantillaGQL extends Apollo.Mutation<
   InsertPlantilla.Variables
 > {
   document: any = gql`
-  mutation newInt($plantilla:PlantillaInput,$rutas:[IntInput]){
-  crearPlantillaRuta(plantilla:$plantilla,rutas:$rutas){
+  mutation newInt($plantilla:PlantillaInput,$rutas:[IntInput],$token:String){
+  crearPlantillaRuta(plantilla:$plantilla,rutas:$rutas,token:$token){
     estatus,
     createdAt
   }
