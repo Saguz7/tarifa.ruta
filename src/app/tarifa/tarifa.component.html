@@ -359,7 +359,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col s10 offset-s1">
+                      <div class="col s12">
                         <p-table #tt [value]="arrayrutasdepruebas" [paginator]="true" [rows]="10" [responsive]="true" [globalFilterFields]="['ruta.origen','ruta.destino','descripcionTarifa','tarifa']">
                           <ng-template pTemplate="caption">
                             <div class="col s6 offset-s5" id="divsearchmob">
@@ -372,10 +372,10 @@
                           </ng-template>
                           <ng-template pTemplate="header" let-columns>
                             <tr>
-                              <th style="width:30%"><label class="tabladiariooficial">Origen</label></th>
+                              <th style="width:25%"><label class="tabladiariooficial">Origen</label></th>
                               <th style="width:30%"><label class="tabladiariooficial">Destino</label></th>
                               <th style="width:30%"><label class="tabladiariooficial">Tarifa en letras</label></th>
-                              <th style="width:10%"><label class="tabladiariooficial">Cantidad</label></th>
+                              <th style="width:15%"><label class="tabladiariooficial">Cantidad</label></th>
                             </tr>
                           </ng-template>
                           <ng-template pTemplate="body" let-rowData let-columns="columns">
