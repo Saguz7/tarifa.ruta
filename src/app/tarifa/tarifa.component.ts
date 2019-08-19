@@ -89,6 +89,8 @@ export class TarifaComponent implements OnInit {
   fechaperiodicooficial: any;
 
   validarfecha: boolean = false;
+  descargaroficio: boolean = false;
+  descargarrutas: boolean = false;
   user: any;
 
   infoqr = "Concesionario";
@@ -341,12 +343,20 @@ export class TarifaComponent implements OnInit {
            */
        pdf.save(this.registroamostrar.nuc + ".pdf");
 
+       this.descargarrutas=true;
 
-       var delayInMilliseconds = 1000; //1 second
-         setTimeout(function() {
-        }, delayInMilliseconds);
-           window.location.href = "/tarifa";
 
+          this.teminarproceso();
+
+      }
+
+
+      teminarproceso(){
+        var delayInMilliseconds = 15000; //1 second
+          setTimeout(function() {
+            window.location.href = "/tarifa";
+
+         }, delayInMilliseconds);
 
 
       }
@@ -558,11 +568,10 @@ export class TarifaComponent implements OnInit {
                     ]
                  };
                pdfMake.createPdf(dd).download('OFC'+this.registroamostrar.nuc + '.pdf');
+               this.descargaroficio = true;
+
          }
 
- terminarproceso(){
-      window.location.href = "/tarifa";
- }
 
  vistaprevia(){
       this.btngetTarjeton = true;
