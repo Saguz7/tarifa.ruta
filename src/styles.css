@@ -1,3 +1,7 @@
+html{
+  background-color: #F1F1F1;
+}
+
 @font-face {
  font-family: lato;
  src: url(assets/fonts/Calibri.ttf) format("opentype");

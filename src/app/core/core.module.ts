@@ -4,7 +4,7 @@ import {NgModule, Optional, SkipSelf} from '@angular/core';
 import {AuthorizatedGuard} from "./guards/authorizated.guard";
 import {AuthorizatedAdminGuard} from "./guards/authorizatedAdmin.guard";
 import {AuthorizatedAfterLoginGuard} from "./guards/authorizatedafterlogin.guard";
-import {AuthorizatedResportesGuard} from "./guards/authorizedreportes.guard";
+import {AuthorizatedCreacionGuard} from "./guards/authorizedcreacion.guard";
 import {ConvertNSService} from "./services/convertns.service";
 
 @NgModule({
@@ -15,7 +15,7 @@ import {ConvertNSService} from "./services/convertns.service";
     AuthorizatedGuard,
     AuthorizatedAdminGuard,
     AuthorizatedAfterLoginGuard,
-    AuthorizatedResportesGuard,
+    AuthorizatedCreacionGuard,
     ConvertNSService
   ],
   bootstrap: []

@@ -5,7 +5,7 @@ import {StorageService} from "../services/storage.service";
  import {User} from "../../core/models/user.model";
 
 @Injectable()
-export class AuthorizatedResportesGuard implements CanActivate {
+export class AuthorizatedCreacionGuard implements CanActivate {
   //Para conocer los datos del usuario
   public user: User;
   constructor(private router: Router,
@@ -15,7 +15,7 @@ export class AuthorizatedResportesGuard implements CanActivate {
 
 
      this.user = this.storageService.getCurrentUser();
-     if (this.storageService.isAuthenticated() && (this.storageService.getCurrentUser().id_rol == 5 || this.storageService.getCurrentUser().id_rol == 3)) {
+     if (this.storageService.isAuthenticated() && this.storageService.getCurrentUser().id_rol == 3) {
       // logged in so return true
     //  this.router.navigate(['/permiso']);
     if(this.storageService.isExpired()){
@@ -26,7 +26,7 @@ export class AuthorizatedResportesGuard implements CanActivate {
 
     }
     else{
-      this.router.navigate(['/permisos']);
+      this.router.navigate(['/tarifa']);
      }
     // not logged in so redirect to login page
   //  this.router.navigate(['/']);

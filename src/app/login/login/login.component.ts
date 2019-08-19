@@ -117,7 +117,7 @@ export class LoginComponent implements OnInit {
      /* Manda el objeto a guardar en el storageservice para que lo detecte*/
       private correctLogin(data: Session){
        this.storageService.setCurrentSession(data);
-       window.location.href = "/informacion";
+       window.location.href = "/tarifa";
       }
 
       verificarcorreo(){

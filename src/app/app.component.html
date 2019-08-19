@@ -5,8 +5,11 @@
       <a href="#" data-target="slide-out" class="sidenav-trigger" *ngIf="loged"><i class="material-icons">menu</i></a>
       <a id="alogo"><img class="responsive-img" id="logosemovi" src="./assets/tarifabanner.svg" ></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li *ngIf="viewmoreoptions"><a href="/tarifa">Tarifa</a></li>
+        <li *ngIf="viewmoreoptions"><a href="/crearplantilla">Plantilla</a></li>
+
         <li>
-          <a class="dropdown-trigger" data-target="dropdown1">
+           <a class="dropdown-trigger" data-target="dropdown1">
             <label class="nombreusuario" *ngIf="loged">{{user.nombre}} {{user.primer_apellido}} {{user.segundo_apellido}}</label>
             <i class="material-icons right"  *ngIf="loged">arrow_drop_down</i>
           </a>
@@ -19,6 +22,8 @@
   <li><div class="user-view">
     <a href="#email"><span class="white-text email"><label class="nombreusuario" *ngIf="loged">{{user.nombre}} {{user.primer_apellido}} {{user.segundo_apellido}}</label></span></a>
   </div></li>
+  <li *ngIf="viewmoreoptions"><a href="/tarifa">Tarifa</a></li>
+  <li *ngIf="viewmoreoptions"><a href="/crearplantilla">Plantilla</a></li>
   <li><div class="divider"></div></li>
   <li><a href="/resetpassword" class="waves-effect"><i class="material-icons left">compare_arrows</i> Cambiar contraseña</a></li>
   <li><a class="waves-effect" (click)="logout()"><i class="material-icons left">exit_to_app</i>Cerrar sesión</a></li>

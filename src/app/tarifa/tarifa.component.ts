@@ -340,6 +340,15 @@ export class TarifaComponent implements OnInit {
             }
            */
        pdf.save(this.registroamostrar.nuc + ".pdf");
+
+
+       var delayInMilliseconds = 1000; //1 second
+         setTimeout(function() {
+        }, delayInMilliseconds);
+           window.location.href = "/tarifa";
+
+
+
       }
 
          generaformatoconmakepdf(){

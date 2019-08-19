@@ -13,6 +13,7 @@ export class AppComponent implements OnInit  {
   title = 'tarifas';
  public user: User;
  loged: boolean = false;
+ viewmoreoptions: boolean = false;
 
   constructor(
      private storageService: StorageService
@@ -21,11 +22,16 @@ export class AppComponent implements OnInit  {
 
   ngOnInit() {
      this.user = this.storageService.getCurrentUser();
-      if(this.user == null){
-       this.loged = false;
+     if(this.user == null){
+     this.loged = false;
+   }else{
+     if(this.storageService.getCurrentUser().id_rol == 3){
+       this.viewmoreoptions = true;
      }else{
-       this.loged = true;
+       this.viewmoreoptions = false;
      }
+     this.loged = true;
+   }
      $(".dropdown-trigger").dropdown();
        $(document).ready(function(){
          $('.sidenav').sidenav();
