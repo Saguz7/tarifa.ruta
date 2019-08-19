@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TarifaComponent } from './tarifa/tarifa.component';
 import { PlantillaComponent } from './plantilla/plantilla.component';
 import { PaymentsComponent } from './payments/payments.component';
+import { ResetPasswordComponent } from './resetpassword/resetpassword.component';
 
 import {CalendarModule} from 'primeng/calendar';
 import * as $ from 'jquery';
@@ -36,7 +37,8 @@ import { PaymentsModule } from 'semovi-payments';
     SpecialNumberAndDecimalDirective,
     CreatePlantillaComponent,
     CreateDiarioOficialComponent,
-    PaymentsComponent
+    PaymentsComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

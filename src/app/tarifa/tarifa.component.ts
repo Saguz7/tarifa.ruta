@@ -819,53 +819,58 @@ concesiones(entrada: $entrada, opcion: $opcion, top: $top) {
     }
 
     seleccionarregistro(registro: any){
-      if(registro.condiciones.bloqueado==false){
+       if(registro.condiciones.bloqueado==false){
         if(registro.condiciones.vigente==true){
-        this.registroamostrar = registro;
-        this.divdebusqueda = false;
-
-        this.apollo.query({query: gql`
-          query listPlantillas($localidad: ID, $modalidad: ID) {
-  plantillas(localidad: $localidad, modalidad: $modalidad) {
-    id,
-    nombre,
-    descripcion,
-    localidad {
-      id,
-      nombre,
-      municipio {
-        id,
-        nombre
+           if(registro.nuc != '/'){
+            this.registroamostrar = registro;
+            this.divdebusqueda = false;
+            this.apollo.query({query: gql`
+              query listPlantillas($localidad: ID, $modalidad: ID) {
+                plantillas(localidad: $localidad, modalidad: $modalidad) {
+                  id,
+                  nombre,
+                  descripcion,
+                  localidad {
+                    id,
+                    nombre,
+                    municipio {
+                      id,
+                      nombre
+                    }
+                  },
+                  modalidad {
+                    id,
+                    nombre,
+                    descripcion,
+                    estatus,
+                    abreviatura
+                  },
+                  periodico {
+                    id,
+                    descripcion,
+                    fechaPublicacion,
+          tomo,
+          numero,
+          estatus,
+          createdAt
+        },
+        estatus,
+        createdAt
       }
     },
-    modalidad {
-      id,
-      nombre,
-      descripcion,
-      estatus,
-      abreviatura
-    },
-    periodico {
-      id,
-      descripcion,
-      fechaPublicacion,
-      tomo,
-      numero,
-      estatus,
-      createdAt
-    },
-    estatus,
-    createdAt
-  }
-},
-           `, fetchPolicy: 'network-only',
-              variables: {
-                localidad: this.registroamostrar.concesionario.localidad.id,
-                modalidad: this.registroamostrar.modalidad.id
-              }})
-              .subscribe(result => {
-                this.asignarplantillasseleccionadas(result.data);
-            });
+               `, fetchPolicy: 'network-only',
+                  variables: {
+                    localidad: this.registroamostrar.concesionario.localidad.id,
+                    modalidad: this.registroamostrar.modalidad.id
+                  }})
+                  .subscribe(result => {
+                    this.asignarplantillasseleccionadas(result.data);
+                });
+          }else{
+            var toastHTML = '<span> <div class="valign-wrapper"><i class="material-icons">error_outline</i>  &nbsp;&nbsp;Concesión no tiene NUC</div></span>';
+            M.toast({html: toastHTML});
+          }
+
 
       }else{
 
