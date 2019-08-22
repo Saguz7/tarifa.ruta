@@ -22,8 +22,7 @@ import { SpecialNumberAndDecimalDirective  } from './specialnumericdecimal.direc
 
 import {ButtonModule} from 'primeng/button';
 import {TableModule} from 'primeng/table';
-import {DropdownModule} from 'primeng/dropdown';
-
+ 
 
 import { PaymentsModule } from 'semovi-payments';
 
@@ -52,8 +51,7 @@ import { PaymentsModule } from 'semovi-payments';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     ButtonModule,
-    TableModule,
-    DropdownModule
+    TableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
