@@ -63,17 +63,17 @@ export class PaymentsComponent implements OnInit {
       this.result = result;
       this.IModel.setAllValues(this.result);
       //eliminar cuando todo este OK
-      // this.Ostatus.emit({status: true});
+      this.Ostatus.emit({status: true});
 
      if(this.result!=null){
        if(this.result.data.status_payment != 'documento vencido'){
-           this.Ostatus.emit({status: true});
+        //   this.Ostatus.emit({status: true});
          (<HTMLInputElement>document.getElementById('folio')).disabled = true;
          (<HTMLInputElement>document.getElementById('capture_line')).disabled = true;
          (<HTMLInputElement>document.getElementById('formButton')).style.visibility = "hidden";
        }else{
-          this.Ostatus.emit({status: false});
-          alert("Pago vencido");
+        //  this.Ostatus.emit({status: false});
+        //  alert("Pago vencido");
        }
      }
 

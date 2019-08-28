@@ -13,11 +13,14 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 })
 export class GraphQLModule {
 
-   private readonly URI1: string = 'http://tarifas.dt.gql.semovioaxaca.gob.mx/graphql';
-   private readonly URI2: string = 'http://servicios.ui.gql.semovioaxaca.gob.mx/graphql';
-   private readonly URI3: string = 'http://sicac.ui.gql.semovioaxaca.gob.mx/graphql';
+  // private readonly URI1: string = 'http://tarifas.dt.gql.semovioaxaca.gob.mx/graphql';
+  // private readonly URI2: string = 'http://servicios.ui.gql.semovioaxaca.gob.mx/graphql';
+  // private readonly URI3: string = 'http://sicac.ui.gql.semovioaxaca.gob.mx/graphql';
 
 
+  private readonly URI1: string = 'http://172.80.13.12:10009/graphql';
+   private readonly URI2: string = 'http://172.80.13.12:10007/graphql';
+   private readonly URI3: string = 'http://172.80.13.12:5000/graphql';
   constructor(
     apollo: Apollo,
     httpLink: HttpLink
