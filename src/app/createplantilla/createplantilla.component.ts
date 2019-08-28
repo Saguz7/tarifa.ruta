@@ -292,7 +292,7 @@ export class CreatePlantillaComponent implements OnInit {
        event.target.parentNode.parentNode.style.backgroundColor = "#f5f5f5";
     }
 
-    this.mensaje = "Ha seleccionado el periódico oficial del dia: " +rowData.fecha_publicacion +", Tomo: " + rowData.tomo +", Numero:"+ rowData.numero
+    this.mensaje = "Ha seleccionado el periódico oficial del dia: " +rowData.fechaPublicacion +", Tomo: " + rowData.tomo +", Numero:"+ rowData.numero
     M.toast({html: this.mensaje})
     this.newspaperselect = rowData;
     this.mostardespuesperiodicooficial = true;
