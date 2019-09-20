@@ -241,6 +241,16 @@
         <div class="collapsible-header" id="divheader3"><i class="material-icons">assignment</i>Solicitudes</div>
         <div class="row" *ngIf="div3solicitud"><br>
           <div class="row">
+            <div class="col s10 offset-s1"  id="cambiodetamanio3">
+              <div class="col s12" >
+
+              <label class="buscadores" >Rellene los datos correspondientes a la solicitud.</label><br>
+              </div>
+
+              </div>
+            </div>
+          <div class="row">
+
             <div class="col s10 offset-s1"> <br> <br>
               <div class="col s6" id="cambiodetamanio3">
                 <div>
@@ -259,10 +269,54 @@
                 </div>
               </div><br> <br>
             </div>
+
+            <div class="col s10 offset-s1">
+              <div class="row">
+                <div class="s10 offset-s1">
+                <div class="s10 offset-s1"  id="cambiodetamanio3">
+                  <br>
+                  <br>
+                  <label class="buscadores" >Selecciona la ruta predeterminada.</label><br>
+
+                  </div>
+                <div class="s10 offset-s1"  id="cambiodetamanio3">
+                  <p-table #tt [value]="arrayrutasdepruebas" [paginator]="true" [rows]="10" [responsive]="true" [globalFilterFields]="['ruta.origen','ruta.destino','descripcionTarifa','tarifa']">
+                    <ng-template pTemplate="caption">
+                      <div class="col s6 offset-s5" id="divsearchmob">
+                        <div class="input-field">
+                          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                          <input id="inputsearchuser" type="text" pInputText size="50"  (input)="tt.filterGlobal($event.target.value, 'contains')" ><br>
+                         </div>
+                         <br>
+                      </div>
+                    </ng-template>
+                    <ng-template pTemplate="header" let-columns>
+                      <tr>
+                        <th style="width:25%"><label class="tabladiariooficial">Origen</label></th>
+                        <th style="width:30%"><label class="tabladiariooficial">Destino</label></th>
+                        <th style="width:30%"><label class="tabladiariooficial">Tarifa en letras</label></th>
+                        <th style="width:15%"><label class="tabladiariooficial">Cantidad</label></th>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                      <tr class="sinfondo" (click)="seleccionaruta(rowData,$event)">
+                        <td><div><label class="tabladiariooficial">{{rowData.ruta.origen}}</label></div></td>
+                        <td><div><label class="tabladiariooficial">{{rowData.ruta.destino}}</label></div></td>
+                        <td><div><label class="tabladiariooficial">{{ rowData.descripcionTarifa }}</label></div></td>
+                        <td><div><label class="tabladiariooficial">{{"$"+rowData.tarifa.toFixed(2)}}</label></div></td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </div>
+                </div>
+                </div>
+            </div>
           </div>
+
+
           <div class="col s11 offset-s1" id="cambiodetamanio6">
-            <a *ngIf="foliosolicitud == null || date1 == null" id="btnverificarpago" class="waves-effect waves-light btn-small disabled"><i class="material-icons left">arrow_downward</i>Descargar Tarjetón</a>
-            <a *ngIf="foliosolicitud != null && date1 != null" id="btnverificarpago" class="waves-effect waves-light btn-small"  (click)="descargaractive()"><i class="material-icons left">arrow_downward</i>Descargar Tarjetón</a>
+            <a *ngIf="foliosolicitud == null || date1 == null || rutaseleccionada == null" id="btnverificarpago" class="waves-effect waves-light btn-small disabled"><i class="material-icons left">arrow_downward</i>Descargar Tarjetón</a>
+            <a *ngIf="foliosolicitud != null && date1 != null && rutaseleccionada != null" id="btnverificarpago" class="waves-effect waves-light btn-small"  (click)="descargaractive()"><i class="material-icons left">arrow_downward</i>Descargar Tarjetón</a>
           </div> <br> <br>
         </div>
       </li>
@@ -359,35 +413,44 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col s12">
-                        <p-table #tt [value]="arrayrutasdepruebas" [paginator]="true" [rows]="10" [responsive]="true" [globalFilterFields]="['ruta.origen','ruta.destino','descripcionTarifa','tarifa']">
-                          <ng-template pTemplate="caption">
-                            <div class="col s6 offset-s5" id="divsearchmob">
-                              <div class="input-field">
-                                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                                <input id="inputsearchuser" type="text" pInputText size="50"  (input)="tt.filterGlobal($event.target.value, 'contains')" ><br>
-                               </div>
-                               <br>
-                            </div>
-                          </ng-template>
-                          <ng-template pTemplate="header" let-columns>
-                            <tr>
-                              <th style="width:25%"><label class="tabladiariooficial">Origen</label></th>
-                              <th style="width:30%"><label class="tabladiariooficial">Destino</label></th>
-                              <th style="width:30%"><label class="tabladiariooficial">Tarifa en letras</label></th>
-                              <th style="width:15%"><label class="tabladiariooficial">Cantidad</label></th>
-                            </tr>
-                          </ng-template>
-                          <ng-template pTemplate="body" let-rowData let-columns="columns">
-                            <tr class="sinfondo">
-                              <td><div><label class="tabladiariooficial">{{rowData.ruta.origen}}</label></div></td>
-                              <td><div><label class="tabladiariooficial">{{rowData.ruta.destino}}</label></div></td>
-                              <td><div><label class="tabladiariooficial">{{ rowData.descripcionTarifa }}</label></div></td>
-                              <td><div><label class="tabladiariooficial">{{"$"+rowData.tarifa.toFixed(2)}}</label></div></td>
-                            </tr>
-                          </ng-template>
-                        </p-table>
+
+
+
+
+                      <div *ngIf="rutaseleccionada != undefined">
+                        <div class="col s11 offset-s1"><br>
+                          <label class="buscadores" >Ruta predeterminada.</label><br>
+                        </div>
                       </div>
+                      <div *ngIf="rutaseleccionada != undefined">
+                        <div class="col s11 offset-s1">
+                          <div class="col s12">
+                            <div class="col s6" id="cambiodetamanio3">
+                              <label class="conseciontitulopequeñored">Origen:</label><br>
+                              <label class="conseciontitulo">{{rutaseleccionada.ruta.origen}}</label>
+                            </div>
+                            <div class="col s6" id="cambiodetamanio3">
+                              <label class="conseciontitulopequeñored">Destino:</label><br>
+                              <label class="conseciontitulo">{{rutaseleccionada.ruta.destino}}</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col s11 offset-s1">
+                          <div class="col s12">
+                            <div class="col s6" id="cambiodetamanio3">
+                              <label class="conseciontitulopequeñored">Cantidad:</label><br>
+                              <label class="conseciontitulo">{{rutaseleccionada.tarifa.toFixed(2)}}</label>
+                            </div>
+                            <div class="col s6" id="cambiodetamanio3">
+                              <label class="conseciontitulopequeñored">Cantidad en letra:</label><br>
+                              <label class="conseciontitulo">{{rutaseleccionada.descripcionTarifa}}</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+
                     </div>
                     <div class="row">
                       <div class="input-field col s10 offset-s2" id="cambiodetamanio9">

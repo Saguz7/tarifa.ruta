@@ -69,6 +69,7 @@ export class TarifaComponent implements OnInit {
   tamaniointervalo: any;
   busquedapornuc: boolean = false;
   busquedapornombre: boolean = true;
+  rutaseleccionada: any;
 
   plantillasencontradas: any;
   foliosolicitud: any;
@@ -161,6 +162,45 @@ export class TarifaComponent implements OnInit {
  }
 
 
+ generatepdfreverse(){
+
+   var para='JSPDF is the HTML5 client-side solution for generating PDFs. This is perfect for event tickets, reports, and certificates. Just include the JSPDF library in your <head>, generate your PDF using the many built-in functions';
+   let calibri_url = CALIBRI.CALIBRI;
+   let calibrib_url = CALIBRIB.CALIBRIB;
+   var pdf = new jsPDF('p', 'mm', [612,   792]);
+   pdf.addFileToVFS("Calibri.ttf",calibri_url);
+   pdf.addFileToVFS("Calibrib.ttf",calibrib_url);
+   pdf.setFontSize(44);
+   pdf.text('TARJETÓN DE TARIFA' , 30, 200, null, 90);
+   pdf.setFontSize(32);
+   pdf.addFont("Calibri.ttf", "Calibri", "normal");
+   pdf.setFont("Calibri");
+
+   var municipio = 'MUNICIPIO: OCOTLAN DE MORELOS OAXACA - SAN PEDRO APOSTOL BLA BLA BLA BLA BLA BLA BLA';
+   var lines = pdf.splitTextToSize(municipio, 240);
+
+   pdf.text(lines, 110, 260, null, 90);
+
+
+   var ruta = 'RUTA: OCOTLAN DE MORELOS OAXACA - SAN PEDRO APOSTOL BLA BLA BLA BLA BLA BLA BLA ';
+
+   var lines = pdf.splitTextToSize(ruta, 250);
+
+   pdf.text(lines , 130, 260, null, 90);
+
+   pdf.setFontSize(24);
+   pdf.addFont("Calibri.ttf", "Calibri", "normal");
+   pdf.setFont("Calibri");
+   var tarifa = '(CIENTO QUINCE PESOS 00/100 M.N). BLA BLA BLA BLA BLA BLA';
+
+   var lines = pdf.splitTextToSize(tarifa, 150);
+
+   pdf.text(lines, 185, 235, null, 90);
+
+   pdf.save( "REVERSE.pdf");
+ }
+
+
  creaciondetarjeton(){
    let solicitudinput = new SolicitudInput();
    solicitudinput.folio = this.foliosolicitud;
@@ -227,7 +267,9 @@ export class TarifaComponent implements OnInit {
    pdf.text(89, 18, 'SECRETARÍA DE MOVILIDAD');
    pdf.setFontSize(9);
    pdf.text(77, 21, 'SUBSECRETARÍA DE REGULACIÓN Y CONTROL DE TRANSPORTE');
-   pdf.text(82, 24, 'DIRECCIÓN DE OPERACIÓN DEL TRANSPORTE PUBLICO');
+   pdf.setFontSize(11);
+
+   pdf.text(74, 25, 'DIRECCIÓN DE OPERACIÓN DEL TRANSPORTE PUBLICO');
    var img = new Image();
    img.src = './assets/SEMOVI2.png'
    pdf.addFont("Calibri.ttf", "Calibri", "normal");
@@ -247,9 +289,11 @@ export class TarifaComponent implements OnInit {
    pdf.setFont("Calibrib");
    pdf.addImage(barcodeData, "JPG", 10, 45,31, 31);
    pdf.text(50, 71, 'TARJETÓN');
-   pdf.setFontSize(7);
-   pdf.addFont("Calibri.ttf", "Calibri", "normal");
-   pdf.setFont("Calibri");
+   pdf.setFontSize(9);
+
+
+   pdf.addFont("Calibrib.ttf", "Calibrib", "normal");
+   pdf.setFont("Calibrib");
    let concesionarionombre = "";
    if(this.registroamostrar.concesionario.tipoPersona == "F"){
      concesionarionombre = 'CONCESIONARIO: ' + this.registroamostrar.concesionario.nombre + " " + this.registroamostrar.concesionario.primerApellido + " " + this.registroamostrar.concesionario.segundoApellido ;
@@ -259,9 +303,19 @@ export class TarifaComponent implements OnInit {
    pdf.text(100, 67, concesionarionombre);
    pdf.text(100, 71, 'NUC: ' + this.registroamostrar.nuc);
    pdf.setFontSize(8);
+
+   pdf.addFont("Calibri.ttf", "Calibri", "normal");
+   pdf.setFont("Calibri");
    pdf.text('La  Secretaría  de  Movilidad  del  Poder  Ejecutivo  del  estado  de  Oaxaca , con  fundamento  en  lo  dispuesto   por  los  artículos  2 párrafo  tercero y   82  de  la   Constitución   Política   del   Estado  Libre  y  Soberado  de  Oaxaca;  1 ,  27   fracción  VII  y  40   de   la   Ley  Orgánica   del   Poder   Ejecutivo  del  Estado de  Oaxaca, articulo  156  y  158  de  la  Ley  del  Movilidad  del  Estado de Oaxaca; en  relación  con  los  artículos 43  fracción II, 72,  73,  75  y 76 del  Reglamento  de la  Ley  de Transporte del  Estado de Oaxaca;  y  de  conformidad  con el  Acuerdo  Administrativo  de  fecha  17  de  diciembre  del  2018,  publicado  en  el  Periódico Oficial de Gobierno del Estado de Oaxaca el 19 de enero del 2019 y en el diario Enlace de la costa, el  día  15 de febrero de 2019 , queda autorizada   la siguiente:', 14,78, {maxWidth: 182, align: "justify"});
-   pdf.setFontSize(16);
-   pdf.text(96, 97, 'TARIFA');
+   pdf.setFontSize(22);
+
+   pdf.addFont("Calibrib.ttf", "Calibrib", "normal");
+   pdf.setFont("Calibrib");
+
+   pdf.text(92, 97, 'TARIFA');
+
+   pdf.addFont("Calibri.ttf", "Calibri", "normal");
+   pdf.setFont("Calibri");
    if(restorutas<=25){
      for(var i = 0; i < restorutas; i++){
        this.arrayrutasdepruebas[i]
@@ -332,7 +386,54 @@ export class TarifaComponent implements OnInit {
          }
        }
        pdf.setFontSize(9);
-       pdf.text(25, 264, 'del Servicio Público de Transporte de pasajeros en la modalidad de ' + this.plantillaseleccionada.modalidad.nombre+ '; para el Municipio de ' +this.registroamostrar.concesionario.localidad.municipio.nombre +  ".");
+       pdf.addFont("Calibrib.ttf", "Calibrib", "normal");
+       pdf.setFont("Calibrib");
+
+
+       pdf.text(15, 260, 'del Servicio Público de Transporte de pasajeros en la modalidad de '.toUpperCase() + this.plantillaseleccionada.modalidad.nombre+ ';' );
+       pdf.text(15, 263, 'para el Municipio de '.toUpperCase() +this.registroamostrar.concesionario.localidad.municipio.nombre +  ".");
+
+
+       pdf.addPage();
+
+
+       pdf.addFont("Calibrib.ttf", "Calibrib", "normal");
+       pdf.setFont("Calibrib");
+       pdf.setFontSize(44);
+       pdf.text('TARJETÓN DE TARIFA' , 30, 200, null, 90);
+       pdf.setFontSize(24);
+       pdf.addFont("Calibri.ttf", "Calibri", "normal");
+       pdf.setFont("Calibri");
+       var lines = pdf.splitTextToSize(concesionarionombre, 650);
+       pdf.text(lines, 50, 260, null, 90);
+       pdf.text('NUC:' + this.registroamostrar.nuc, 70, 260, null, 90);
+       pdf.text('MODALIDAD:' + this.plantillaseleccionada.modalidad.nombre +  ".", 90, 260, null, 90);
+       var municipio = 'MUNICIPIO: ' + this.registroamostrar.concesionario.localidad.municipio.nombre;
+       var lines = pdf.splitTextToSize(municipio, 240);
+
+       pdf.text(lines, 110, 260, null, 90);
+       var ruta = 'RUTA: ' + this.rutaseleccionada.ruta.origen +  " - " + this.rutaseleccionada.ruta.destino;
+
+       var lines = pdf.splitTextToSize(ruta, 250);
+
+       pdf.text(lines , 130, 260, null, 90);
+       pdf.setFontSize(90);
+       pdf.addFont("Calibrib.ttf", "Calibrib", "normal");
+       pdf.setFont("Calibrib");
+       pdf.text('$'+this.rutaseleccionada.tarifa.toFixed(2), 170, 235, null, 90);
+
+
+       pdf.setFontSize(24);
+       pdf.addFont("Calibri.ttf", "Calibri", "normal");
+       pdf.setFont("Calibri");
+       //pdf.text(concesionarionombre, 50, 260, null, 90);
+
+       var tarifa = '(' + this.rutaseleccionada.descripcionTarifa +  ").";
+
+       var lines = pdf.splitTextToSize(tarifa, 150);
+
+       pdf.text(lines, 185, 235, null, 90);
+
            /*
            var delayInMilliseconds = 1000; //1 second
              setTimeout(function() {
@@ -1177,6 +1278,32 @@ concesiones(entrada: $entrada, opcion: $opcion, top: $top) {
            $('input#input_text').characterCounter();
          });
        });
+    }
+
+    seleccionaruta(rowData: any,event: any){
+      if(event.target.tagName == "TD"){
+        for(var i = 1; i < event.target.parentNode.parentNode.parentNode.rows.length; i++){
+          event.target.parentNode.parentNode.parentNode.rows[i].style.backgroundColor = "#FFF";
+        }
+        event.target.parentNode.style.backgroundColor = "#f5f5f5";
+      }
+      if(event.target.tagName == "LABEL"){
+        for(var i = 0; i < event.target.parentNode.parentNode.parentNode.parentNode.rows.length; i++){
+          event.target.parentNode.parentNode.parentNode.parentNode.rows[i].style.backgroundColor = "#FFF";
+        }
+        event.target.parentNode.parentNode.parentNode.style.backgroundColor = "#f5f5f5";
+      }
+      if(event.target.tagName == "DIV"){
+        for(var i = 0; i < event.target.parentNode.parentNode.parentNode.parentNode.rows.length-1; i++){
+          event.target.parentNode.parentNode.parentNode.rows[i].style.backgroundColor = "#FFF";
+        }
+        event.target.parentNode.parentNode.style.backgroundColor = "#f5f5f5";
+      }
+      this.rutaseleccionada = rowData;
+
+      var toastHTML = '<span> <div class="valign-wrapper"> &nbsp;&nbsp; Se ha seleccionado la ruta '+this.rutaseleccionada.ruta.origen+'-'+this.rutaseleccionada.ruta.destino+'</div></span>';
+      M.toast({html: toastHTML});
+
     }
 
 }
