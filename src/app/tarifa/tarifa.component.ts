@@ -306,7 +306,7 @@ export class TarifaComponent implements OnInit {
 
    pdf.addFont("Calibri.ttf", "Calibri", "normal");
    pdf.setFont("Calibri");
-   pdf.text('La  Secretaría  de  Movilidad  del  Poder  Ejecutivo  del  estado  de  Oaxaca , con  fundamento  en  lo  dispuesto   por  los  artículos  2 párrafo  tercero y   82  de  la   Constitución   Política   del   Estado  Libre  y  Soberado  de  Oaxaca;  1 ,  27   fracción  VII  y  40   de   la   Ley  Orgánica   del   Poder   Ejecutivo  del  Estado de  Oaxaca, articulo  156  y  158  de  la  Ley  del  Movilidad  del  Estado de Oaxaca; en  relación  con  los  artículos 43  fracción II, 72,  73,  75  y 76 del  Reglamento  de la  Ley  de Transporte del  Estado de Oaxaca;  y  de  conformidad  con el  Acuerdo  Administrativo  de  fecha  17  de  diciembre  del  2018,  publicado  en  el  Periódico Oficial de Gobierno del Estado de Oaxaca el 19 de enero del 2019 y en el diario Enlace de la costa, el  día  15 de febrero de 2019 , queda autorizada   la siguiente:', 14,78, {maxWidth: 182, align: "justify"});
+   pdf.text('La  Secretaría  de  Movilidad  del  Poder  Ejecutivo  del  estado  de  Oaxaca , con  fundamento  en  lo  dispuesto   por  los  artículos  2  párrafo  tercero  y   82  de  la   Constitución   Política   del   Estado  Libre  y  Soberado  de  Oaxaca;  1 ,  27   fracción  VII  y  40   de   la   Ley  Orgánica   del   Poder   Ejecutivo  del  Estado de  Oaxaca, articulo  156  y  158  de  la  Ley  del  Movilidad  del  Estado de Oaxaca; en  relación  con  los artículos 82 fracción II, 270, 271, 273 y 274 del Reglamento de la Ley de Movilidad para el Estado de Oaxaca ;  y  de  conformidad  con el  Acuerdo  Administrativo  de  fecha  17  de  diciembre  del  2018,  publicado  en  el  Periódico Oficial de Gobierno del Estado de Oaxaca el 19 de  enero del 2019 y en  el diario Enlace de la costa, el  día  15 de febrero de 2019 , queda autorizada   la siguiente:', 14,78, {maxWidth: 182, align: "justify"});
    pdf.setFontSize(22);
 
    pdf.addFont("Calibrib.ttf", "Calibrib", "normal");
@@ -526,7 +526,7 @@ export class TarifaComponent implements OnInit {
                      { columns: [
                          { width: 10, text: '' },
                          { alignment: 'justify', width: 460,
-                           text: 'En atención a las diversas solicitudes presentadas ante esta Secretaría por prestadores del servicio público de transporte, en su modalidad de ' + this.plantillaseleccionada.modalidad.nombre+' en esta localidad, con fundamento en los artículos 27 fracción VII, 40 fracción XXXIX de la Ley Orgánica del Poder Ejecutivo del Estado de Oaxaca: 1 , 2, 6, 11, fracción II, XII, XXX, 35, 114, 116, 117, 120 fracción II, 121 fracción IX, de la ley de Transporte del Estado de Oaxaca, 31, 52, 73, 74 y 76 del Reglamento de la Ley de Transporte del Estado de Oaxaca y Artículos 31 fracción III y 32 fracción V, del Reglamento Interno de la Secretaria de Vialidad y Transporte del Estado de Oaxaca y con base en las conclusiones del estudio técnico y costos practicado por la Subsecretaria de Planeación y Normatividad para la actualización de las tarifas del servicio público de transporte de pasajeros, considerando la estimación de la demanda del servicio, el inventario de vehículos que prestan el servicio en dicha modalidad y las cotizaciones de costos de refacciones, combustibles y mantenimiento, relacionados directamente con el costo de operación de los vehículos, por instrucciones del encargado de Despacho de la Secretaría de Movilidad del Gobierno del Estado de Oaxaca y en términos del Acuerdo por el que el Secretario de Movilidad delega facultades al Titular de la Dirección de Operación del Transporte Público de la misma Dependencia, publicado en el Periódico Oficial del Gobierno del Estado de Oaxaca el día 6 de Julio del año 2013, la Dirección de Operación del Transporte Público a través del Departamento de Control de Transporte, le comunica que se le autoriza como tarifa para la prestación del servicio público de transporte de pasajeros en la Modalidad de ' + this.plantillaseleccionada.modalidad.nombre+', en la Localidad de ' + this.plantillaseleccionada.localidad.nombre+', Municipio de ' + this.plantillaseleccionada.localidad.municipio.nombre+', Oax., una cantidad que no deberá ser mayor a:', fontSize: 8, margin: [0, 10] }
+                           text: 'En atención a las diversas solicitudes presentadas ante esta Secretaría por prestadores del servicio público de transporte, en su modalidad de ' + this.plantillaseleccionada.modalidad.nombre+' en esta localidad, con fundamento en los artículos 27 fracción VII, 40 fracción XXXIX de la Ley Orgánica del Poder Ejecutivo del Estado de Oaxaca: 1 , 2, 13, 35 fracción II, 37 fracción VII, XXI, XL, 85, 156, 158, 159, 206 fracción II, 207 fracción IX de la ley de Movilidad, 76, 130, 271, 272 y 274 del Reglamento de la Ley de Movilidad para el Estado de Oaxaca y Artículo 31 fracción III y 32 fracción V, del Reglamento Interno de la Secretaria de Vialidad y Transporte del Estado de Oaxaca y con base en las conclusiones del estudio técnico y costos practicado por la Subsecretaria de Planeación y Normatividad para la actualización de las tarifas del servicio público de transporte de pasajeros, considerando la estimación de la demanda del servicio, el inventario de vehículos que prestan el servicio en dicha modalidad y las cotizaciones de costos de refacciones, combustibles y mantenimiento, relacionados directamente con el costo de operación de los vehículos, por instrucciones del encargado de Despacho de la Secretaría de Movilidad del Gobierno del Estado de Oaxaca y en términos del Acuerdo por el que el Secretario de Movilidad delega facultades al Titular de la Dirección de Operación del Transporte Público de la misma Dependencia, publicado en el Periódico Oficial del Gobierno del Estado de Oaxaca el día 6 de Julio del año 2013, la Dirección de Operación del Transporte Público a través del Departamento de Control de Transporte, le comunica que se le autoriza como tarifa para la prestación del servicio público de transporte de pasajeros en la Modalidad de ' + this.plantillaseleccionada.modalidad.nombre+', en la Localidad de ' + this.plantillaseleccionada.localidad.nombre+', Municipio de ' + this.plantillaseleccionada.localidad.municipio.nombre+', Oax., una cantidad que no deberá ser mayor a:', fontSize: 8, margin: [0, 10] }
                        ]
                      },
                      { columns: [
@@ -568,8 +568,8 @@ export class TarifaComponent implements OnInit {
                      {
                        columns: [
                          { width: 10, text: '' },
-                         { alignment: 'justify', width: 300, text: 'FELIPE REYNA ROMERO', fontSize: 8,bold: true },
-                         { alignment: 'justify', width: 400, text: 'MARINO HERNÁNDEZ LÓPEZ', fontSize: 8,bold: true }
+                         { alignment: 'justify', width: 300, text: 'ING. FELIPE REYNA ROMERO', fontSize: 8,bold: true },
+                         { alignment: 'justify', width: 400, text: 'ARQ. MARINO HERNÁNDEZ LÓPEZ', fontSize: 8,bold: true }
                        ]
                      },
                      {
@@ -628,12 +628,6 @@ export class TarifaComponent implements OnInit {
                        ]
                      }
                      ,
-                     {
-                       columns: [
-                         { width: 10, text: '' },
-                         { alignment: 'justify', width: 300, text: 'Arq. Julio César Rojas Rivera. - Jefe de Departamento de Control de Transporte. - Para su control.', fontSize: 5  }
-                       ]
-                     },
                      {
                        columns: [
                          { width: 170, text: '' },
