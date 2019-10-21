@@ -20,7 +20,7 @@ export class GraphQLModule {
 
   //private readonly URI1: string = 'http://172.80.13.12:10009/graphql';
   //private readonly URI2: string = 'http://172.80.13.12:10007/graphql';
-  //private readonly URI3: string = 'http://172.80.13.12:5000/graphql';
+  //private readonly URI3: string = 'http://172.80.13.12:11000/graphql';
   constructor(
     apollo: Apollo,
     httpLink: HttpLink

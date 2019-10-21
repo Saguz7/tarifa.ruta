@@ -63,6 +63,7 @@ export class TarifaComponent implements OnInit {
   div3solicitud: boolean = false;
   div4descarga: boolean = false;
   divdebusqueda: boolean = true;
+  loading:boolean = false;
   arrayrutasdepruebas: any;
   data: Observable<any>;
   registroabuscar: any;
@@ -202,6 +203,8 @@ export class TarifaComponent implements OnInit {
 
 
  creaciondetarjeton(){
+
+   this.loading = true;
    let solicitudinput = new SolicitudInput();
    solicitudinput.folio = this.foliosolicitud;
    solicitudinput.fecha = this.date1;
@@ -210,9 +213,9 @@ export class TarifaComponent implements OnInit {
    lineaCaptura.lineaCaptura = this.paymentsModel.capture_line;
    lineaCaptura.folioPago = this.paymentsModel.folio;
    lineaCaptura.totalAmparados = 1;
-   lineaCaptura.fechaPago = new Date();
-  // lineaCaptura.fechaPago = new Date(this.paymentsModel.payment_date);
-  // lineaCaptura.totalPago =  Number(this.paymentsModel.total_payment);
+   //lineaCaptura.fechaPago = new Date();
+   lineaCaptura.fechaPago =  this.paymentsModel.payment_date;
+   lineaCaptura.totalPago =  Number(this.paymentsModel.total_payment);
 
    let hojaValorada = new HojaValoradaInput();
    hojaValorada.folio = this.pago3;
@@ -1110,6 +1113,7 @@ concesiones(entrada: $entrada, opcion: $opcion, top: $top) {
     }
 //Metodo que obtiene las rutas de la plantilla seleccionada
     getRutas(){
+      this.loading = true;
       this.divplantillas = false;
       this.apollo.query({query: gql`
         query listRutas4Plantilla($plantilla:ID){
@@ -1124,6 +1128,7 @@ concesiones(entrada: $entrada, opcion: $opcion, top: $top) {
                 plantilla: this.plantillaseleccionada.id
               }})
             .subscribe(result => {
+              this.loading = false;
               this.asignarrutas(result.data);
             });
     }

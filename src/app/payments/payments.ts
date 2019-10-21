@@ -5,7 +5,7 @@ export class Payments {
   public concept: string;
   public contributor: string;
   public detail: string;
-  public payment_date: string;
+  public payment_date: Date;
   public status_payment: string;
   public total_payment: string;
   public error;
