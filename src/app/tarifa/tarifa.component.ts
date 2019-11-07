@@ -213,8 +213,8 @@ export class TarifaComponent implements OnInit {
    lineaCaptura.lineaCaptura = this.paymentsModel.capture_line;
    lineaCaptura.folioPago = this.paymentsModel.folio;
    lineaCaptura.totalAmparados = 1;
-   //lineaCaptura.fechaPago = new Date();
-   lineaCaptura.fechaPago =  this.paymentsModel.payment_date;
+   lineaCaptura.fechaPago = new Date();
+   //lineaCaptura.fechaPago =  this.paymentsModel.payment_date;
    lineaCaptura.totalPago =  Number(this.paymentsModel.total_payment);
 
    let hojaValorada = new HojaValoradaInput();
@@ -415,15 +415,20 @@ export class TarifaComponent implements OnInit {
        var lines = pdf.splitTextToSize(municipio, 240);
 
        pdf.text(lines, 110, 260, null, 90);
+
+       var localidad = 'LOCALIDAD: ' + this.registroamostrar.concesionario.localidad.nombre;
+       var lines = pdf.splitTextToSize(localidad, 240);
+
+       pdf.text(lines, 130, 260, null, 90);
        var ruta = 'RUTA: ' + this.rutaseleccionada.ruta.origen +  " - " + this.rutaseleccionada.ruta.destino;
 
        var lines = pdf.splitTextToSize(ruta, 250);
 
-       pdf.text(lines , 130, 260, null, 90);
+       pdf.text(lines , 150, 260, null, 90);
        pdf.setFontSize(90);
        pdf.addFont("Calibrib.ttf", "Calibrib", "normal");
        pdf.setFont("Calibrib");
-       pdf.text('$'+this.rutaseleccionada.tarifa.toFixed(2), 170, 235, null, 90);
+       pdf.text('$'+this.rutaseleccionada.tarifa.toFixed(2), 190, 235, null, 90);
 
 
        pdf.setFontSize(24);
@@ -435,7 +440,7 @@ export class TarifaComponent implements OnInit {
 
        var lines = pdf.splitTextToSize(tarifa, 150);
 
-       pdf.text(lines, 185, 235, null, 90);
+       pdf.text(lines, 205, 235, null, 90);
 
            /*
            var delayInMilliseconds = 1000; //1 second
@@ -615,7 +620,7 @@ export class TarifaComponent implements OnInit {
                      {
                        columns: [
                          { width: 10, text: '' },
-                         { alignment: 'justify', width: 300, text: '-C.P. Jóse Guzmán Santos.- Director de la Policía Vial Estatal. Mismo fin.', fontSize: 5  }
+                         { alignment: 'justify', width: 300, text: '- Lic. David Antonio Jiménez.- Director de la Policía Vial Estatal. Mismo fin.', fontSize: 5  }
                        ]
                      },
                      {
