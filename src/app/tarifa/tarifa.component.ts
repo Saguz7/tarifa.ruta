@@ -213,8 +213,8 @@ export class TarifaComponent implements OnInit {
    lineaCaptura.lineaCaptura = this.paymentsModel.capture_line;
    lineaCaptura.folioPago = this.paymentsModel.folio;
    lineaCaptura.totalAmparados = 1;
-   lineaCaptura.fechaPago = new Date();
-   //lineaCaptura.fechaPago =  this.paymentsModel.payment_date;
+   //lineaCaptura.fechaPago = new Date();
+   lineaCaptura.fechaPago =  this.paymentsModel.payment_date;
    lineaCaptura.totalPago =  Number(this.paymentsModel.total_payment);
 
    let hojaValorada = new HojaValoradaInput();
