@@ -6,7 +6,7 @@
         <div class="row" *ngIf="div1validacionpago"><br>
           <div class="row">
             <div class="col s10 offset-s1"><br>
-              <semovi-payments [IModel]="paymentsModel" (Ostatus)="check($event)"></semovi-payments>
+              <semovi-payments [IModel]="paymentsModel" [IModelExtra]="paymentsModelExtra" (Ostatus)="check($event)"></semovi-payments>
               <div class="row" *ngIf="mostrardespuesdewebservice">
                 <div class="col s6" id="cambiodetamanio5">
                   <div>

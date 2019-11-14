@@ -1,6 +1,9 @@
 <div class="payment">
   <form [formGroup]="paymentsForm" (ngSubmit)="sendStatus(paymentsForm.valid)">
     <div class="row">
+      <div class="progress" *ngIf="loading">
+        <div class="indeterminate"></div>
+      </div>
       <!-- Payment folio -->
       <div class="col s12 m6">
         <div class="input-field">

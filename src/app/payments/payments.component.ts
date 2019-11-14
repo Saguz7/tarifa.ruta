@@ -11,9 +11,12 @@ import { Payments } from './payments';
 })
 export class PaymentsComponent implements OnInit {
   @Input() IModel: Payments;
+  @Input() IModelExtra: Payments;
+
   @Output() Ostatus = new EventEmitter<any>();
   public paymentsForm: FormGroup;
   result: any;
+  loading: boolean = false;
 
   constructor(private paymentsService?: PaymentsService) {}
 
@@ -54,12 +57,67 @@ export class PaymentsComponent implements OnInit {
   }
 
   public sendStatus(status: boolean):void {
+    this.loading = true;
+
     this.IModel.setInitValues(
       this.paymentsForm.controls.folio.value,
       this.paymentsForm.controls.capture_line.value
     );
 
+
+    this.IModelExtra.setInitValues(
+      this.paymentsForm.controls.folio.value,
+      this.paymentsForm.controls.capture_line.value
+    );
+
+
     this.paymentsService.validate(this.IModel).subscribe((result) => {
+      this.result = result;
+      this.IModel.setAllValues(this.result);
+      //eliminar cuando todo este OK
+
+     if(this.result!=null){
+       if(this.result.data.status_payment != 'documento vencido'){
+          //this.Ostatus.emit({status: true});
+          this.Ostatus.emit({status: true});
+          this.loading = false;
+
+
+         (<HTMLInputElement>document.getElementById('folio')).disabled = true;
+         (<HTMLInputElement>document.getElementById('capture_line')).disabled = true;
+         (<HTMLInputElement>document.getElementById('formButton')).style.visibility = "hidden";
+       }else{
+          this.Ostatus.emit({status: false});
+          alert("Línea de Captura Vencida");
+          //this.Ostatus.emit({status: true});
+          this.loading = false;
+
+       }
+     }
+
+
+
+    }, (error) => {
+      console.log(error.error.error.status);
+      if(error.error.error.status == 400){
+        this.secondValited();
+      }
+      if(error.error.error.status >= 500){
+        document.getElementById('formButton').style.visibility = "hidden";
+        this.Ostatus.emit(error.error);
+      }
+     });
+
+  }
+
+  public secondValited(){
+
+        this.IModelExtra.setInitValues(
+          this.paymentsForm.controls.folio.value,
+          this.paymentsForm.controls.capture_line.value
+        );
+
+    this.paymentsService.validate(this.IModelExtra).subscribe((result) => {
       this.result = result;
       this.IModel.setAllValues(this.result);
       //eliminar cuando todo este OK
@@ -68,23 +126,23 @@ export class PaymentsComponent implements OnInit {
      if(this.result!=null){
        if(this.result.data.status_payment != 'documento vencido'){
           this.Ostatus.emit({status: true});
+          this.loading = false;
+
          (<HTMLInputElement>document.getElementById('folio')).disabled = true;
          (<HTMLInputElement>document.getElementById('capture_line')).disabled = true;
          (<HTMLInputElement>document.getElementById('formButton')).style.visibility = "hidden";
        }else{
           this.Ostatus.emit({status: false});
           alert("Línea de Captura Vencida");
+          this.loading = false;
        }
      }
-
-
-
     }, (error) => {
       if(error.error.error.status >= 500){
         document.getElementById('formButton').style.visibility = "hidden";
       }
       this.Ostatus.emit(error.error);
+      this.loading = false;
     });
-
   }
 }

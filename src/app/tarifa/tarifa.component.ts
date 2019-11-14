@@ -35,6 +35,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export class TarifaComponent implements OnInit {
   public paymentsModel: Payments;
+  public paymentsModelExtra: Payments;
   public test: any;
   date1: Date;
   datepay: Date;
@@ -124,6 +125,8 @@ export class TarifaComponent implements OnInit {
     $('input#input_text').characterCounter();
 
     this.paymentsModel = new Payments('3IFBAC017');
+    this.paymentsModelExtra = new Payments('3IFAAD007');
+
     const meses = [
           "Enero", "Febrero", "Marzo",
           "Abril", "Mayo", "Junio", "Julio",
