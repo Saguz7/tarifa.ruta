@@ -38,6 +38,8 @@ export class LoginComponent implements OnInit {
                 {}
 
     ngOnInit() {
+      console.log("Version 1.0.2");
+
       this.user = this.storageService.getCurrentUser();
       if(this.user == null){
         document.getElementById("navesconder").style.visibility = "hidden";

@@ -120,7 +120,7 @@ export class TarifaComponent implements OnInit {
 
 
   ngOnInit() {
-    this.user = this.storageService.getCurrentUser();
+     this.user = this.storageService.getCurrentUser();
 
     $('input#input_text').characterCounter();
 
