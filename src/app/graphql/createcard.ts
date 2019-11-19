@@ -4,6 +4,7 @@ export namespace InsertTarjeton {
     concesion: string;
     plantilla: string;
     vehiculo: string;
+    idSolicitud: string;
     solicitud: SolicitudInput;
     lineaCaptura: LineaCapturaInput;
     hojaValorada: HojaValoradaInput;
@@ -23,6 +24,7 @@ export namespace InsertTarjeton {
     concesion: Maybe<string>;
     plantilla: Maybe<string>;
     vehiculo: Maybe<string>;
+    idSolicitud: Maybe<string>;
     solicitud: Maybe<SolicitudInput>;
     lineaCaptura: Maybe<LineaCapturaInput>;
     hojaValorada: Maybe<HojaValoradaInput>;
@@ -47,8 +49,26 @@ export class InsertTarjetonGQL extends Apollo.Mutation<
   InsertTarjeton.Variables
 > {
   document: any = gql`
-  mutation newTarjeton($concesion: ID,$vehiculo:ID,$plantilla: ID,$solicitud: SolicitudInput,$lineaCaptura: LineaCapturaInput,$hojaValorada: HojaValoradaInput,$token: String) {
-  crearTarjeton(concesion: $concesion,vehiculo:$vehiculo,plantilla: $plantilla,solicitud: $solicitud,lineaCaptura: $lineaCaptura,hojaValorada: $hojaValorada,token: $token) {
+  mutation newTarjeton(
+  $concesion: ID
+  $vehiculo: ID
+  $plantilla: ID
+  $idSolicitud: ID
+  $solicitud: SolicitudInput
+  $lineaCaptura: LineaCapturaInput
+  $hojaValorada: HojaValoradaInput
+  $token: String
+) {
+  crearTarjeton(
+    concesion: $concesion
+    vehiculo: $vehiculo
+    plantilla: $plantilla
+    idSolicitud: $idSolicitud
+    solicitud: $solicitud
+    lineaCaptura: $lineaCaptura
+    hojaValorada: $hojaValorada
+    token: $token
+  ) {
     id
     concesion {
       id
@@ -92,10 +112,10 @@ export class InsertTarjetonGQL extends Apollo.Mutation<
           municipio {
             id
             nombre
-            distrito{
+            distrito {
               id
               nombre
-              region{
+              region {
                 id
                 nombre
               }
@@ -108,7 +128,7 @@ export class InsertTarjetonGQL extends Apollo.Mutation<
         bloqueado
       }
     }
-    vehiculo{
+    vehiculo {
       id
       anioModelo
       motor
@@ -116,11 +136,11 @@ export class InsertTarjetonGQL extends Apollo.Mutation<
       puertas
       numeroEconomico
       estatus
-      marca{
+      marca {
         id
         nombre
       }
-      tipo{
+      tipo {
         id
         nombre
       }
@@ -135,10 +155,10 @@ export class InsertTarjetonGQL extends Apollo.Mutation<
         municipio {
           id
           nombre
-          distrito{
+          distrito {
             id
             nombre
-            region{
+            region {
               id
               nombre
             }

@@ -13,7 +13,7 @@
                     <label  class="atributoscuestionariotitulos">Folio de hoja valorada.</label>
                   </div>
                   <div class="input-field">
-                    <input type="text" numbersOnly required onKeyPress="if(this.value.length==9) return false;" [(ngModel)]="pago3" id="input_text" name="pago3" class="form-control" data-length="9">
+                    <input autocomplete="off" type="text" numbersOnly required onKeyPress="if(this.value.length==9) return false;" [(ngModel)]="pago3" id="input_text" name="pago3" class="form-control" data-length="9">
                   </div>
                 </div>
                 <div class="col s6" id="cambiodetamanio5" *ngIf=mostrarfechapago>
@@ -29,8 +29,9 @@
               </div>
             </div>
             <div class="col s11 offset-s1" id="cambiodetamanio7" *ngIf="pago3 != undefined">
-              <a id="btnverificarpago2" *ngIf="pago3.length != 9 || !validarfecha" class="waves-effect waves-light btn-small" disabled><i class="material-icons left">arrow_downward</i>Confirmar pago</a>
-              <a id="btnverificarpago2" *ngIf="pago3.length == 9 && validarfecha" class="waves-effect waves-light btn-small" (click)="busquedaconcesionarioactive()"><i class="material-icons left">arrow_downward</i>Confirmar pago</a> <br> <br>
+              <a id="btnverificarpago2" *ngIf="pago3.length != 9" class="waves-effect waves-light btn-small" disabled>Confirmar pago</a>
+              <a id="btnverificarpago2" *ngIf="pago3.length == 9 && datepay==undefined" class="waves-effect waves-light btn-small" (click)="busquedaconcesionarioactive()">Confirmar pago</a> <br> <br>
+              <a id="btnverificarpago2" *ngIf="pago3.length == 9 &&  datepay!=undefined" class="waves-effect waves-light btn-small" (click)="busquedaconcesionarioactiveconvalidacionmanual()">Confirmar pago</a> <br> <br>
             </div>
           </div>
         </div>
@@ -264,18 +265,30 @@
                   <label class="atributoscuestionariotitulos">Folio solicitud.</label>
                 </div>
                 <div>
-                  <input autocomplete="off" type="text"  [(ngModel)]="foliosolicitud" id="foliosolicitud" name="foliosolicitud" class="form-control" >
+                  <input autocomplete="off" type="text"  [(ngModel)]="foliosolicitud" (ngModelChange)="esconderfechaSolicitud()" id="foliosolicitud" name="foliosolicitud" (change)="enviarFolioSolicitud()" class="form-control" >
                 </div>
               </div>
-              <div class="col s6" id="cambiodetamanio3">
-                <div>
-                  <label class="atributoscuestionariotitulos">Fecha de recepción.</label>
+              <div class="col s6" *ngIf="foliosolicitud != undefined && foliosolicitud.length > 0"><br><br>
+                <a id="btnverificarpago2" class="waves-effect waves-light btn" (click)="enviarFolioSolicitud()"><i class="material-icons left">arrow_downward</i>Confirmar Solicitud</a>
                 </div>
-                <div>
-                  <p-calendar [(ngModel)]="date1" [maxDate]="datenow" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"  [locale]="es" dateFormat="dd/mm/yy"></p-calendar>
-                </div>
-              </div><br> <br>
+                <div class="col s6" *ngIf="foliosolicitud== undefined"><br><br>
+                  <a id="btnverificarpago2" class="waves-effect waves-light btn" disabled><i class="material-icons left">arrow_downward</i>Confirmar Solicitud</a>
+                  </div>
+
             </div>
+            <div class="col s10 offset-s1">
+              <div class="col s6" id="cambiodetamanio3" *ngIf="validacionFolio == true">
+              <div>
+                <label class="atributoscuestionariotitulos">Fecha de recepción.</label>
+              </div>
+              <div *ngIf="this.idSolicitud != undefined">
+                <label class="atributoscuestionariotitulos">{{funcioncrearfecha(date1)}}</label>
+               </div>
+              <div *ngIf="this.idSolicitud == undefined">
+                <p-calendar id="calendarFechaRecepcion"   [(ngModel)]="date1" [maxDate]="datenow" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"  [locale]="es" dateFormat="dd/mm/yy"></p-calendar>
+              </div>
+            </div><br> <br>
+              </div>
 
             <div class="col s10 offset-s1">
               <div class="row">

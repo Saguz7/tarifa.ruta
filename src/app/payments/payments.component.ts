@@ -98,8 +98,7 @@ export class PaymentsComponent implements OnInit {
 
 
     }, (error) => {
-      console.log(error.error.error.status);
-      if(error.error.error.status == 400){
+       if(error.error.error.status == 400){
         this.secondValited();
       }
       if(error.error.error.status >= 500){

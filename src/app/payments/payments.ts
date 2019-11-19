@@ -9,6 +9,7 @@ export class Payments {
   public status_payment: string;
   public total_payment: string;
   public error;
+  public valid_for: string;
 
   /**
    * @param key_concept :string

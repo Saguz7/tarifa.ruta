@@ -41,6 +41,8 @@ export class TarifaComponent implements OnInit {
   datepay: Date;
   datenow: Date;
   minDate: Date;
+  totalDeAmparados: any;
+  idLineaCaptura:any;
 
   qrmensagge: any;
   statusComponentPayment: boolean = false;
@@ -86,8 +88,11 @@ export class TarifaComponent implements OnInit {
   mostrarplantillas: boolean = false;
   formbuscarnumserie: boolean = false;
 
+  //SAGUZ ESTO CAMBIASTE WACHO
 
   mostrarfechapago: boolean = false;
+
+  //SAGUZ ESTO CAMBIASTE WACHO
   mostrardespuesdewebservice: boolean = false;
   fechaperiodicooficial: any;
 
@@ -96,12 +101,18 @@ export class TarifaComponent implements OnInit {
   descargarrutas: boolean = false;
   user: any;
 
+  idSolicitud: any;
+
   infoqr = "Concesionario";
   nombreconcesionario = "";
   vehiculo: any;
   fechaactual = "";
   tamanio: any;
   objtarjeton: any;
+
+  validacionFolio: boolean = false;
+
+
 
   static getBarcodeData(text: string, size = 900) {
     return kjua({
@@ -213,6 +224,8 @@ export class TarifaComponent implements OnInit {
    solicitudinput.fecha = this.date1;
 
    let lineaCaptura = new LineaCapturaInput();
+
+   /*
    lineaCaptura.lineaCaptura = this.paymentsModel.capture_line;
    lineaCaptura.folioPago = this.paymentsModel.folio;
    lineaCaptura.totalAmparados = 1;
@@ -220,12 +233,38 @@ export class TarifaComponent implements OnInit {
    lineaCaptura.fechaPago =  this.paymentsModel.payment_date;
    lineaCaptura.totalPago =  Number(this.paymentsModel.total_payment);
 
+   */
+
    let hojaValorada = new HojaValoradaInput();
    hojaValorada.folio = this.pago3;
+
+
+   if(this.idSolicitud!=undefined){
+     solicitudinput = null;
+   }
+
+
+   if(this.mostrarfechapago){
+     lineaCaptura.lineaCaptura = this.paymentsModel.capture_line;
+    lineaCaptura.folioPago = this.paymentsModel.folio;
+    lineaCaptura.totalAmparados = 1;
+    lineaCaptura.fechaPago = this.datepay;
+    lineaCaptura.totalPago = Number(this.paymentsModel.total_payment);
+   }else{
+     lineaCaptura.lineaCaptura = this.paymentsModel.capture_line;
+    lineaCaptura.folioPago = this.paymentsModel.folio;
+    lineaCaptura.totalAmparados =  Number.parseInt(this.paymentsModel.valid_for);
+    lineaCaptura.fechaPago = new Date(this.paymentsModel.payment_date);
+    lineaCaptura.totalPago = Number(this.paymentsModel.total_payment);
+   }
+
+
+
    this.insertTarjetonGQL
      .mutate({
        concesion: this.registroamostrar.id,
        plantilla: this.plantillaseleccionada.id,
+       idSolicitud: this.idSolicitud,
        solicitud: solicitudinput,
        lineaCaptura: lineaCaptura,
        vehiculo: this.vehiculo.id,
@@ -239,6 +278,40 @@ export class TarifaComponent implements OnInit {
      M.toast({html: divisiones[1]})
    });
  }
+
+
+
+    busquedaconcesionarioactiveconvalidacionmanual(){
+      this.apollo.use('endpoint2')
+      .watchQuery({
+        query: gql`
+        query findHojaValorada($folio:String){
+          hojaValorada(folio:$folio){
+            id,
+            folio,
+            estatus,
+            createdAt
+          }
+        },
+          `,
+          variables: {
+               folio: this.pago3
+             }
+           })
+           .valueChanges.subscribe(result => {
+             var toastHTML = '<span> <div class="valign-wrapper"> Hoja valorada encontrada</div></span>';
+            M.toast({html: toastHTML});
+           }, (error) => {
+               this.div1validacionpago = false;
+              this.div2busquedadeconcesionario = true;
+              this.div3solicitud = false;
+              this.div4descarga = false;
+              document.getElementById("divheader1").style.backgroundColor ="#F1F1F1";
+              document.getElementById("divheader2").style.backgroundColor ="white";
+            });
+    }
+
+
 
 
  asignaciontarjeton(tarjeton : any){
@@ -817,29 +890,7 @@ export class TarifaComponent implements OnInit {
       }
 
     });
-
-    /*
-    this.apollo
-    .watchQuery({
-      query: gql`
-      query findFolioHojaValorada($folioHojaValorada:String){
-            folioHoja(folioHojaValorada:$folioHojaValorada){
-                   estatus
-                 }
-              },
-        `,
-        variables: {
-             folioHojaValorada: this.pago3
-           }
-         })
-         .valueChanges.subscribe(result => {
-           this.validarlineascapturas(result.data);
-         }, (error) => {
-           var divisiones = error.message.split(":", 2);
-           var toastHTML = '<span> <div class="valign-wrapper"><i class="material-icons">error_outline</i>  &nbsp;&nbsp;'+divisiones[1]+'</div></span>';
-           M.toast({html: toastHTML});
-         });
-         */
+ 
    }
 
 
@@ -1287,6 +1338,9 @@ concesiones(entrada: $entrada, opcion: $opcion, top: $top) {
        });
     }
 
+
+
+
     seleccionaruta(rowData: any,event: any){
       if(event.target.tagName == "TD"){
         for(var i = 1; i < event.target.parentNode.parentNode.parentNode.rows.length; i++){
@@ -1311,6 +1365,71 @@ concesiones(entrada: $entrada, opcion: $opcion, top: $top) {
       var toastHTML = '<span> <div class="valign-wrapper"> &nbsp;&nbsp; Se ha seleccionado la ruta '+this.rutaseleccionada.ruta.origen+'-'+this.rutaseleccionada.ruta.destino+'</div></span>';
       M.toast({html: toastHTML});
 
+    }
+
+    enviarFolioSolicitud(){
+
+      this.validacionFolio = true;
+
+
+      this.apollo
+      .watchQuery({
+        query: gql`
+        query getSolicitudByFolio($folio:String){
+           solicitud(folio:$folio){
+             id
+             folio
+             fecha
+             estatus
+             createdAt
+           }
+          }
+          `,
+        variables: {
+           folio: this.foliosolicitud
+         }
+       })
+       .valueChanges.subscribe(result => {
+          this.asignarObjFolio(result.data);
+        }, (error) => {
+       });
+
+
+    }
+
+    asignarObjFolio(solicitud: any){
+
+      this.date1 = new Date(solicitud.solicitud.fecha);
+      this.idSolicitud = solicitud.solicitud.id;
+
+    }
+
+
+                      funcioncrearfecha(stringdate: any){
+
+                        let fecha = new Date(stringdate);
+
+                        let dia21 = "";
+                        let anio21 = fecha.getFullYear().toString();
+                        let mes21 = "";
+
+                        if((fecha.getMonth()+1)<10){
+                         mes21 = "0"+(fecha.getMonth() + 1).toString();
+                        }else{
+                         mes21 = (fecha.getMonth() + 1).toString();
+                        }
+                         if((fecha.getDate()+1)<=10){
+                         dia21 = "0"+(fecha.getDate()).toString();
+                        }else{
+                         dia21 = (fecha.getDate()).toString();
+                        }
+
+                        return anio21  + "-" + mes21 + "-" + dia21 + "";
+                      }
+
+
+    esconderfechaSolicitud(){
+       this.validacionFolio = false;
     }
 
 }
